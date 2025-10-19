@@ -38,22 +38,10 @@
         
         .team-header {
             padding: 16px;
-            cursor: pointer;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             background: white;
             border-bottom: 1px solid #eee;
-        }
-        
-        .team-header:hover {
-            background: #f9f9f9;
-        }
-        
-        .team-name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
         }
         
         .team-header.avs { border-left: 4px solid #236192; }
@@ -61,27 +49,55 @@
         .team-header.broncos { border-left: 4px solid #FB4F14; }
         .team-header.buffs { border-left: 4px solid #CFB87C; }
         
-        .expand-icon {
-            font-size: 20px;
+        .team-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+        }
+        
+        .team-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .expand-button {
+            width: 100%;
+            padding: 10px;
+            background: #f5f5f5;
+            border: none;
             color: #666;
-            transition: transform 0.2s;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         
-        .expand-icon.expanded {
-            transform: rotate(180deg);
+        .expand-button:hover {
+            background: #e8e8e8;
         }
         
-        .featured-game {
-            padding: 16px;
-            border-bottom: 1px solid #eee;
+        .expand-button.up {
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        .additional-games {
+        .expand-button.down {
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .older-games, .upcoming-games {
             display: none;
         }
         
-        .additional-games.visible {
+        .older-games.visible, .upcoming-games.visible {
             display: block;
+        }
+        
+        .featured-games {
+            background: white;
         }
         
         .game {
@@ -160,21 +176,6 @@
             font-size: 14px;
         }
         
-        .expand-button {
-            width: 100%;
-            padding: 12px;
-            background: #f5f5f5;
-            border: none;
-            color: #666;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-        }
-        
-        .expand-button:hover {
-            background: #e8e8e8;
-        }
-        
         .loading {
             text-align: center;
             color: #666;
@@ -209,7 +210,6 @@
         const TEAMS = [
             {
                 name: 'Colorado Avalanche',
-                emoji: '⛸️',
                 sport: 'hockey/nhl',
                 teamId: 21,
                 abbr: 'COL',
@@ -217,7 +217,6 @@
             },
             {
                 name: 'Denver Nuggets',
-                emoji: '🏀',
                 sport: 'basketball/nba',
                 teamId: 7,
                 abbr: 'DEN',
@@ -225,7 +224,6 @@
             },
             {
                 name: 'Denver Broncos',
-                emoji: '🏈',
                 sport: 'football/nfl',
                 teamId: 7,
                 abbr: 'DEN',
@@ -233,7 +231,6 @@
             },
             {
                 name: 'Colorado Buffaloes',
-                emoji: '🦬',
                 sport: 'football/college-football',
                 teamId: 38,
                 abbr: 'COLO',
@@ -247,7 +244,7 @@
             try {
                 const now = new Date();
                 const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-                const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                const lastWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
                 
                 const formatDate = (date) => {
                     const year = date.getFullYear();
@@ -256,7 +253,7 @@
                     return `${year}${month}${day}`;
                 };
                 
-                const startDate = formatDate(yesterday);
+                const startDate = formatDate(lastWeek);
                 const endDate = formatDate(nextWeek);
                 
                 let html = '';
@@ -267,7 +264,7 @@
                     );
                     const data = await response.json();
                     
-                    let previousGame = null;
+                    const previousGames = [];
                     let liveGame = null;
                     const upcomingGames = [];
                     
@@ -282,34 +279,44 @@
                         const gameDate = new Date(event.date);
                         
                         if (status === 'post') {
-                            if (!previousGame || gameDate > new Date(previousGame.date)) {
-                                previousGame = event;
-                            }
+                            previousGames.push(event);
                         } else if (status === 'in') {
                             liveGame = event;
-                        } else if (status === 'pre' && gameDate >= now && gameDate <= nextWeek) {
+                        } else if (status === 'pre') {
                             upcomingGames.push(event);
                         }
                     });
                     
-                    html += createTeamSection(team, previousGame, liveGame, upcomingGames);
+                    // Sort by date
+                    previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    
+                    // Get team logo
+                    const logoUrl = data.events.find(e => 
+                        e.competitions[0].competitors.some(t => t.team.abbreviation === team.abbr)
+                    )?.competitions[0].competitors.find(t => t.team.abbreviation === team.abbr)?.team.logo;
+                    
+                    html += createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl);
                 }
                 
                 scheduleDiv.innerHTML = html;
                 
-                // Add click handlers
-                document.querySelectorAll('.team-header').forEach(header => {
-                    header.addEventListener('click', toggleTeamSection);
-                });
-                
+                // Add expand button handlers
                 document.querySelectorAll('.expand-button').forEach(button => {
                     button.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const games = button.previousElementSibling;
+                        const target = button.dataset.target;
+                        const games = document.getElementById(target);
                         games.classList.toggle('visible');
-                        button.textContent = games.classList.contains('visible') 
-                            ? 'Show less' 
-                            : `Show ${button.dataset.count} more games`;
+                        
+                        if (button.classList.contains('up')) {
+                            button.innerHTML = games.classList.contains('visible') 
+                                ? '▲ Hide older games' 
+                                : `▲ Show ${button.dataset.count} older games`;
+                        } else {
+                            button.innerHTML = games.classList.contains('visible') 
+                                ? '▼ Hide upcoming games' 
+                                : `▼ Show ${button.dataset.count} more upcoming`;
+                        }
                     });
                 });
                 
@@ -319,70 +326,63 @@
             }
         }
         
-        function toggleTeamSection(e) {
-            const section = e.currentTarget.parentElement;
-            const icon = e.currentTarget.querySelector('.expand-icon');
-            const games = section.querySelector('.additional-games');
-            const button = section.querySelector('.expand-button');
+        function createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl) {
+            const mostRecent = previousGames[0];
+            const nextGame = liveGame || upcomingGames[0];
+            const olderGames = previousGames.slice(1);
+            const remainingUpcoming = liveGame ? upcomingGames : upcomingGames.slice(1);
             
-            if (games) {
-                games.classList.toggle('visible');
-                icon.classList.toggle('expanded');
-                
-                if (button && games.classList.contains('visible')) {
-                    button.textContent = 'Show less';
-                } else if (button) {
-                    button.textContent = `Show ${button.dataset.count} more games`;
-                }
-            }
-        }
-        
-        function createTeamSection(team, previousGame, liveGame, upcomingGames) {
-            const featuredGame = liveGame || upcomingGames[0] || previousGame;
-            const remainingGames = [];
+            const sectionId = team.className;
             
-            if (previousGame && featuredGame !== previousGame) {
-                remainingGames.push({game: previousGame, type: 'past'});
-            }
-            if (liveGame && upcomingGames.length > 0) {
-                upcomingGames.forEach(g => remainingGames.push({game: g, type: 'upcoming'}));
-            } else if (!liveGame && upcomingGames.length > 1) {
-                upcomingGames.slice(1).forEach(g => remainingGames.push({game: g, type: 'upcoming'}));
-            }
-            
-            if (!featuredGame) {
+            if (!mostRecent && !nextGame) {
                 return `
                     <div class="team-section">
                         <div class="team-header ${team.className}">
-                            <div class="team-name">${team.emoji} ${team.name}</div>
+                            ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
+                            <div class="team-name">${team.name}</div>
                         </div>
-                        <div class="no-games">No games in the next week</div>
+                        <div class="no-games">No games in the past or next week</div>
                     </div>
                 `;
             }
             
-            let gameType = 'upcoming';
-            if (liveGame && featuredGame === liveGame) gameType = 'live';
-            else if (previousGame && featuredGame === previousGame) gameType = 'past';
-            
             let html = `
                 <div class="team-section">
                     <div class="team-header ${team.className}">
-                        <div class="team-name">${team.emoji} ${team.name}</div>
-                        ${remainingGames.length > 0 ? '<div class="expand-icon">▼</div>' : ''}
-                    </div>
-                    <div class="featured-game">
-                        ${formatGame(featuredGame, gameType, team.abbr)}
+                        ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
+                        <div class="team-name">${team.name}</div>
                     </div>
             `;
             
-            if (remainingGames.length > 0) {
-                html += `<div class="additional-games">`;
-                remainingGames.forEach(({game, type}) => {
-                    html += `<div class="game ${type === 'live' ? 'live' : ''}">${formatGame(game, type, team.abbr)}</div>`;
+            // Expand button for older games
+            if (olderGames.length > 0) {
+                html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} older games</button>`;
+                html += `<div class="older-games" id="${sectionId}-older">`;
+                olderGames.forEach(game => {
+                    html += `<div class="game">${formatGame(game, 'past', team.abbr)}</div>`;
                 });
                 html += `</div>`;
-                html += `<button class="expand-button" data-count="${remainingGames.length}">Show ${remainingGames.length} more games</button>`;
+            }
+            
+            // Featured games
+            html += `<div class="featured-games">`;
+            if (mostRecent) {
+                html += `<div class="game">${formatGame(mostRecent, 'past', team.abbr)}</div>`;
+            }
+            if (nextGame) {
+                const gameType = liveGame ? 'live' : 'upcoming';
+                html += `<div class="game ${gameType === 'live' ? 'live' : ''}">${formatGame(nextGame, gameType, team.abbr)}</div>`;
+            }
+            html += `</div>`;
+            
+            // Expand button for remaining upcoming games
+            if (remainingUpcoming.length > 0) {
+                html += `<div class="upcoming-games" id="${sectionId}-upcoming">`;
+                remainingUpcoming.forEach(game => {
+                    html += `<div class="game">${formatGame(game, 'upcoming', team.abbr)}</div>`;
+                });
+                html += `</div>`;
+                html += `<button class="expand-button down" data-target="${sectionId}-upcoming" data-count="${remainingUpcoming.length}">▼ Show ${remainingUpcoming.length} more upcoming</button>`;
             }
             
             html += `</div>`;
