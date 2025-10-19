@@ -662,13 +662,11 @@
                 broadcastInfo = `<div class="broadcast">📺 ${networks}</div>`;
             }
             
-            // Get opponent standings for upcoming games
+            // Get opponent standings for all games
             let opponentStandingsHtml = '';
-            if (gameType === 'upcoming') {
-                const oppStandings = await getOpponentStandings(sport, opponentTeamId);
-                if (oppStandings) {
-                    opponentStandingsHtml = `<div class="opponent-standings">${oppStandings}</div>`;
-                }
+            const oppStandings = await getOpponentStandings(sport, opponentTeamId);
+            if (oppStandings) {
+                opponentStandingsHtml = `<div class="opponent-standings">${oppStandings}</div>`;
             }
             
             let statusLabel = '';
