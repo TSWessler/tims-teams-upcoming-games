@@ -188,16 +188,37 @@
         .score {
             font-size: 20px;
             font-weight: 700;
-            color: #236192;
             margin-bottom: 4px;
         }
         
-        .score.won {
+        .score a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .score a:hover {
+            text-decoration: underline;
+        }
+        
+        .score.won a {
             color: #2d8659;
         }
         
-        .score.lost {
+        .score.lost a {
             color: #c33;
+        }
+        
+        .preview-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: #4a90e2;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .preview-link:hover {
+            text-decoration: underline;
         }
         
         .location {
@@ -500,6 +521,11 @@
             const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
             const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
             
+            // Get game link
+            const gameLink = event.links?.find(link => link.text === 'Gamecast' || link.text === 'Game Summary')?.href || 
+                            event.links?.[0]?.href || 
+                            `https://www.espn.com`;
+            
             // Get broadcast info (only for upcoming and live games)
             let broadcastInfo = '';
             if (gameType !== 'past' && competition.broadcasts && competition.broadcasts.length > 0) {
@@ -509,6 +535,7 @@
             
             let statusLabel = '';
             let scoreHtml = '';
+            let previewLink = '';
             
             if (gameType === 'past') {
                 statusLabel = '<span class="status past">FINAL</span>';
@@ -529,15 +556,16 @@
                     otLabel = ' (3OT)';
                 }
                 
-                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${won ? '😁' : '😭'} ${myScore} - ${oppScore} ${won ? 'W' : 'L'}${otLabel}</div>`;
+                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}"><a href="${gameLink}" target="_blank">${won ? '😁' : '😭'} ${myScore} - ${oppScore} ${won ? 'W' : 'L'}${otLabel}</a></div>`;
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
                 const myScore = isHome ? homeTeam.score : awayTeam.score;
                 const oppScore = isHome ? awayTeam.score : homeTeam.score;
-                scoreHtml = `<div class="score">${myScore} - ${oppScore}</div>`;
+                scoreHtml = `<div class="score"><a href="${gameLink}" target="_blank">${myScore} - ${oppScore}</a></div>`;
             } else {
                 statusLabel = '<span class="status upcoming">UPCOMING</span>';
+                previewLink = `<a href="${gameLink}" target="_blank" class="preview-link">Preview →</a>`;
             }
             
             return `
@@ -547,6 +575,7 @@
                 ${scoreHtml}
                 <div class="location">${location}</div>
                 ${broadcastInfo}
+                ${previewLink}
             `;
         }
         
