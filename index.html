@@ -436,58 +436,9 @@
                             );
                             const standingsApiData = await standingsApiResponse.json();
                             
-                            // Find our team in the standings
-                            let divRank = null, confRank = null, leagueRank = null;
-                            let divName = '', confName = '';
+                            console.log(team.name, 'standings API structure:', Object.keys(standingsApiData));
+                            console.log(team.name, 'standings data sample:', standingsApiData);
                             
-                            standingsApiData.children?.forEach(group => {
-                                group.standings?.entries?.forEach((entry, idx) => {
-                                    if (entry.team.abbreviation === team.abbr || entry.team.id === team.teamId.toString()) {
-                                        // Found our team
-                                        if (group.name.includes('Division')) {
-                                            divRank = idx + 1;
-                                            divName = group.name.replace(' Division', '').replace(' Standings', '');
-                                        } else if (group.name.includes('Conference')) {
-                                            confRank = idx + 1;
-                                            confName = group.name.replace(' Conference', '').replace(' Standings', '');
-                                        }
-                                    }
-                                });
-                            });
-                            
-                            // Calculate league rank by counting teams with better records
-                            if (standingsApiData.children && standings?.stats) {
-                                const ourWins = standings.stats.find(s => s.name === 'wins')?.value || 0;
-                                const ourLosses = standings.stats.find(s => s.name === 'losses')?.value || 0;
-                                const ourPct = ourWins / (ourWins + ourLosses) || 0;
-                                
-                                let betterTeams = 0;
-                                standingsApiData.children.forEach(group => {
-                                    group.standings?.entries?.forEach(entry => {
-                                        const stats = entry.stats;
-                                        const wins = stats?.find(s => s.name === 'wins')?.value || 0;
-                                        const losses = stats?.find(s => s.name === 'losses')?.value || 0;
-                                        const pct = wins / (wins + losses) || 0;
-                                        if (pct > ourPct) betterTeams++;
-                                    });
-                                });
-                                leagueRank = betterTeams + 1;
-                            }
-                            
-                            // Build ranking text
-                            if (divRank || confRank || leagueRank) {
-                                const parts = [];
-                                if (divRank && divName) parts.push(`#${divRank} in ${divName}`);
-                                if (confRank && confName) parts.push(`#${confRank} in ${confName}`);
-                                if (leagueRank) {
-                                    const leagueName = team.sport.includes('basketball') ? 'NBA' : 
-                                                       team.sport.includes('nfl') ? 'NFL' : 'FBS';
-                                    parts.push(`#${leagueRank} in ${leagueName}`);
-                                }
-                                if (parts.length > 0) {
-                                    leagueRank = { text: parts.join(', ') };
-                                }
-                            }
                         } catch (e) {
                             console.log('Could not fetch detailed standings for', team.name, e);
                         }
