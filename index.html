@@ -412,28 +412,39 @@
                     previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
                     upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
                     
-                    if (previousGames.length === 0 && !liveGame && upcomingGames.length === 0) {
+                    // Always ensure we have at least 1 previous and 1 upcoming game if they exist
+                    if (previousGames.length === 0 || upcomingGames.length === 0) {
                         const fullSeasonResponse = await fetch(
                             `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`
                         );
                         const fullData = await fullSeasonResponse.json();
                         
                         if (fullData.events) {
+                            const allPreviousGames = [];
+                            const allUpcomingGames = [];
+                            
                             fullData.events.forEach(event => {
                                 const status = event.competitions[0].status.type.state;
                                 
                                 if (status === 'post') {
-                                    previousGames.push(event);
+                                    allPreviousGames.push(event);
                                 } else if (status === 'pre') {
-                                    upcomingGames.push(event);
+                                    allUpcomingGames.push(event);
                                 }
                             });
                             
-                            previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
-                            upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+                            allPreviousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
+                            allUpcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
                             
-                            if (previousGames.length > 1) previousGames.splice(1);
-                            if (upcomingGames.length > 1) upcomingGames.splice(1);
+                            // If we don't have a previous game, get the most recent one
+                            if (previousGames.length === 0 && allPreviousGames.length > 0) {
+                                previousGames.push(allPreviousGames[0]);
+                            }
+                            
+                            // If we don't have an upcoming game, get the next one
+                            if (upcomingGames.length === 0 && allUpcomingGames.length > 0) {
+                                upcomingGames.push(allUpcomingGames[0]);
+                            }
                         }
                     }
                     
