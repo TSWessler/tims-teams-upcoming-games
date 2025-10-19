@@ -405,6 +405,7 @@
                     
                     // Try to get standings info
                     let standings = null;
+                    let leagueRank = null;
                     try {
                         const standingsResponse = await fetch(
                             `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
@@ -413,11 +414,19 @@
                         if (standingsData.team?.record?.items) {
                             standings = standingsData.team.record.items[0];
                         }
+                        
+                        // Try to get league-wide rank
+                        if (standingsData.team?.standingSummary) {
+                            const leagueMatch = standingsData.team.standingSummary.match(/(\d+)(?:st|nd|rd|th) in (?:NHL|NBA|NFL)/);
+                            if (leagueMatch) {
+                                leagueRank = leagueMatch[1];
+                            }
+                        }
                     } catch (e) {
                         console.log('Could not fetch standings for', team.name);
                     }
                     
-                    html += createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings);
+                    html += createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
                 }
                 
                 scheduleDiv.innerHTML = html;
@@ -446,13 +455,13 @@
                             const count = button.dataset.count;
                             const gameWord = count === '1' ? 'game' : 'games';
                             button.innerHTML = games.classList.contains('visible') 
-                                ? '▼ Hide previous games' 
+                                ? `▼ Hide previous ${gameWord}` 
                                 : `▲ Show ${count} previous ${gameWord}`;
                         } else {
                             const count = button.dataset.count;
                             const gameWord = count === '1' ? 'game' : 'games';
                             button.innerHTML = games.classList.contains('visible') 
-                                ? '▲ Hide upcoming games' 
+                                ? `▲ Hide upcoming ${gameWord}` 
                                 : `▼ Show ${count} upcoming ${gameWord}`;
                         }
                     });
@@ -464,7 +473,7 @@
             }
         }
         
-        function createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings) {
+        function createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank) {
             const mostRecent = previousGames[0];
             const nextGame = liveGame || upcomingGames[0];
             const olderGames = previousGames.slice(1);
@@ -499,7 +508,10 @@
                         const parts = [];
                         if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
                         if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]} Conf`);
+                        if (leagueRank) parts.push(`#${leagueRank} in NHL`);
                         rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
+                    } else if (leagueRank) {
+                        rankingsText = ` - #${leagueRank} in NHL`;
                     }
                     
                     standingsLink = 'https://www.espn.com/nhl/standings';
@@ -517,7 +529,10 @@
                         const parts = [];
                         if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
                         if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]} Conf`);
+                        if (leagueRank) parts.push(`#${leagueRank} in NBA`);
                         rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
+                    } else if (leagueRank) {
+                        rankingsText = ` - #${leagueRank} in NBA`;
                     }
                     
                     standingsLink = 'https://www.espn.com/nba/standings';
@@ -535,7 +550,10 @@
                         const parts = [];
                         if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
                         if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]}`);
+                        if (leagueRank) parts.push(`#${leagueRank} in NFL`);
                         rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
+                    } else if (leagueRank) {
+                        rankingsText = ` - #${leagueRank} in NFL`;
                     }
                     
                     standingsLink = 'https://www.espn.com/nfl/standings';
@@ -545,10 +563,15 @@
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     record = `(${wins}-${losses})`;
                     
-                    // Try to get conference rank
+                    // Try to get conference rank and national ranking if available
                     const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?)$/);
                     if (confMatch) {
                         rankingsText = ` - #${confMatch[1]} in ${confMatch[2]}`;
+                    }
+                    
+                    // Check for AP or CFP ranking
+                    if (leagueRank) {
+                        rankingsText += (rankingsText ? ', ' : ' - ') + `#${leagueRank} ranked`;
                     }
                     
                     standingsLink = 'https://www.espn.com/college-football/standings';
