@@ -519,15 +519,13 @@
                     const pts = stats.find(s => s.name === 'points')?.value || 0;
                     record = `(${wins}-${losses}-${otl}, ${pts} pts)`;
                     
-                    if (leagueRank) {
-                        rankingsText = ` - ${leagueRank.text}`;
-                    }
-                    
                     standingsLink = 'https://www.espn.com/nhl/standings';
+                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record} - <span style="color: #4a90e2;">Standings →</span></a></div>`;
                 } else if (team.sport.includes('basketball')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
-                    const pct = stats.find(s => s.name === 'winPercent')?.displayValue || '.000';
+                    const winPct = stats.find(s => s.name === 'winPercent')?.value || 0;
+                    const pct = winPct.toFixed(3);
                     record = `(${wins}-${losses}, ${pct})`;
                     
                     if (leagueRank) {
@@ -558,7 +556,7 @@
                     standingsLink = 'https://www.espn.com/college-football/standings';
                 }
                 
-                if (record && standingsLink) {
+                if (record && standingsLink && !team.sport.includes('hockey')) {
                     standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
                 }
             }
