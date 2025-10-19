@@ -463,14 +463,28 @@
                         
                         // Debug logging for Avalanche standings
                         if (team.sport.includes('hockey')) {
-                            // Try api-web.nhle.com standings
-                            console.log('Testing api-web.nhle.com standings...');
+                            // Try the NHL API that ChatGPT recommended
+                            console.log('Testing NHL API with standings/now endpoint...');
                             try {
-                                const nhlStandingsResponse = await fetch(`https://api-web.nhle.com/v1/standings/now`);
-                                const nhlStandingsData = await nhlStandingsResponse.json();
-                                console.log('NHL standings from api-web.nhle.com:', nhlStandingsData);
+                                const url = 'https://api-web.nhle.com/v1/standings/now';
+                                const response = await fetch(url);
+                                console.log('Response status:', response.status);
+                                console.log('Response headers:', {
+                                    'access-control-allow-origin': response.headers.get('access-control-allow-origin'),
+                                    'content-type': response.headers.get('content-type')
+                                });
+                                const data = await response.json();
+                                console.log('Full NHL standings data:', data);
+                                
+                                // Find Avalanche specifically
+                                const avs = data.standings?.find(t => t.teamAbbrev?.default === 'COL' || t.teamAbbrev === 'COL');
+                                console.log('Avalanche from NHL API:', avs);
                             } catch (error) {
-                                console.log('Error fetching NHL standings:', error.message);
+                                console.log('Error details:', {
+                                    name: error.name,
+                                    message: error.message,
+                                    stack: error.stack
+                                });
                             }
                         }
                         
