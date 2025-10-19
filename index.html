@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colorado Sports</title>
+    <title>Colorado Sports Now(-ish)</title>
     <style>
         * {
             margin: 0;
@@ -40,14 +40,25 @@
             padding: 16px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             background: white;
             border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .team-header:hover {
+            background: #f9f9f9;
         }
         
         .team-header.avs { border-left: 4px solid #236192; }
         .team-header.nuggets { border-left: 4px solid #0E2240; }
         .team-header.broncos { border-left: 4px solid #FB4F14; }
         .team-header.buffs { border-left: 4px solid #CFB87C; }
+        
+        .team-info {
+            display: flex;
+            align-items: center;
+        }
         
         .team-logo {
             width: 40px;
@@ -59,6 +70,24 @@
             font-size: 18px;
             font-weight: 600;
             color: #333;
+        }
+        
+        .collapse-icon {
+            font-size: 20px;
+            color: #666;
+            transition: transform 0.2s;
+        }
+        
+        .collapse-icon.collapsed {
+            transform: rotate(180deg);
+        }
+        
+        .team-content {
+            display: block;
+        }
+        
+        .team-content.collapsed {
+            display: none;
         }
         
         .expand-button {
@@ -176,6 +205,13 @@
             font-size: 14px;
         }
         
+        .broadcast {
+            color: #666;
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        
         .loading {
             text-align: center;
             color: #666;
@@ -200,7 +236,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🏔️ Colorado Sports</h1>
+        <h1>🏔️ Colorado Sports Now(-ish)</h1>
         <div id="schedule">
             <div class="loading">Loading games...</div>
         </div>
@@ -253,12 +289,13 @@
                     return `${year}${month}${day}`;
                 };
                 
-                const startDate = formatDate(lastWeek);
-                const endDate = formatDate(nextWeek);
-                
                 let html = '';
                 
                 for (const team of TEAMS) {
+                    // First try to get games from last week to next week
+                    const startDate = formatDate(lastWeek);
+                    const endDate = formatDate(nextWeek);
+                    
                     const response = await fetch(
                         `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/scoreboard?dates=${startDate}-${endDate}`
                     );
@@ -291,6 +328,38 @@
                     previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
                     upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
                     
+                    // Fallback: if no games in window, try to get the full season
+                    if (previousGames.length === 0 && !liveGame && upcomingGames.length === 0) {
+                        const fullSeasonResponse = await fetch(
+                            `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`
+                        );
+                        const fullData = await fullSeasonResponse.json();
+                        
+                        if (fullData.events) {
+                            fullData.events.forEach(event => {
+                                const status = event.competitions[0].status.type.state;
+                                const gameDate = new Date(event.date);
+                                
+                                if (status === 'post') {
+                                    previousGames.push(event);
+                                } else if (status === 'pre') {
+                                    upcomingGames.push(event);
+                                }
+                            });
+                            
+                            previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
+                            upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+                            
+                            // Keep only most recent and next upcoming
+                            if (previousGames.length > 1) {
+                                previousGames.splice(1);
+                            }
+                            if (upcomingGames.length > 1) {
+                                upcomingGames.splice(1);
+                            }
+                        }
+                    }
+                    
                     // Get team logo
                     const logoUrl = data.events.find(e => 
                         e.competitions[0].competitors.some(t => t.team.abbreviation === team.abbr)
@@ -301,9 +370,22 @@
                 
                 scheduleDiv.innerHTML = html;
                 
+                // Add collapse header handlers
+                document.querySelectorAll('.team-header').forEach(header => {
+                    header.addEventListener('click', (e) => {
+                        const section = header.parentElement;
+                        const content = section.querySelector('.team-content');
+                        const icon = header.querySelector('.collapse-icon');
+                        
+                        content.classList.toggle('collapsed');
+                        icon.classList.toggle('collapsed');
+                    });
+                });
+                
                 // Add expand button handlers
                 document.querySelectorAll('.expand-button').forEach(button => {
                     button.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         const target = button.dataset.target;
                         const games = document.getElementById(target);
                         games.classList.toggle('visible');
@@ -338,10 +420,15 @@
                 return `
                     <div class="team-section">
                         <div class="team-header ${team.className}">
-                            ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
-                            <div class="team-name">${team.name}</div>
+                            <div class="team-info">
+                                ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
+                                <div class="team-name">${team.name}</div>
+                            </div>
+                            <div class="collapse-icon">▲</div>
                         </div>
-                        <div class="no-games">No games in the past or next week</div>
+                        <div class="team-content">
+                            <div class="no-games">No games scheduled</div>
+                        </div>
                     </div>
                 `;
             }
@@ -349,9 +436,13 @@
             let html = `
                 <div class="team-section">
                     <div class="team-header ${team.className}">
-                        ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
-                        <div class="team-name">${team.name}</div>
+                        <div class="team-info">
+                            ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
+                            <div class="team-name">${team.name}</div>
+                        </div>
+                        <div class="collapse-icon">▲</div>
                     </div>
+                    <div class="team-content">
             `;
             
             // Expand button for older games
@@ -385,7 +476,7 @@
                 html += `<button class="expand-button down" data-target="${sectionId}-upcoming" data-count="${remainingUpcoming.length}">▼ Show ${remainingUpcoming.length} more upcoming</button>`;
             }
             
-            html += `</div>`;
+            html += `</div></div>`;
             return html;
         }
         
@@ -408,6 +499,13 @@
             const isHome = homeTeam.team.abbreviation === teamAbbr;
             const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
             const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
+            
+            // Get broadcast info (only for upcoming and live games)
+            let broadcastInfo = '';
+            if (gameType !== 'past' && competition.broadcasts && competition.broadcasts.length > 0) {
+                const networks = competition.broadcasts.map(b => b.names[0]).join(', ');
+                broadcastInfo = `<div class="broadcast">📺 ${networks}</div>`;
+            }
             
             let statusLabel = '';
             let scoreHtml = '';
@@ -434,6 +532,7 @@
                 <div class="matchup">vs ${opponent}</div>
                 ${scoreHtml}
                 <div class="location">${location}</div>
+                ${broadcastInfo}
             `;
         }
         
