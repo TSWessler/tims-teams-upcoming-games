@@ -463,40 +463,14 @@
                         
                         // Debug logging for Avalanche standings
                         if (team.sport.includes('hockey')) {
-                            console.log('Avalanche standings data:', {
-                                teamName: team.name,
-                                hasRecord: !!standingsData.team?.record,
-                                recordItems: standingsData.team?.record?.items,
-                                standingSummary: standingsData.team?.standingSummary
-                            });
-                            
-                            // Try NHL.com API
-                            console.log('Attempting to fetch from NHL.com API...');
+                            // Try api-web.nhle.com standings
+                            console.log('Testing api-web.nhle.com standings...');
                             try {
-                                const nhlResponse = await fetch(`https://api-web.nhle.com/v1/club-stats/${team.abbr}/now`);
-                                const nhlData = await nhlResponse.json();
-                                console.log('NHL.com API response:', nhlData);
-                            } catch (nhlError) {
-                                console.log('NHL.com API error:', nhlError);
-                            }
-                            
-                            // Try alternate ESPN endpoint
-                            console.log('Attempting ESPN standings endpoint...');
-                            try {
-                                const espnStandings = await fetch(`https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings`);
-                                const espnStandingsData = await espnStandings.json();
-                                console.log('ESPN standings API response:', espnStandingsData);
-                            } catch (espnError) {
-                                console.log('ESPN standings API error:', espnError);
-                            }
-                            
-                            // Try The Score API (used by many sports apps)
-                            console.log('Attempting The Score API...');
-                            try {
-                                const scoreResponse = await fetch(`https://www.thescore.com/nhl/teams/19`);
-                                console.log('The Score response status:', scoreResponse.status);
-                            } catch (scoreError) {
-                                console.log('The Score API error:', scoreError);
+                                const nhlStandingsResponse = await fetch(`https://api-web.nhle.com/v1/standings/now`);
+                                const nhlStandingsData = await nhlStandingsResponse.json();
+                                console.log('NHL standings from api-web.nhle.com:', nhlStandingsData);
+                            } catch (error) {
+                                console.log('Error fetching NHL standings:', error.message);
                             }
                         }
                         
@@ -709,18 +683,7 @@
             
             const isHome = homeTeam.team.abbreviation === teamAbbr;
             
-            // Debug logging for score issues
-            if (gameType === 'past' || gameType === 'live') {
-                console.log('Game scores debug:', {
-                    opponent: isHome ? awayTeam.team.displayName : homeTeam.team.displayName,
-                    homeTeam: homeTeam.team.displayName,
-                    homeScore: homeTeam.score,
-                    homeScoreType: typeof homeTeam.score,
-                    awayScore: awayTeam.score,
-                    awayScoreType: typeof awayTeam.score,
-                    gameType: gameType
-                });
-            }
+            // Debug logging removed for cleaner console
             const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
             const opponentTeamId = isHome ? awayTeam.team.id : homeTeam.team.id;
             const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
