@@ -406,7 +406,46 @@
                     // Try to get standings info
                     let standings = null;
                     let leagueRank = null;
-                    try {
+                    
+                    // Special handling for NHL - use official NHL.com API
+                    if (team.sport.includes('hockey')) {
+                        try {
+                            const nhlStandingsResponse = await fetch('https://api-web.nhle.com/v1/standings/now');
+                            const nhlStandingsData = await nhlStandingsResponse.json();
+                            
+                            // Find Colorado Avalanche in the standings
+                            const avalancheStanding = nhlStandingsData.standings.find(t => 
+                                t.teamAbbrev?.default === 'COL' || t.teamName?.default?.includes('Avalanche')
+                            );
+                            
+                            if (avalancheStanding) {
+                                console.log('NHL API Avalanche data:', avalancheStanding);
+                                leagueRank = {
+                                    text: `#${avalancheStanding.divisionSequence} in ${avalancheStanding.divisionName}, #${avalancheStanding.conferenceSequence} in ${avalancheStanding.conferenceName}, #${avalancheStanding.leagueSequence} in NHL`,
+                                    wins: avalancheStanding.wins,
+                                    losses: avalancheStanding.losses,
+                                    otLosses: avalancheStanding.otLosses,
+                                    points: avalancheStanding.points
+                                };
+                                
+                                // Create a standings object compatible with our formatting
+                                standings = {
+                                    stats: [
+                                        { name: 'wins', value: avalancheStanding.wins },
+                                        { name: 'losses', value: avalancheStanding.losses },
+                                        { name: 'otLosses', value: avalancheStanding.otLosses },
+                                        { name: 'points', value: avalancheStanding.points }
+                                    ]
+                                };
+                            }
+                        } catch (e) {
+                            console.log('Could not fetch from NHL API, falling back to ESPN', e);
+                        }
+                    }
+                    
+                    // Fall back to ESPN API if NHL API didn't work or for other sports
+                    if (!standings) {
+                        try {
                         const standingsResponse = await fetch(
                             `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
                         );
@@ -415,16 +454,17 @@
                             standings = standingsData.team.record.items[0];
                         }
                         
-                        // Debug: log what we're getting
-                        console.log(team.name, 'standings data:', standings);
-                        console.log(team.name, 'standingSummary:', standingsData.team?.standingSummary);
-                        
-                        // Try to get league-wide rank
+                        // Try to parse rankings from standingSummary
                         if (standingsData.team?.standingSummary) {
-                            const leagueMatch = standingsData.team.standingSummary.match(/(\d+)(?:st|nd|rd|th) in (?:NHL|NBA|NFL)/);
-                            if (leagueMatch) {
-                                leagueRank = leagueMatch[1];
+                            const summary = standingsData.team.standingSummary;
+                            console.log(team.name, 'parsing summary:', summary);
+                            
+                            // Parse division/conference ranking (e.g., "3rd in Atlantic Division")
+                            const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
+                            if (rankMatch) {
+                                leagueRank = { text: summary, rank: rankMatch[1], location: rankMatch[2] };
                             }
+                        }
                         }
                     } catch (e) {
                         console.log('Could not fetch standings for', team.name);
@@ -493,9 +533,6 @@
                 let rankingsText = '';
                 let standingsLink = '';
                 
-                // Get ranking info from summary if available
-                const summary = standings.summary || '';
-                
                 if (team.sport.includes('hockey')) {
                     // NHL: W-L-OTL, PTS
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
@@ -504,18 +541,8 @@
                     const pts = stats.find(s => s.name === 'points')?.value || 0;
                     record = `(${wins}-${losses}-${otl}, ${pts} pts)`;
                     
-                    // Try to parse rankings from summary (e.g., "1st in Central Division")
-                    const divMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Division/);
-                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Conference/);
-                    
-                    if (divMatch || confMatch) {
-                        const parts = [];
-                        if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
-                        if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]} Conf`);
-                        if (leagueRank) parts.push(`#${leagueRank} in NHL`);
-                        rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
-                    } else if (leagueRank) {
-                        rankingsText = ` - #${leagueRank} in NHL`;
+                    if (leagueRank) {
+                        rankingsText = ` - ${leagueRank.text}`;
                     }
                     
                     standingsLink = 'https://www.espn.com/nhl/standings';
@@ -526,17 +553,8 @@
                     const pct = stats.find(s => s.name === 'winPercent')?.displayValue || '.000';
                     record = `(${wins}-${losses}, ${pct})`;
                     
-                    const divMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Division/);
-                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Conference/);
-                    
-                    if (divMatch || confMatch) {
-                        const parts = [];
-                        if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
-                        if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]} Conf`);
-                        if (leagueRank) parts.push(`#${leagueRank} in NBA`);
-                        rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
-                    } else if (leagueRank) {
-                        rankingsText = ` - #${leagueRank} in NBA`;
+                    if (leagueRank) {
+                        rankingsText = ` - ${leagueRank.text}`;
                     }
                     
                     standingsLink = 'https://www.espn.com/nba/standings';
@@ -547,17 +565,8 @@
                     const ties = stats.find(s => s.name === 'ties')?.value || 0;
                     record = `(${wins}-${losses}-${ties})`;
                     
-                    const divMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) (?:AFC|NFC)/);
-                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (?:AFC|NFC)$/);
-                    
-                    if (divMatch || confMatch) {
-                        const parts = [];
-                        if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
-                        if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]}`);
-                        if (leagueRank) parts.push(`#${leagueRank} in NFL`);
-                        rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
-                    } else if (leagueRank) {
-                        rankingsText = ` - #${leagueRank} in NFL`;
+                    if (leagueRank) {
+                        rankingsText = ` - ${leagueRank.text}`;
                     }
                     
                     standingsLink = 'https://www.espn.com/nfl/standings';
@@ -567,15 +576,8 @@
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     record = `(${wins}-${losses})`;
                     
-                    // Try to get conference rank and national ranking if available
-                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?)$/);
-                    if (confMatch) {
-                        rankingsText = ` - #${confMatch[1]} in ${confMatch[2]}`;
-                    }
-                    
-                    // Check for AP or CFP ranking
                     if (leagueRank) {
-                        rankingsText += (rankingsText ? ', ' : ' - ') + `#${leagueRank} ranked`;
+                        rankingsText = ` - ${leagueRank.text}`;
                     }
                     
                     standingsLink = 'https://www.espn.com/college-football/standings';
