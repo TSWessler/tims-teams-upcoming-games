@@ -469,13 +469,24 @@
                                 recordItems: standingsData.team?.record?.items,
                                 standingSummary: standingsData.team?.standingSummary
                             });
+                            
+                            // Try NHL.com API
+                            console.log('Attempting to fetch from NHL.com API...');
+                            try {
+                                // NHL API v1 - team stats
+                                const nhlResponse = await fetch(`https://api-web.nhle.com/v1/club-stats/${team.abbr}/now`);
+                                const nhlData = await nhlResponse.json();
+                                console.log('NHL.com API response:', nhlData);
+                            } catch (nhlError) {
+                                console.log('NHL.com API error:', nhlError);
+                            }
                         }
                         
                         if (standingsData.team?.record?.items) {
                             standings = standingsData.team.record.items[0];
                         }
                         
-                        if (standingsData.team?.standingSummary && !team.sport.includes('hockey')) {
+                        if (standingsData.team?.standingSummary) {
                             const summary = standingsData.team.standingSummary;
                             const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
                             if (rankMatch) {
@@ -547,8 +558,17 @@
                 let standingsLink = '';
                 
                 if (team.sport.includes('hockey')) {
+                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
+                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
+                    const otLosses = stats.find(s => s.name === 'OTL' || s.name === 'otLosses')?.value || 0;
+                    record = `(${wins}-${losses}-${otLosses})`;
+                    
+                    if (leagueRank) {
+                        rankingsText = ` - ${leagueRank.text}`;
+                    }
+                    
                     standingsLink = 'https://www.espn.com/nhl/standings';
-                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank"><span style="color: #4a90e2;">Standings →</span></a></div>`;
+                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
                 } else if (team.sport.includes('basketball')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
