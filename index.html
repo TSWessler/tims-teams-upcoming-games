@@ -666,7 +666,9 @@
                     opponent: isHome ? awayTeam.team.displayName : homeTeam.team.displayName,
                     homeTeam: homeTeam.team.displayName,
                     homeScore: homeTeam.score,
+                    homeScoreType: typeof homeTeam.score,
                     awayScore: awayTeam.score,
+                    awayScoreType: typeof awayTeam.score,
                     gameType: gameType
                 });
             }
@@ -697,8 +699,17 @@
             
             if (gameType === 'past') {
                 statusLabel = '<span class="status past">FINAL</span>';
-                const myScore = isHome ? (homeTeam.score || homeTeam.score?.value || '0') : (awayTeam.score || awayTeam.score?.value || '0');
-                const oppScore = isHome ? (awayTeam.score || awayTeam.score?.value || '0') : (homeTeam.score || homeTeam.score?.value || '0');
+                
+                // Handle both string scores and object scores
+                let myScore, oppScore;
+                if (typeof homeTeam.score === 'object') {
+                    myScore = isHome ? (homeTeam.score?.displayValue || homeTeam.score?.value || '0') : (awayTeam.score?.displayValue || awayTeam.score?.value || '0');
+                    oppScore = isHome ? (awayTeam.score?.displayValue || awayTeam.score?.value || '0') : (homeTeam.score?.displayValue || homeTeam.score?.value || '0');
+                } else {
+                    myScore = isHome ? homeTeam.score : awayTeam.score;
+                    oppScore = isHome ? awayTeam.score : homeTeam.score;
+                }
+                
                 const won = parseInt(myScore) > parseInt(oppScore);
                 
                 let otLabel = '';
@@ -718,8 +729,17 @@
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
-                const myScore = isHome ? (homeTeam.score || homeTeam.score?.value || '0') : (awayTeam.score || awayTeam.score?.value || '0');
-                const oppScore = isHome ? (awayTeam.score || awayTeam.score?.value || '0') : (homeTeam.score || homeTeam.score?.value || '0');
+                
+                // Handle both string scores and object scores
+                let myScore, oppScore;
+                if (typeof homeTeam.score === 'object') {
+                    myScore = isHome ? (homeTeam.score?.displayValue || homeTeam.score?.value || '0') : (awayTeam.score?.displayValue || awayTeam.score?.value || '0');
+                    oppScore = isHome ? (awayTeam.score?.displayValue || awayTeam.score?.value || '0') : (homeTeam.score?.displayValue || homeTeam.score?.value || '0');
+                } else {
+                    myScore = isHome ? homeTeam.score : awayTeam.score;
+                    oppScore = isHome ? awayTeam.score : homeTeam.score;
+                }
+                
                 scoreHtml = `<div class="score"><a href="${gameLink}" target="_blank">${myScore} - ${oppScore}</a></div>`;
             } else {
                 statusLabel = '<span class="status upcoming">UPCOMING</span>';
