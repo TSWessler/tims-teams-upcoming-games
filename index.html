@@ -473,12 +473,30 @@
                             // Try NHL.com API
                             console.log('Attempting to fetch from NHL.com API...');
                             try {
-                                // NHL API v1 - team stats
                                 const nhlResponse = await fetch(`https://api-web.nhle.com/v1/club-stats/${team.abbr}/now`);
                                 const nhlData = await nhlResponse.json();
                                 console.log('NHL.com API response:', nhlData);
                             } catch (nhlError) {
                                 console.log('NHL.com API error:', nhlError);
+                            }
+                            
+                            // Try alternate ESPN endpoint
+                            console.log('Attempting ESPN standings endpoint...');
+                            try {
+                                const espnStandings = await fetch(`https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings`);
+                                const espnStandingsData = await espnStandings.json();
+                                console.log('ESPN standings API response:', espnStandingsData);
+                            } catch (espnError) {
+                                console.log('ESPN standings API error:', espnError);
+                            }
+                            
+                            // Try The Score API (used by many sports apps)
+                            console.log('Attempting The Score API...');
+                            try {
+                                const scoreResponse = await fetch(`https://www.thescore.com/nhl/teams/19`);
+                                console.log('The Score response status:', scoreResponse.status);
+                            } catch (scoreError) {
+                                console.log('The Score API error:', scoreError);
                             }
                         }
                         
