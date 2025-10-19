@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+} else if (team.sport.includes('basketball')) {<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -428,6 +428,71 @@
                         }
                     }
                     
+                    // For non-NHL teams, try to get full standings to calculate ranks
+                    if (!team.sport.includes('hockey')) {
+                        try {
+                            const standingsApiResponse = await fetch(
+                                `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/standings`
+                            );
+                            const standingsApiData = await standingsApiResponse.json();
+                            
+                            // Find our team in the standings
+                            let divRank = null, confRank = null, leagueRank = null;
+                            let divName = '', confName = '';
+                            
+                            standingsApiData.children?.forEach(group => {
+                                group.standings?.entries?.forEach((entry, idx) => {
+                                    if (entry.team.abbreviation === team.abbr || entry.team.id === team.teamId.toString()) {
+                                        // Found our team
+                                        if (group.name.includes('Division')) {
+                                            divRank = idx + 1;
+                                            divName = group.name.replace(' Division', '').replace(' Standings', '');
+                                        } else if (group.name.includes('Conference')) {
+                                            confRank = idx + 1;
+                                            confName = group.name.replace(' Conference', '').replace(' Standings', '');
+                                        }
+                                    }
+                                });
+                            });
+                            
+                            // Calculate league rank by counting teams with better records
+                            if (standingsApiData.children && standings?.stats) {
+                                const ourWins = standings.stats.find(s => s.name === 'wins')?.value || 0;
+                                const ourLosses = standings.stats.find(s => s.name === 'losses')?.value || 0;
+                                const ourPct = ourWins / (ourWins + ourLosses) || 0;
+                                
+                                let betterTeams = 0;
+                                standingsApiData.children.forEach(group => {
+                                    group.standings?.entries?.forEach(entry => {
+                                        const stats = entry.stats;
+                                        const wins = stats?.find(s => s.name === 'wins')?.value || 0;
+                                        const losses = stats?.find(s => s.name === 'losses')?.value || 0;
+                                        const pct = wins / (wins + losses) || 0;
+                                        if (pct > ourPct) betterTeams++;
+                                    });
+                                });
+                                leagueRank = betterTeams + 1;
+                            }
+                            
+                            // Build ranking text
+                            if (divRank || confRank || leagueRank) {
+                                const parts = [];
+                                if (divRank && divName) parts.push(`#${divRank} in ${divName}`);
+                                if (confRank && confName) parts.push(`#${confRank} in ${confName}`);
+                                if (leagueRank) {
+                                    const leagueName = team.sport.includes('basketball') ? 'NBA' : 
+                                                       team.sport.includes('nfl') ? 'NFL' : 'FBS';
+                                    parts.push(`#${leagueRank} in ${leagueName}`);
+                                }
+                                if (parts.length > 0) {
+                                    leagueRank = { text: parts.join(', ') };
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Could not fetch detailed standings for', team.name, e);
+                        }
+                    }
+                    
                     if (!standings) {
                         try {
                             const standingsResponse = await fetch(
@@ -438,6 +503,7 @@
                                 standings = standingsData.team.record.items[0];
                             }
                             
+                            // Get detailed rankings from the team data
                             if (standingsData.team?.standingSummary && !leagueRank) {
                                 const summary = standingsData.team.standingSummary;
                                 console.log(team.name, 'parsing summary:', summary);
@@ -445,6 +511,17 @@
                                 const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
                                 if (rankMatch) {
                                     leagueRank = { text: summary, rank: rankMatch[1], location: rankMatch[2] };
+                                }
+                            }
+                            
+                            // Try to get more detailed standings info for non-NHL teams
+                            if (!team.sport.includes('hockey') && standingsData.team?.record?.items) {
+                                const recordItem = standingsData.team.record.items[0];
+                                if (recordItem.stats) {
+                                    const divRank = recordItem.stats.find(s => s.name === 'divisionWinPercent' || s.name === 'rank')?.displayValue;
+                                    const confRank = recordItem.stats.find(s => s.abbreviation === 'CONF')?.displayValue;
+                                    
+                                    console.log(team.name, 'division rank:', divRank, 'conf rank:', confRank);
                                 }
                             }
                         } catch (e) {
@@ -513,14 +590,8 @@
                 let standingsLink = '';
                 
                 if (team.sport.includes('hockey')) {
-                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
-                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
-                    const otl = stats.find(s => s.name === 'otLosses')?.value || 0;
-                    const pts = stats.find(s => s.name === 'points')?.value || 0;
-                    record = `(${wins}-${losses}-${otl}, ${pts} pts)`;
-                    
                     standingsLink = 'https://www.espn.com/nhl/standings';
-                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record} - <span style="color: #4a90e2;">Standings →</span></a></div>`;
+                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank"><span style="color: #4a90e2;">Standings →</span></a></div>`;
                 } else if (team.sport.includes('basketball')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
