@@ -226,15 +226,15 @@
             
             if (gameType === 'past') {
                 statusLabel = '<span class="status past">FINAL</span>';
-                const avScore = isHome ? homeTeam.score : awayTeam.score;
-                const oppScore = isHome ? awayTeam.score : homeTeam.score;
+                const avScore = isHome ? homeTeam.score.value : awayTeam.score.value;
+                const oppScore = isHome ? awayTeam.score.value : homeTeam.score.value;
                 const won = parseInt(avScore) > parseInt(oppScore);
                 scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${avScore} - ${oppScore}</div>`;
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
-                const avScore = isHome ? homeTeam.score : awayTeam.score;
-                const oppScore = isHome ? awayTeam.score : homeTeam.score;
+                const avScore = isHome ? homeTeam.score.value : awayTeam.score.value;
+                const oppScore = isHome ? awayTeam.score.value : homeTeam.score.value;
                 scoreHtml = `<div class="score">${avScore} - ${oppScore}</div>`;
             } else {
                 statusLabel = '<span class="status upcoming">UPCOMING</span>';
