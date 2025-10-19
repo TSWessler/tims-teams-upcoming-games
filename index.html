@@ -543,17 +543,19 @@
                 const oppScore = isHome ? awayTeam.score : homeTeam.score;
                 const won = parseInt(myScore) > parseInt(oppScore);
                 
-                // Check for overtime/shootout
+                // Parse overtime/shootout from status detail
                 let otLabel = '';
                 const statusDetail = competition.status.type.detail;
-                if (statusDetail.includes('OT')) {
-                    otLabel = ' (OT)';
-                } else if (statusDetail.includes('SO')) {
+                if (statusDetail.includes('SO')) {
                     otLabel = ' (SO)';
-                } else if (statusDetail.includes('2OT')) {
-                    otLabel = ' (2OT)';
-                } else if (statusDetail.includes('3OT')) {
-                    otLabel = ' (3OT)';
+                } else {
+                    // Match any number followed by OT (e.g., "2OT", "3OT", "4OT")
+                    const otMatch = statusDetail.match(/(\d+)OT/);
+                    if (otMatch) {
+                        otLabel = ` (${otMatch[1]}OT)`;
+                    } else if (statusDetail.includes('OT')) {
+                        otLabel = ' (OT)';
+                    }
                 }
                 
                 scoreHtml = `<div class="score ${won ? 'won' : 'lost'}"><a href="${gameLink}" target="_blank">${won ? '😁' : '😭'} ${myScore} - ${oppScore} ${won ? 'W' : 'L'}${otLabel}</a></div>`;
@@ -572,10 +574,10 @@
                 ${statusLabel}
                 <div class="date">${dateStr} • ${timeStr}</div>
                 <div class="matchup">vs ${opponent}</div>
-                ${scoreHtml}
                 <div class="location">${location}</div>
-                ${broadcastInfo}
+                ${scoreHtml}
                 ${previewLink}
+                ${broadcastInfo}
             `;
         }
         
