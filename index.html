@@ -415,6 +415,10 @@
                             standings = standingsData.team.record.items[0];
                         }
                         
+                        // Debug: log what we're getting
+                        console.log(team.name, 'standings data:', standings);
+                        console.log(team.name, 'standingSummary:', standingsData.team?.standingSummary);
+                        
                         // Try to get league-wide rank
                         if (standingsData.team?.standingSummary) {
                             const leagueMatch = standingsData.team.standingSummary.match(/(\d+)(?:st|nd|rd|th) in (?:NHL|NBA|NFL)/);
