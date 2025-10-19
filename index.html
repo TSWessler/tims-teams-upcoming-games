@@ -686,8 +686,8 @@
             
             if (gameType === 'past') {
                 statusLabel = '<span class="status past">FINAL</span>';
-                const myScore = isHome ? homeTeam.score : awayTeam.score;
-                const oppScore = isHome ? awayTeam.score : homeTeam.score;
+                const myScore = isHome ? (homeTeam.score || homeTeam.score?.value || '0') : (awayTeam.score || awayTeam.score?.value || '0');
+                const oppScore = isHome ? (awayTeam.score || awayTeam.score?.value || '0') : (homeTeam.score || homeTeam.score?.value || '0');
                 const won = parseInt(myScore) > parseInt(oppScore);
                 
                 let otLabel = '';
@@ -707,8 +707,8 @@
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
-                const myScore = isHome ? homeTeam.score : awayTeam.score;
-                const oppScore = isHome ? awayTeam.score : homeTeam.score;
+                const myScore = isHome ? (homeTeam.score || homeTeam.score?.value || '0') : (awayTeam.score || awayTeam.score?.value || '0');
+                const oppScore = isHome ? (awayTeam.score || awayTeam.score?.value || '0') : (homeTeam.score || homeTeam.score?.value || '0');
                 scoreHtml = `<div class="score"><a href="${gameLink}" target="_blank">${myScore} - ${oppScore}</a></div>`;
             } else {
                 statusLabel = '<span class="status upcoming">UPCOMING</span>';
