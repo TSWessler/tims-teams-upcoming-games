@@ -477,7 +477,11 @@
             if (standings && standings.stats) {
                 const stats = standings.stats;
                 let record = '';
+                let rankingsText = '';
                 let standingsLink = '';
+                
+                // Get ranking info from summary if available
+                const summary = standings.summary || '';
                 
                 if (team.sport.includes('hockey')) {
                     // NHL: W-L-OTL, PTS
@@ -486,6 +490,18 @@
                     const otl = stats.find(s => s.name === 'otLosses')?.value || 0;
                     const pts = stats.find(s => s.name === 'points')?.value || 0;
                     record = `(${wins}-${losses}-${otl}, ${pts} pts)`;
+                    
+                    // Try to parse rankings from summary (e.g., "1st in Central Division")
+                    const divMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Division/);
+                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Conference/);
+                    
+                    if (divMatch || confMatch) {
+                        const parts = [];
+                        if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
+                        if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]} Conf`);
+                        rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
+                    }
+                    
                     standingsLink = 'https://www.espn.com/nhl/standings';
                 } else if (team.sport.includes('basketball')) {
                     // NBA: W-L, PCT
@@ -493,6 +509,17 @@
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     const pct = stats.find(s => s.name === 'winPercent')?.displayValue || '.000';
                     record = `(${wins}-${losses}, ${pct})`;
+                    
+                    const divMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Division/);
+                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) Conference/);
+                    
+                    if (divMatch || confMatch) {
+                        const parts = [];
+                        if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
+                        if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]} Conf`);
+                        rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
+                    }
+                    
                     standingsLink = 'https://www.espn.com/nba/standings';
                 } else if (team.sport.includes('football/nfl')) {
                     // NFL: W-L-T
@@ -500,17 +527,35 @@
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     const ties = stats.find(s => s.name === 'ties')?.value || 0;
                     record = `(${wins}-${losses}-${ties})`;
+                    
+                    const divMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?) (?:AFC|NFC)/);
+                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (?:AFC|NFC)$/);
+                    
+                    if (divMatch || confMatch) {
+                        const parts = [];
+                        if (divMatch) parts.push(`#${divMatch[1]} in ${divMatch[2]}`);
+                        if (confMatch) parts.push(`#${confMatch[1]} in ${confMatch[2]}`);
+                        rankingsText = parts.length > 0 ? ' - ' + parts.join(', ') : '';
+                    }
+                    
                     standingsLink = 'https://www.espn.com/nfl/standings';
                 } else if (team.sport.includes('college-football')) {
                     // CFB: W-L
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     record = `(${wins}-${losses})`;
+                    
+                    // Try to get conference rank
+                    const confMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+?)$/);
+                    if (confMatch) {
+                        rankingsText = ` - #${confMatch[1]} in ${confMatch[2]}`;
+                    }
+                    
                     standingsLink = 'https://www.espn.com/college-football/standings';
                 }
                 
                 if (record && standingsLink) {
-                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}</a></div>`;
+                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
                 }
             }
             
