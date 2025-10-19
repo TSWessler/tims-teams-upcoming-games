@@ -461,33 +461,6 @@
                         );
                         const standingsData = await standingsResponse.json();
                         
-                        // Debug logging for Avalanche standings
-                        if (team.sport.includes('hockey')) {
-                            // Try the NHL API that ChatGPT recommended
-                            console.log('Testing NHL API with standings/now endpoint...');
-                            try {
-                                const url = 'https://api-web.nhle.com/v1/standings/now';
-                                const response = await fetch(url);
-                                console.log('Response status:', response.status);
-                                console.log('Response headers:', {
-                                    'access-control-allow-origin': response.headers.get('access-control-allow-origin'),
-                                    'content-type': response.headers.get('content-type')
-                                });
-                                const data = await response.json();
-                                console.log('Full NHL standings data:', data);
-                                
-                                // Find Avalanche specifically
-                                const avs = data.standings?.find(t => t.teamAbbrev?.default === 'COL' || t.teamAbbrev === 'COL');
-                                console.log('Avalanche from NHL API:', avs);
-                            } catch (error) {
-                                console.log('Error details:', {
-                                    name: error.name,
-                                    message: error.message,
-                                    stack: error.stack
-                                });
-                            }
-                        }
-                        
                         if (standingsData.team?.record?.items) {
                             standings = standingsData.team.record.items[0];
                         }
@@ -564,17 +537,8 @@
                 let standingsLink = '';
                 
                 if (team.sport.includes('hockey')) {
-                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
-                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
-                    const otLosses = stats.find(s => s.name === 'OTL' || s.name === 'otLosses')?.value || 0;
-                    record = `(${wins}-${losses}-${otLosses})`;
-                    
-                    if (leagueRank) {
-                        rankingsText = ` - ${leagueRank.text}`;
-                    }
-                    
                     standingsLink = 'https://www.espn.com/nhl/standings';
-                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
+                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">Standings →</a></div>`;
                 } else if (team.sport.includes('basketball')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
