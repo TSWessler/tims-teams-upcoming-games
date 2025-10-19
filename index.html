@@ -515,7 +515,7 @@
                 const myScore = isHome ? homeTeam.score : awayTeam.score;
                 const oppScore = isHome ? awayTeam.score : homeTeam.score;
                 const won = parseInt(myScore) > parseInt(oppScore);
-                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${myScore} - ${oppScore}</div>`;
+                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${won ? '😁' : '😭'} ${myScore} - ${oppScore} ${won ? 'W' : 'L'}</div>`;
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
