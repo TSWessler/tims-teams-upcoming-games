@@ -658,6 +658,8 @@
             const homeTeam = competition.competitors.find(t => t.homeAway === 'home');
             const awayTeam = competition.competitors.find(t => t.homeAway === 'away');
             
+            const isHome = homeTeam.team.abbreviation === teamAbbr;
+            
             // Debug logging for score issues
             if (gameType === 'past' || gameType === 'live') {
                 console.log('Game scores debug:', {
@@ -668,8 +670,6 @@
                     gameType: gameType
                 });
             }
-            
-            const isHome = homeTeam.team.abbreviation === teamAbbr;
             const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
             const opponentTeamId = isHome ? awayTeam.team.id : homeTeam.team.id;
             const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
