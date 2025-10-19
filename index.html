@@ -233,6 +233,23 @@
             font-weight: 500;
         }
         
+        .standings {
+            padding: 12px 16px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .standings a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        
+        .standings a:hover {
+            text-decoration: underline;
+        }
+        
         .loading {
             text-align: center;
             color: #666;
@@ -257,7 +274,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🏔️ CO Sports Now(-ish)</h1>
+        <h1><img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg" alt="CO" style="height: 24px; vertical-align: middle; margin-right: 8px;"> CO Sports Now(-ish)</h1>
         <div id="schedule">
             <div class="loading">Loading games...</div>
         </div>
@@ -386,7 +403,21 @@
                         e.competitions[0].competitors.some(t => t.team.abbreviation === team.abbr)
                     )?.competitions[0].competitors.find(t => t.team.abbreviation === team.abbr)?.team.logo;
                     
-                    html += createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl);
+                    // Try to get standings info
+                    let standings = null;
+                    try {
+                        const standingsResponse = await fetch(
+                            `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
+                        );
+                        const standingsData = await standingsResponse.json();
+                        if (standingsData.team?.record?.items) {
+                            standings = standingsData.team.record.items[0];
+                        }
+                    } catch (e) {
+                        console.log('Could not fetch standings for', team.name);
+                    }
+                    
+                    html += createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings);
                 }
                 
                 scheduleDiv.innerHTML = html;
@@ -412,13 +443,17 @@
                         games.classList.toggle('visible');
                         
                         if (button.classList.contains('up')) {
+                            const count = button.dataset.count;
+                            const gameWord = count === '1' ? 'game' : 'games';
                             button.innerHTML = games.classList.contains('visible') 
                                 ? '▼ Hide previous games' 
-                                : `▲ Show ${button.dataset.count} previous games`;
+                                : `▲ Show ${count} previous ${gameWord}`;
                         } else {
+                            const count = button.dataset.count;
+                            const gameWord = count === '1' ? 'game' : 'games';
                             button.innerHTML = games.classList.contains('visible') 
                                 ? '▲ Hide upcoming games' 
-                                : `▼ Show ${button.dataset.count} more upcoming`;
+                                : `▼ Show ${count} upcoming ${gameWord}`;
                         }
                     });
                 });
@@ -429,13 +464,55 @@
             }
         }
         
-        function createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl) {
+        function createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings) {
             const mostRecent = previousGames[0];
             const nextGame = liveGame || upcomingGames[0];
             const olderGames = previousGames.slice(1);
             const remainingUpcoming = liveGame ? upcomingGames : upcomingGames.slice(1);
             
             const sectionId = team.className;
+            
+            // Format standings info
+            let standingsHtml = '';
+            if (standings && standings.stats) {
+                const stats = standings.stats;
+                let record = '';
+                let standingsLink = '';
+                
+                if (team.sport.includes('hockey')) {
+                    // NHL: W-L-OTL, PTS
+                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
+                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
+                    const otl = stats.find(s => s.name === 'otLosses')?.value || 0;
+                    const pts = stats.find(s => s.name === 'points')?.value || 0;
+                    record = `(${wins}-${losses}-${otl}, ${pts} pts)`;
+                    standingsLink = 'https://www.espn.com/nhl/standings';
+                } else if (team.sport.includes('basketball')) {
+                    // NBA: W-L, PCT
+                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
+                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
+                    const pct = stats.find(s => s.name === 'winPercent')?.displayValue || '.000';
+                    record = `(${wins}-${losses}, ${pct})`;
+                    standingsLink = 'https://www.espn.com/nba/standings';
+                } else if (team.sport.includes('football/nfl')) {
+                    // NFL: W-L-T
+                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
+                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
+                    const ties = stats.find(s => s.name === 'ties')?.value || 0;
+                    record = `(${wins}-${losses}-${ties})`;
+                    standingsLink = 'https://www.espn.com/nfl/standings';
+                } else if (team.sport.includes('college-football')) {
+                    // CFB: W-L
+                    const wins = stats.find(s => s.name === 'wins')?.value || 0;
+                    const losses = stats.find(s => s.name === 'losses')?.value || 0;
+                    record = `(${wins}-${losses})`;
+                    standingsLink = 'https://www.espn.com/college-football/standings';
+                }
+                
+                if (record && standingsLink) {
+                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}</a></div>`;
+                }
+            }
             
             if (!mostRecent && !nextGame) {
                 return `
@@ -464,11 +541,13 @@
                         <div class="collapse-icon">▲</div>
                     </div>
                     <div class="team-content">
+                        ${standingsHtml}
             `;
             
             // Expand button for older games
             if (olderGames.length > 0) {
-                html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} previous games</button>`;
+                const gameWord = olderGames.length === 1 ? 'game' : 'games';
+                html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} previous ${gameWord}</button>`;
                 html += `<div class="older-games" id="${sectionId}-older">`;
                 olderGames.forEach(game => {
                     html += `<div class="game">${formatGame(game, 'past', team.abbr)}</div>`;
@@ -494,7 +573,8 @@
                     html += `<div class="game">${formatGame(game, 'upcoming', team.abbr)}</div>`;
                 });
                 html += `</div>`;
-                html += `<button class="expand-button down" data-target="${sectionId}-upcoming" data-count="${remainingUpcoming.length}">▼ Show ${remainingUpcoming.length} upcoming games</button>`;
+                const gameWord = remainingUpcoming.length === 1 ? 'game' : 'games';
+                html += `<button class="expand-button down" data-target="${sectionId}-upcoming" data-count="${remainingUpcoming.length}">▼ Show ${remainingUpcoming.length} upcoming ${gameWord}</button>`;
             }
             
             html += `</div></div>`;
