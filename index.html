@@ -337,7 +337,7 @@
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     
                     let record = '';
-                    if (sport.includes('football/nfl')) {
+                    if (sport.includes('nfl')) {
                         const ties = stats.find(s => s.name === 'ties')?.value || 0;
                         record = `(${wins}-${losses}-${ties})`;
                     } else if (sport.includes('basketball')) {
@@ -355,7 +355,7 @@
                     return record + rankText;
                 }
             } catch (e) {
-                console.log('Could not fetch opponent standings');
+                console.log('Could not fetch opponent standings for team', opponentTeamId, e);
             }
             
             return null;
