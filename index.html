@@ -113,12 +113,6 @@
             font-size: 14px;
         }
         
-        .game-detail {
-            color: #666;
-            font-size: 13px;
-            margin-top: 4px;
-        }
-        
         .loading {
             text-align: center;
             color: #666;
@@ -147,8 +141,14 @@
             const scheduleDiv = document.getElementById('schedule');
             
             try {
-                const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/teams/21/schedule');
-                const data = await response.json();
+                // Fetch both scoreboard (for live/recent games) and schedule (for upcoming)
+                const [scoreboardRes, scheduleRes] = await Promise.all([
+                    fetch('https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard'),
+                    fetch('https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/teams/21/schedule')
+                ]);
+                
+                const scoreboardData = await scoreboardRes.json();
+                const scheduleData = await scheduleRes.json();
                 
                 const now = new Date();
                 const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -157,17 +157,32 @@
                 let liveGame = null;
                 const upcomingGames = [];
                 
-                data.events.forEach(event => {
+                // Check scoreboard for Avalanche games (live or recent)
+                scoreboardData.events.forEach(event => {
+                    const hasAvalanche = event.competitions[0].competitors.some(
+                        team => team.team.abbreviation === 'COL'
+                    );
+                    
+                    if (hasAvalanche) {
+                        const status = event.competitions[0].status.type.state;
+                        const gameDate = new Date(event.date);
+                        
+                        if (status === 'post') {
+                            if (!previousGame || gameDate > new Date(previousGame.date)) {
+                                previousGame = event;
+                            }
+                        } else if (status === 'in') {
+                            liveGame = event;
+                        }
+                    }
+                });
+                
+                // Get upcoming games from schedule
+                scheduleData.events.forEach(event => {
                     const gameDate = new Date(event.date);
                     const status = event.competitions[0].status.type.state;
                     
-                    if (status === 'post') {
-                        if (!previousGame || gameDate > new Date(previousGame.date)) {
-                            previousGame = event;
-                        }
-                    } else if (status === 'in') {
-                        liveGame = event;
-                    } else if (gameDate >= now && gameDate <= nextWeek) {
+                    if (status === 'pre' && gameDate >= now && gameDate <= nextWeek) {
                         upcomingGames.push(event);
                     }
                 });
@@ -222,19 +237,18 @@
             
             let statusLabel = '';
             let scoreHtml = '';
-            let detailHtml = '';
             
             if (gameType === 'past') {
                 statusLabel = '<span class="status past">FINAL</span>';
-                const avScore = isHome ? homeTeam.score.value : awayTeam.score.value;
-                const oppScore = isHome ? awayTeam.score.value : homeTeam.score.value;
+                const avScore = isHome ? homeTeam.score : awayTeam.score;
+                const oppScore = isHome ? awayTeam.score : homeTeam.score;
                 const won = parseInt(avScore) > parseInt(oppScore);
                 scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${avScore} - ${oppScore}</div>`;
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
-                const avScore = isHome ? homeTeam.score.value : awayTeam.score.value;
-                const oppScore = isHome ? awayTeam.score.value : homeTeam.score.value;
+                const avScore = isHome ? homeTeam.score : awayTeam.score;
+                const oppScore = isHome ? awayTeam.score : homeTeam.score;
                 scoreHtml = `<div class="score">${avScore} - ${oppScore}</div>`;
             } else {
                 statusLabel = '<span class="status upcoming">UPCOMING</span>';
@@ -253,6 +267,7 @@
         
         loadSchedule();
         
+        // Auto-refresh every 60 seconds for live scores
         setInterval(loadSchedule, 60000);
     </script>
 </body>
