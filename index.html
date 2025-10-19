@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CO Sports Now(-ish)</title>
+    <title>Colorado Sports Now(-ish)</title>
     <style>
         * {
             margin: 0;
@@ -392,11 +392,11 @@
                         
                         if (button.classList.contains('up')) {
                             button.innerHTML = games.classList.contains('visible') 
-                                ? '▲ Hide older games' 
-                                : `▲ Show ${button.dataset.count} older games`;
+                                ? '▼ Hide previous games' 
+                                : `▲ Show ${button.dataset.count} previous games`;
                         } else {
                             button.innerHTML = games.classList.contains('visible') 
-                                ? '▼ Hide upcoming games' 
+                                ? '▲ Hide upcoming games' 
                                 : `▼ Show ${button.dataset.count} more upcoming`;
                         }
                     });
@@ -447,7 +447,7 @@
             
             // Expand button for older games
             if (olderGames.length > 0) {
-                html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} older games</button>`;
+                html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} previous games</button>`;
                 html += `<div class="older-games" id="${sectionId}-older">`;
                 olderGames.forEach(game => {
                     html += `<div class="game">${formatGame(game, 'past', team.abbr)}</div>`;
@@ -515,7 +515,21 @@
                 const myScore = isHome ? homeTeam.score : awayTeam.score;
                 const oppScore = isHome ? awayTeam.score : homeTeam.score;
                 const won = parseInt(myScore) > parseInt(oppScore);
-                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${won ? '😁' : '😭'} ${myScore} - ${oppScore} ${won ? 'W' : 'L'}</div>`;
+                
+                // Check for overtime/shootout
+                let otLabel = '';
+                const statusDetail = competition.status.type.detail;
+                if (statusDetail.includes('OT')) {
+                    otLabel = ' (OT)';
+                } else if (statusDetail.includes('SO')) {
+                    otLabel = ' (SO)';
+                } else if (statusDetail.includes('2OT')) {
+                    otLabel = ' (2OT)';
+                } else if (statusDetail.includes('3OT')) {
+                    otLabel = ' (3OT)';
+                }
+                
+                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${won ? '😁' : '😭'} ${myScore} - ${oppScore} ${won ? 'W' : 'L'}${otLabel}</div>`;
             } else if (gameType === 'live') {
                 const statusDetail = competition.status.type.detail;
                 statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
