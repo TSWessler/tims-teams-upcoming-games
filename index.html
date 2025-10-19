@@ -166,6 +166,16 @@
                 let liveGame = null;
                 const upcomingGames = [];
                 
+                // Debug: log all events
+                console.log('Total events found:', data.events.length);
+                data.events.forEach((event, index) => {
+                    const comp = event.competitions[0];
+                    const home = comp.competitors.find(t => t.homeAway === 'home');
+                    const away = comp.competitors.find(t => t.homeAway === 'away');
+                    console.log(`Game ${index}:`, away.team.abbreviation, '@', home.team.abbreviation, 
+                                'on', new Date(event.date).toLocaleDateString());
+                });
+                
                 // Filter for Avalanche games
                 data.events.forEach(event => {
                     const hasAvalanche = event.competitions[0].competitors.some(
@@ -173,6 +183,8 @@
                     );
                     
                     if (!hasAvalanche) return;
+                    
+                    console.log('Found Avalanche game:', event.name, 'Status:', event.competitions[0].status.type.state);
                     
                     const status = event.competitions[0].status.type.state;
                     const gameDate = new Date(event.date);
