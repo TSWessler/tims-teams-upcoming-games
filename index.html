@@ -36,6 +36,50 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
+        .game.past {
+            background: #f9f9f9;
+            border-left: 4px solid #999;
+        }
+        
+        .game.live {
+            background: #fff4e6;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .game.upcoming {
+            border-left: 4px solid #236192;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .status.past {
+            background: #e0e0e0;
+            color: #666;
+        }
+        
+        .status.live {
+            background: #ff6b35;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .status.upcoming {
+            background: #236192;
+            color: white;
+        }
+        
         .date {
             color: #666;
             font-size: 14px;
@@ -49,9 +93,30 @@
             margin-bottom: 4px;
         }
         
+        .score {
+            font-size: 20px;
+            font-weight: 700;
+            color: #236192;
+            margin-bottom: 4px;
+        }
+        
+        .score.won {
+            color: #2d8659;
+        }
+        
+        .score.lost {
+            color: #c33;
+        }
+        
         .location {
             color: #888;
             font-size: 14px;
+        }
+        
+        .game-detail {
+            color: #666;
+            font-size: 13px;
+            margin-top: 4px;
         }
         
         .loading {
@@ -82,53 +147,52 @@
             const scheduleDiv = document.getElementById('schedule');
             
             try {
-                // ESPN API for Colorado Avalanche (team ID: 21)
                 const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/teams/21/schedule');
                 const data = await response.json();
                 
-                // Get current date and one week from now
                 const now = new Date();
                 const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
                 
-                // Filter for upcoming games in the next week
-                const upcomingGames = data.events.filter(event => {
+                let previousGame = null;
+                let liveGame = null;
+                const upcomingGames = [];
+                
+                data.events.forEach(event => {
                     const gameDate = new Date(event.date);
-                    return gameDate >= now && gameDate <= nextWeek;
+                    const status = event.competitions[0].status.type.state;
+                    
+                    if (status === 'post') {
+                        if (!previousGame || gameDate > new Date(previousGame.date)) {
+                            previousGame = event;
+                        }
+                    } else if (status === 'in') {
+                        liveGame = event;
+                    } else if (gameDate >= now && gameDate <= nextWeek) {
+                        upcomingGames.push(event);
+                    }
                 });
                 
-                if (upcomingGames.length === 0) {
-                    scheduleDiv.innerHTML = '<div class="game">No games in the next week</div>';
-                    return;
+                let html = '';
+                
+                if (previousGame) {
+                    html += formatGame(previousGame, 'past');
                 }
                 
-                // Display games
-                scheduleDiv.innerHTML = upcomingGames.map(event => {
-                    const gameDate = new Date(event.date);
-                    const dateStr = gameDate.toLocaleDateString('en-US', { 
-                        weekday: 'short', 
-                        month: 'short', 
-                        day: 'numeric' 
+                if (liveGame) {
+                    html += formatGame(liveGame, 'live');
+                }
+                
+                if (upcomingGames.length > 0) {
+                    upcomingGames.forEach(game => {
+                        html += formatGame(game, 'upcoming');
                     });
-                    const timeStr = gameDate.toLocaleTimeString('en-US', { 
-                        hour: 'numeric', 
-                        minute: '2-digit'
-                    });
-                    
-                    const homeTeam = event.competitions[0].competitors.find(t => t.homeAway === 'home');
-                    const awayTeam = event.competitions[0].competitors.find(t => t.homeAway === 'away');
-                    
-                    const isHome = homeTeam.team.abbreviation === 'COL';
-                    const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
-                    const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
-                    
-                    return `
-                        <div class="game">
-                            <div class="date">${dateStr} • ${timeStr}</div>
-                            <div class="matchup">vs ${opponent}</div>
-                            <div class="location">${location}</div>
-                        </div>
-                    `;
-                }).join('');
+                }
+                
+                if (!previousGame && !liveGame && upcomingGames.length === 0) {
+                    html = '<div class="game">No recent or upcoming games found</div>';
+                }
+                
+                scheduleDiv.innerHTML = html;
                 
             } catch (error) {
                 scheduleDiv.innerHTML = '<div class="error">Error loading schedule. Please refresh.</div>';
@@ -136,8 +200,60 @@
             }
         }
         
-        // Load schedule when page loads
+        function formatGame(event, gameType) {
+            const gameDate = new Date(event.date);
+            const dateStr = gameDate.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            const timeStr = gameDate.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit'
+            });
+            
+            const competition = event.competitions[0];
+            const homeTeam = competition.competitors.find(t => t.homeAway === 'home');
+            const awayTeam = competition.competitors.find(t => t.homeAway === 'away');
+            
+            const isHome = homeTeam.team.abbreviation === 'COL';
+            const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
+            const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
+            
+            let statusLabel = '';
+            let scoreHtml = '';
+            let detailHtml = '';
+            
+            if (gameType === 'past') {
+                statusLabel = '<span class="status past">FINAL</span>';
+                const avScore = isHome ? homeTeam.score : awayTeam.score;
+                const oppScore = isHome ? awayTeam.score : homeTeam.score;
+                const won = parseInt(avScore) > parseInt(oppScore);
+                scoreHtml = `<div class="score ${won ? 'won' : 'lost'}">${avScore} - ${oppScore}</div>`;
+            } else if (gameType === 'live') {
+                const statusDetail = competition.status.type.detail;
+                statusLabel = `<span class="status live">LIVE - ${statusDetail}</span>`;
+                const avScore = isHome ? homeTeam.score : awayTeam.score;
+                const oppScore = isHome ? awayTeam.score : homeTeam.score;
+                scoreHtml = `<div class="score">${avScore} - ${oppScore}</div>`;
+            } else {
+                statusLabel = '<span class="status upcoming">UPCOMING</span>';
+            }
+            
+            return `
+                <div class="game ${gameType}">
+                    ${statusLabel}
+                    <div class="date">${dateStr} • ${timeStr}</div>
+                    <div class="matchup">vs ${opponent}</div>
+                    ${scoreHtml}
+                    <div class="location">${location}</div>
+                </div>
+            `;
+        }
+        
         loadSchedule();
+        
+        setInterval(loadSchedule, 60000);
     </script>
 </body>
 </html>
