@@ -460,6 +460,17 @@
                             `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
                         );
                         const standingsData = await standingsResponse.json();
+                        
+                        // Debug logging for Avalanche standings
+                        if (team.sport.includes('hockey')) {
+                            console.log('Avalanche standings data:', {
+                                teamName: team.name,
+                                hasRecord: !!standingsData.team?.record,
+                                recordItems: standingsData.team?.record?.items,
+                                standingSummary: standingsData.team?.standingSummary
+                            });
+                        }
+                        
                         if (standingsData.team?.record?.items) {
                             standings = standingsData.team.record.items[0];
                         }
