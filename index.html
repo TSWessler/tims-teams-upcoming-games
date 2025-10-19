@@ -330,7 +330,6 @@
                 let html = '';
                 
                 for (const team of TEAMS) {
-                    // First try to get games from last week to next week
                     const startDate = formatDate(lastWeek);
                     const endDate = formatDate(nextWeek);
                     
@@ -351,7 +350,6 @@
                         if (!hasTeam) return;
                         
                         const status = event.competitions[0].status.type.state;
-                        const gameDate = new Date(event.date);
                         
                         if (status === 'post') {
                             previousGames.push(event);
@@ -362,11 +360,9 @@
                         }
                     });
                     
-                    // Sort by date
                     previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
                     upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
                     
-                    // Fallback: if no games in window, try to get the full season
                     if (previousGames.length === 0 && !liveGame && upcomingGames.length === 0) {
                         const fullSeasonResponse = await fetch(
                             `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`
@@ -376,7 +372,6 @@
                         if (fullData.events) {
                             fullData.events.forEach(event => {
                                 const status = event.competitions[0].status.type.state;
-                                const gameDate = new Date(event.date);
                                 
                                 if (status === 'post') {
                                     previousGames.push(event);
@@ -388,32 +383,23 @@
                             previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
                             upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
                             
-                            // Keep only most recent and next upcoming
-                            if (previousGames.length > 1) {
-                                previousGames.splice(1);
-                            }
-                            if (upcomingGames.length > 1) {
-                                upcomingGames.splice(1);
-                            }
+                            if (previousGames.length > 1) previousGames.splice(1);
+                            if (upcomingGames.length > 1) upcomingGames.splice(1);
                         }
                     }
                     
-                    // Get team logo
                     const logoUrl = data.events.find(e => 
                         e.competitions[0].competitors.some(t => t.team.abbreviation === team.abbr)
                     )?.competitions[0].competitors.find(t => t.team.abbreviation === team.abbr)?.team.logo;
                     
-                    // Try to get standings info
                     let standings = null;
                     let leagueRank = null;
                     
-                    // Special handling for NHL - use official NHL.com API
                     if (team.sport.includes('hockey')) {
                         try {
                             const nhlStandingsResponse = await fetch('https://api-web.nhle.com/v1/standings/now');
                             const nhlStandingsData = await nhlStandingsResponse.json();
                             
-                            // Find Colorado Avalanche in the standings
                             const avalancheStanding = nhlStandingsData.standings.find(t => 
                                 t.teamAbbrev?.default === 'COL' || t.teamName?.default?.includes('Avalanche')
                             );
@@ -428,7 +414,6 @@
                                     points: avalancheStanding.points
                                 };
                                 
-                                // Create a standings object compatible with our formatting
                                 standings = {
                                     stats: [
                                         { name: 'wins', value: avalancheStanding.wins },
@@ -443,31 +428,28 @@
                         }
                     }
                     
-                    // Fall back to ESPN API if NHL API didn't work or for other sports
                     if (!standings) {
                         try {
-                        const standingsResponse = await fetch(
-                            `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
-                        );
-                        const standingsData = await standingsResponse.json();
-                        if (standingsData.team?.record?.items) {
-                            standings = standingsData.team.record.items[0];
-                        }
-                        
-                        // Try to parse rankings from standingSummary
-                        if (standingsData.team?.standingSummary) {
-                            const summary = standingsData.team.standingSummary;
-                            console.log(team.name, 'parsing summary:', summary);
-                            
-                            // Parse division/conference ranking (e.g., "3rd in Atlantic Division")
-                            const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
-                            if (rankMatch) {
-                                leagueRank = { text: summary, rank: rankMatch[1], location: rankMatch[2] };
+                            const standingsResponse = await fetch(
+                                `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
+                            );
+                            const standingsData = await standingsResponse.json();
+                            if (standingsData.team?.record?.items) {
+                                standings = standingsData.team.record.items[0];
                             }
+                            
+                            if (standingsData.team?.standingSummary && !leagueRank) {
+                                const summary = standingsData.team.standingSummary;
+                                console.log(team.name, 'parsing summary:', summary);
+                                
+                                const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
+                                if (rankMatch) {
+                                    leagueRank = { text: summary, rank: rankMatch[1], location: rankMatch[2] };
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Could not fetch standings for', team.name);
                         }
-                        }
-                    } catch (e) {
-                        console.log('Could not fetch standings for', team.name);
                     }
                     
                     html += createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
@@ -475,7 +457,6 @@
                 
                 scheduleDiv.innerHTML = html;
                 
-                // Add collapse header handlers
                 document.querySelectorAll('.team-header').forEach(header => {
                     header.addEventListener('click', (e) => {
                         const section = header.parentElement;
@@ -487,7 +468,6 @@
                     });
                 });
                 
-                // Add expand button handlers
                 document.querySelectorAll('.expand-button').forEach(button => {
                     button.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -525,7 +505,6 @@
             
             const sectionId = team.className;
             
-            // Format standings info
             let standingsHtml = '';
             if (standings && standings.stats) {
                 const stats = standings.stats;
@@ -534,7 +513,6 @@
                 let standingsLink = '';
                 
                 if (team.sport.includes('hockey')) {
-                    // NHL: W-L-OTL, PTS
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     const otl = stats.find(s => s.name === 'otLosses')?.value || 0;
@@ -547,7 +525,6 @@
                     
                     standingsLink = 'https://www.espn.com/nhl/standings';
                 } else if (team.sport.includes('basketball')) {
-                    // NBA: W-L, PCT
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     const pct = stats.find(s => s.name === 'winPercent')?.displayValue || '.000';
@@ -559,7 +536,6 @@
                     
                     standingsLink = 'https://www.espn.com/nba/standings';
                 } else if (team.sport.includes('football/nfl')) {
-                    // NFL: W-L-T
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     const ties = stats.find(s => s.name === 'ties')?.value || 0;
@@ -571,7 +547,6 @@
                     
                     standingsLink = 'https://www.espn.com/nfl/standings';
                 } else if (team.sport.includes('college-football')) {
-                    // CFB: W-L
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     record = `(${wins}-${losses})`;
@@ -618,7 +593,6 @@
                         ${standingsHtml}
             `;
             
-            // Expand button for older games
             if (olderGames.length > 0) {
                 const gameWord = olderGames.length === 1 ? 'game' : 'games';
                 html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} previous ${gameWord}</button>`;
@@ -629,7 +603,6 @@
                 html += `</div>`;
             }
             
-            // Featured games
             html += `<div class="featured-games">`;
             if (mostRecent) {
                 html += `<div class="game">${formatGame(mostRecent, 'past', team.abbr)}</div>`;
@@ -640,7 +613,6 @@
             }
             html += `</div>`;
             
-            // Expand button for remaining upcoming games
             if (remainingUpcoming.length > 0) {
                 html += `<div class="upcoming-games" id="${sectionId}-upcoming">`;
                 remainingUpcoming.forEach(game => {
@@ -675,12 +647,10 @@
             const opponent = isHome ? awayTeam.team.displayName : homeTeam.team.displayName;
             const location = isHome ? 'Home' : `@ ${homeTeam.team.displayName}`;
             
-            // Get game link
             const gameLink = event.links?.find(link => link.text === 'Gamecast' || link.text === 'Game Summary')?.href || 
                             event.links?.[0]?.href || 
                             `https://www.espn.com`;
             
-            // Get broadcast info (only for upcoming and live games)
             let broadcastInfo = '';
             if (gameType !== 'past' && competition.broadcasts && competition.broadcasts.length > 0) {
                 const networks = competition.broadcasts.map(b => b.names[0]).join(', ');
@@ -697,13 +667,11 @@
                 const oppScore = isHome ? awayTeam.score : homeTeam.score;
                 const won = parseInt(myScore) > parseInt(oppScore);
                 
-                // Parse overtime/shootout from status detail
                 let otLabel = '';
                 const statusDetail = competition.status.type.detail;
                 if (statusDetail.includes('SO')) {
                     otLabel = ' (SO)';
                 } else {
-                    // Match any number followed by OT (e.g., "2OT", "3OT", "4OT")
                     const otMatch = statusDetail.match(/(\d+)OT/);
                     if (otMatch) {
                         otLabel = ` (${otMatch[1]}OT)`;
