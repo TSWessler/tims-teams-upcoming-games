@@ -455,8 +455,8 @@
                     return `${year}${month}${day}`;
                 };
                 
-                // Load all teams in parallel
-                const teamPromises = TEAMS.map(async (team) => {
+                // Load all teams in parallel and render in order
+                const teamPromises = TEAMS.map(async (team, index) => {
                     const startDate = formatDate(lastWeek);
                     const endDate = formatDate(nextWeek);
                     
@@ -551,17 +551,20 @@
                         console.log('Could not fetch standings for', team.name);
                     }
                     
-                    return await createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
+                    const teamHtml = await createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
+                    
+                    return { html: teamHtml, index };
                 });
                 
-                // Render teams as they finish loading
-                for (const teamPromise of teamPromises) {
-                    const teamHtml = await teamPromise;
-                    scheduleDiv.innerHTML += teamHtml;
-                    
-                    // Attach event listeners for newly added elements
-                    attachEventListeners();
-                }
+                // Wait for all to finish, then render in order
+                const results = await Promise.all(teamPromises);
+                results.sort((a, b) => a.index - b.index);
+                
+                results.forEach(result => {
+                    scheduleDiv.innerHTML += result.html;
+                });
+                
+                attachEventListeners();
                 
             } catch (error) {
                 scheduleDiv.innerHTML = '<div class="error">Error loading schedules. Please refresh.</div>';
