@@ -814,12 +814,11 @@
             return `
                 ${statusLabel}
                 <div class="date">${dateStr} • ${timeStr}</div>
-                <div class="matchup">vs ${opponent}</div>
+                <div class="matchup">vs ${opponent}${spreadText}</div>
                 ${opponentStandingsHtml}
                 <div class="location">${location}</div>
                 ${scoreHtml}
                 ${previewLink}
-                ${spreadHtml}
                 ${broadcastInfo}
             `;
         }
