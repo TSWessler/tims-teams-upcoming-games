@@ -441,6 +441,7 @@
 
         async function loadAllTeams() {
             const scheduleDiv = document.getElementById('schedule');
+            scheduleDiv.innerHTML = ''; // Clear loading message
             
             try {
                 const now = new Date();
@@ -454,9 +455,8 @@
                     return `${year}${month}${day}`;
                 };
                 
-                let html = '';
-                
-                for (const team of TEAMS) {
+                // Load all teams in parallel
+                const teamPromises = TEAMS.map(async (team) => {
                     const startDate = formatDate(lastWeek);
                     const endDate = formatDate(nextWeek);
                     
@@ -551,12 +551,28 @@
                         console.log('Could not fetch standings for', team.name);
                     }
                     
-                    html += await createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
+                    return await createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
+                });
+                
+                // Render teams as they finish loading
+                for (const teamPromise of teamPromises) {
+                    const teamHtml = await teamPromise;
+                    scheduleDiv.innerHTML += teamHtml;
+                    
+                    // Attach event listeners for newly added elements
+                    attachEventListeners();
                 }
                 
-                scheduleDiv.innerHTML = html;
-                
-                document.querySelectorAll('.team-header').forEach(header => {
+            } catch (error) {
+                scheduleDiv.innerHTML = '<div class="error">Error loading schedules. Please refresh.</div>';
+                console.error('Error:', error);
+            }
+        }
+        
+        function attachEventListeners() {
+            document.querySelectorAll('.team-header').forEach(header => {
+                if (!header.hasAttribute('data-listener-attached')) {
+                    header.setAttribute('data-listener-attached', 'true');
                     header.addEventListener('click', (e) => {
                         const section = header.parentElement;
                         const content = section.querySelector('.team-content');
@@ -565,9 +581,12 @@
                         content.classList.toggle('collapsed');
                         icon.classList.toggle('collapsed');
                     });
-                });
-                
-                document.querySelectorAll('.expand-button').forEach(button => {
+                }
+            });
+            
+            document.querySelectorAll('.expand-button').forEach(button => {
+                if (!button.hasAttribute('data-listener-attached')) {
+                    button.setAttribute('data-listener-attached', 'true');
                     button.addEventListener('click', (e) => {
                         e.stopPropagation();
                         const target = button.dataset.target;
@@ -588,12 +607,8 @@
                                 : `▼ Show ${count} upcoming ${gameWord}`;
                         }
                     });
-                });
-                
-            } catch (error) {
-                scheduleDiv.innerHTML = '<div class="error">Error loading schedules. Please refresh.</div>';
-                console.error('Error:', error);
-            }
+                }
+            });
         }
         
         async function createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank) {
