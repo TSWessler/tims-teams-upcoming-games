@@ -189,7 +189,7 @@
             font-size: 13px;
             font-weight: 500;
             margin-left: 8px;
-            opacity: 0.75;
+            opacity: 0.5;
         }
         
         .spread.favorite {
@@ -756,7 +756,7 @@
                     const absSpread = Math.abs(spread).toFixed(1);
                     const isFavorite = spread >= 0;
                     const spreadClass = isFavorite ? 'favorite' : 'underdog';
-                    spreadText = `<span class="spread ${spreadClass}" title="Estimated based on recent performance">📊 ${teamAbbr} ${sign}${absSpread}</span>`;
+                    spreadText = `<span class="spread ${spreadClass}" title="Estimated based on recent performance">🤖 ${teamAbbr} ${sign}${absSpread}</span>`;
                 }
             }
             
