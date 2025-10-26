@@ -434,39 +434,6 @@
             return null;
         }
 
-        async function getRecentMargins(sport, teamId, games = 5) {
-            try {
-                const response = await fetch(
-                    `https://site.api.espn.com/apis/site/v2/sports/${sport}/teams/${teamId}/schedule`
-                );
-                const data = await response.json();
-                
-                if (!data.events) return null;
-                
-                const completedGames = data.events
-                    .filter(e => e.competitions[0].status.type.state === 'post')
-                    .slice(-games);
-                
-                const margins = [];
-                for (const event of completedGames) {
-                    const comp = event.competitions[0];
-                    const home = comp.competitors.find(t => t.homeAway === 'home');
-                    const away = comp.competitors.find(t => t.homeAway === 'away');
-                    
-                    const teamIsHome = home.team.id == teamId;
-                    const teamScore = teamIsHome ? Number(home.score?.value || home.score || 0) : Number(away.score?.value || away.score || 0);
-                    const oppScore = teamIsHome ? Number(away.score?.value || away.score || 0) : Number(home.score?.value || home.score || 0);
-                    
-                    margins.push(teamScore - oppScore);
-                }
-                
-                if (margins.length === 0) return 0;
-                return margins.reduce((a, b) => a + b, 0) / margins.length;
-            } catch (e) {
-                return null;
-            }
-        }
-
         async function getBettingProbability(competition, teamAbbr, sport, sportKey) {
             const homeTeam = competition.competitors.find(t => t.homeAway === 'home');
             const awayTeam = competition.competitors.find(t => t.homeAway === 'away');
@@ -556,24 +523,8 @@
                 }
             }
             
-            // Fallback: calculate estimate based on recent performance
-            const ourTeamId = isHome ? homeTeam.team.id : awayTeam.team.id;
-            const oppTeamId = isHome ? awayTeam.team.id : homeTeam.team.id;
-            
-            const [ourMargin, oppMargin] = await Promise.all([
-                getRecentMargins(sport, ourTeamId, 5),
-                getRecentMargins(sport, oppTeamId, 5)
-            ]);
-            
-            if (ourMargin === null || oppMargin === null) return null;
-            
-            const homeAdvantage = isHome ? 2.5 : -2.5;
-            const estimatedDiff = (ourMargin - oppMargin) + homeAdvantage;
-            
-            const probability = 50 + (estimatedDiff * 2);
-            const clampedProbability = Math.max(10, Math.min(90, probability));
-            
-            return { probability: clampedProbability, isActual: false };
+            // No betting lines available - don't show prediction
+            return null;
         }
 
         async function loadAllTeams() {
@@ -928,20 +879,14 @@
             let spreadText = '';
             if (gameType === 'upcoming') {
                 const probResult = await getBettingProbability(competition, teamAbbr, sport, sportKey);
-                if (probResult !== null) {
+                if (probResult !== null && probResult.isActual) {
+                    // Only show if we have real betting lines
                     const probability = probResult.probability.toFixed(1);
                     const isFavorite = probResult.probability > 50;
                     const spreadClass = isFavorite ? 'favorite' : 'underdog';
-                    
-                    if (probResult.isActual) {
-                        // Real betting line converted to probability
-                        const moneylineText = probResult.moneyline > 0 ? `+${probResult.moneyline}` : probResult.moneyline;
-                        const providerText = probResult.provider ? ` via ${probResult.provider}` : '';
-                        spreadText = `<span class="spread ${spreadClass}" title="Win probability from ${moneylineText} moneyline${providerText}">💰 ${probability}%</span>`;
-                    } else {
-                        // Calculated estimate
-                        spreadText = `<span class="spread ${spreadClass}" title="Estimated win probability based on recent performance">🤖 ${probability}%</span>`;
-                    }
+                    const moneylineText = probResult.moneyline > 0 ? `+${probResult.moneyline}` : probResult.moneyline;
+                    const providerText = probResult.provider ? ` via ${probResult.provider}` : '';
+                    spreadText = `<span class="spread ${spreadClass}" title="Win probability from ${moneylineText} moneyline${providerText}">💰 ${probability}%</span>`;
                 }
             }
             
