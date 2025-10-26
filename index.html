@@ -346,8 +346,9 @@
             }
         ];
 
-        // Global odds data cache
+        // Global data caches
         let oddsData = null;
+        let standingsData = null;
 
         async function loadOddsData() {
             try {
@@ -365,11 +366,38 @@
             }
         }
 
+        async function loadStandingsData() {
+            try {
+                const response = await fetch('./data/standings.json');
+                if (!response.ok) {
+                    console.warn('Could not load standings data, will fetch from ESPN');
+                    return null;
+                }
+                const data = await response.json();
+                console.log('Loaded standings data from:', data.lastUpdatedMT);
+                return data;
+            } catch (error) {
+                console.warn('Error loading standings data:', error);
+                return null;
+            }
+        }
+
         async function getOpponentStandings(sport, opponentTeamId) {
             if (sport.includes('hockey')) {
                 return null;
             }
             
+            // First, try to get from cached standings data
+            if (standingsData && standingsData.opponents) {
+                const opponent = standingsData.opponents.find(
+                    opp => opp.teamId == opponentTeamId && opp.sport === sport
+                );
+                if (opponent && opponent.record) {
+                    return opponent.record;
+                }
+            }
+            
+            // Fallback: fetch from ESPN API
             try {
                 const response = await fetch(
                     `https://site.api.espn.com/apis/site/v2/sports/${sport}/teams/${opponentTeamId}`
@@ -639,25 +667,39 @@
                     let standings = null;
                     let leagueRank = null;
                     
-                    try {
-                        const standingsResponse = await fetch(
-                            `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
-                        );
-                        const standingsData = await standingsResponse.json();
-                        
-                        if (standingsData.team?.record?.items) {
-                            standings = standingsData.team.record.items[0];
-                        }
-                        
-                        if (standingsData.team?.standingSummary) {
-                            const summary = standingsData.team.standingSummary;
-                            const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
-                            if (rankMatch) {
-                                leagueRank = { text: summary };
+                    // First, try to get from cached standings data
+                    if (standingsData && standingsData.teams) {
+                        const teamStandings = standingsData.teams.find(t => t.teamId === team.teamId);
+                        if (teamStandings) {
+                            standings = teamStandings.standings;
+                            if (teamStandings.standingSummary) {
+                                leagueRank = { text: teamStandings.standingSummary };
                             }
                         }
-                    } catch (e) {
-                        console.log('Could not fetch standings for', team.name);
+                    }
+                    
+                    // Fallback: fetch from ESPN API if not in cache
+                    if (!standings) {
+                        try {
+                            const standingsResponse = await fetch(
+                                `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}`
+                            );
+                            const standingsApiData = await standingsResponse.json();
+                            
+                            if (standingsApiData.team?.record?.items) {
+                                standings = standingsApiData.team.record.items[0];
+                            }
+                            
+                            if (standingsApiData.team?.standingSummary) {
+                                const summary = standingsApiData.team.standingSummary;
+                                const rankMatch = summary.match(/(\d+)(?:st|nd|rd|th) in (.+)/);
+                                if (rankMatch) {
+                                    leagueRank = { text: summary };
+                                }
+                            }
+                        } catch (e) {
+                            console.log('Could not fetch standings for', team.name);
+                        }
                     }
                     
                     const teamHtml = await createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
@@ -968,7 +1010,11 @@
         
         // Initialize the page
         async function init() {
+            // Load cached data first (fast!)
             oddsData = await loadOddsData();
+            standingsData = await loadStandingsData();
+            
+            // Then load teams and games
             await loadAllTeams();
         }
         

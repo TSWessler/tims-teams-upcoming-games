@@ -1,0 +1,62 @@
+name: Fetch Standings
+
+on:
+  schedule:
+    # Hourly from 2pm to 1am MT, plus 4am MT
+    # MT is currently MDT (UTC-6), adjust times accordingly
+    # 2pm MT = 8pm UTC (20:00)
+    # 3pm MT = 9pm UTC (21:00)
+    # 4pm MT = 10pm UTC (22:00)
+    # 5pm MT = 11pm UTC (23:00)
+    # 6pm MT = 12am UTC next day (00:00)
+    # 7pm MT = 1am UTC (01:00)
+    # 8pm MT = 2am UTC (02:00)
+    # 9pm MT = 3am UTC (03:00)
+    # 10pm MT = 4am UTC (04:00)
+    # 11pm MT = 5am UTC (05:00)
+    # 12am MT = 6am UTC (06:00)
+    # 1am MT = 7am UTC (07:00)
+    # 4am MT = 10am UTC (10:00)
+    - cron: '0 20 * * *'  # 2pm MT
+    - cron: '0 21 * * *'  # 3pm MT
+    - cron: '0 22 * * *'  # 4pm MT
+    - cron: '0 23 * * *'  # 5pm MT
+    - cron: '0 0 * * *'   # 6pm MT
+    - cron: '0 1 * * *'   # 7pm MT
+    - cron: '0 2 * * *'   # 8pm MT
+    - cron: '0 3 * * *'   # 9pm MT
+    - cron: '0 4 * * *'   # 10pm MT
+    - cron: '0 5 * * *'   # 11pm MT
+    - cron: '0 6 * * *'   # 12am MT
+    - cron: '0 7 * * *'   # 1am MT
+    - cron: '0 10 * * *'  # 4am MT
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  fetch-standings:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Fetch standings from ESPN
+        run: npm run fetch-standings
+      
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/standings.json
+          git diff --staged --quiet || git commit -m "chore: Update standings data"
+          git push

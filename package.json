@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Colorado Sports Now(-ish) - automated odds fetching",
   "scripts": {
-    "fetch-odds": "node scripts/fetch-odds.js"
+    "fetch-odds": "node scripts/fetch-odds.js odds",
+    "fetch-standings": "node scripts/fetch-odds.js standings",
+    "fetch-all": "node scripts/fetch-odds.js both"
   },
   "dependencies": {
     "node-fetch": "^2.6.7"
