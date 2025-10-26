@@ -315,6 +315,7 @@
             {
                 name: 'Colorado Avalanche',
                 sport: 'hockey/nhl',
+                sportKey: 'icehockey_nhl',
                 teamId: 21,
                 abbr: 'COL',
                 className: 'avs'
@@ -322,6 +323,7 @@
             {
                 name: 'Denver Nuggets',
                 sport: 'basketball/nba',
+                sportKey: 'basketball_nba',
                 teamId: 7,
                 abbr: 'DEN',
                 className: 'nuggets'
@@ -329,6 +331,7 @@
             {
                 name: 'Denver Broncos',
                 sport: 'football/nfl',
+                sportKey: 'americanfootball_nfl',
                 teamId: 7,
                 abbr: 'DEN',
                 className: 'broncos'
@@ -336,11 +339,31 @@
             {
                 name: 'Colorado Buffaloes',
                 sport: 'football/college-football',
+                sportKey: 'americanfootball_ncaaf',
                 teamId: 38,
                 abbr: 'COLO',
                 className: 'buffs'
             }
         ];
+
+        // Global odds data cache
+        let oddsData = null;
+
+        async function loadOddsData() {
+            try {
+                const response = await fetch('./data/odds.json');
+                if (!response.ok) {
+                    console.warn('Could not load odds data, will use estimates');
+                    return null;
+                }
+                const data = await response.json();
+                console.log('Loaded odds data from:', data.lastUpdatedMT);
+                return data;
+            } catch (error) {
+                console.warn('Error loading odds data:', error);
+                return null;
+            }
+        }
 
         async function getOpponentStandings(sport, opponentTeamId) {
             if (sport.includes('hockey')) {
@@ -416,48 +439,90 @@
             }
         }
 
-        async function getBettingProbability(competition, teamAbbr, sport) {
+        async function getBettingProbability(competition, teamAbbr, sport, sportKey) {
             const homeTeam = competition.competitors.find(t => t.homeAway === 'home');
             const awayTeam = competition.competitors.find(t => t.homeAway === 'away');
             const isHome = homeTeam.team.abbreviation === teamAbbr;
             
-            // First, try to get actual betting lines from ESPN odds data
+            // First, try to get odds from our JSON data
+            if (oddsData && oddsData.sports) {
+                const sportOdds = oddsData.sports.find(s => s.sport === sportKey);
+                if (sportOdds && sportOdds.games) {
+                    // Find the game by matching team names
+                    const homeTeamName = homeTeam.team.displayName;
+                    const awayTeamName = awayTeam.team.displayName;
+                    
+                    const game = sportOdds.games.find(g => {
+                        const gameHomeTeam = g.home_team;
+                        const gameAwayTeam = g.away_team;
+                        
+                        // Match by team names (ESPN vs The Odds API naming might differ slightly)
+                        return (gameHomeTeam.includes(homeTeamName.split(' ').pop()) || homeTeamName.includes(gameHomeTeam.split(' ').pop())) &&
+                               (gameAwayTeam.includes(awayTeamName.split(' ').pop()) || awayTeamName.includes(gameAwayTeam.split(' ').pop()));
+                    });
+                    
+                    if (game && game.bookmakers && game.bookmakers.length > 0) {
+                        // Get first bookmaker's h2h (moneyline) odds
+                        const bookmaker = game.bookmakers[0];
+                        const h2hMarket = bookmaker.markets.find(m => m.key === 'h2h');
+                        
+                        if (h2hMarket && h2hMarket.outcomes) {
+                            const ourTeamName = isHome ? game.home_team : game.away_team;
+                            const ourOutcome = h2hMarket.outcomes.find(o => o.name === ourTeamName);
+                            
+                            if (ourOutcome && ourOutcome.price) {
+                                const moneyline = ourOutcome.price;
+                                
+                                // Convert moneyline to probability
+                                // P = 100/(N+100) for "plus" odds (underdog, positive)
+                                // P = N/(N+100) for "minus" odds (favorite, negative)
+                                let probability;
+                                if (moneyline > 0) {
+                                    probability = 100 / (moneyline + 100);
+                                } else {
+                                    probability = Math.abs(moneyline) / (Math.abs(moneyline) + 100);
+                                }
+                                
+                                return {
+                                    probability: probability * 100,
+                                    moneyline: moneyline,
+                                    isActual: true,
+                                    provider: bookmaker.title
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Fallback: Try ESPN API odds (legacy)
             if (competition.odds && competition.odds.length > 0) {
-                // Look for moneyline odds
                 for (const odd of competition.odds) {
-                    // Check for moneyline in various possible formats
                     let ourMoneyline = null;
                     
-                    // Format 1: Check homeTeamOdds/awayTeamOdds properties
                     if (odd.homeTeamOdds && odd.awayTeamOdds) {
                         const homeOdds = odd.homeTeamOdds.moneyLine;
                         const awayOdds = odd.awayTeamOdds.moneyLine;
                         ourMoneyline = isHome ? homeOdds : awayOdds;
                     }
                     
-                    // Format 2: Check in competitors array
                     if (!ourMoneyline && homeTeam.odds && awayTeam.odds) {
                         ourMoneyline = isHome ? homeTeam.odds.moneyLine : awayTeam.odds.moneyLine;
                     }
                     
                     if (ourMoneyline !== null && ourMoneyline !== undefined) {
-                        // Convert moneyline to probability
-                        // P = 100/(N+100) for "plus" odds (underdog, positive)
-                        // P = N/(N+100) for "minus" odds (favorite, negative)
                         let probability;
                         if (ourMoneyline > 0) {
-                            // Underdog (plus odds)
                             probability = 100 / (ourMoneyline + 100);
                         } else {
-                            // Favorite (minus odds)
                             probability = Math.abs(ourMoneyline) / (Math.abs(ourMoneyline) + 100);
                         }
                         
-                        return { 
-                            probability: probability * 100, // Convert to percentage
+                        return {
+                            probability: probability * 100,
                             moneyline: ourMoneyline,
-                            isActual: true, 
-                            provider: odd.provider?.name 
+                            isActual: true,
+                            provider: odd.provider?.name
                         };
                     }
                 }
@@ -477,10 +542,8 @@
             const homeAdvantage = isHome ? 2.5 : -2.5;
             const estimatedDiff = (ourMargin - oppMargin) + homeAdvantage;
             
-            // Convert margin difference to rough probability
-            // Using a simplified logistic approach: larger margin = higher win probability
-            const probability = 50 + (estimatedDiff * 2); // Rough estimate
-            const clampedProbability = Math.max(10, Math.min(90, probability)); // Keep between 10-90%
+            const probability = 50 + (estimatedDiff * 2);
+            const clampedProbability = Math.max(10, Math.min(90, probability));
             
             return { probability: clampedProbability, isActual: false };
         }
@@ -753,25 +816,25 @@
                 html += `<button class="expand-button up" data-target="${sectionId}-older" data-count="${olderGames.length}">▲ Show ${olderGames.length} previous ${gameWord}</button>`;
                 html += `<div class="older-games" id="${sectionId}-older">`;
                 for (const game of olderGames) {
-                    html += `<div class="game">${await formatGame(game, 'past', team.abbr, team.sport)}</div>`;
+                    html += `<div class="game">${await formatGame(game, 'past', team.abbr, team.sport, team.sportKey)}</div>`;
                 }
                 html += `</div>`;
             }
             
             html += `<div class="featured-games">`;
             if (mostRecent) {
-                html += `<div class="game">${await formatGame(mostRecent, 'past', team.abbr, team.sport)}</div>`;
+                html += `<div class="game">${await formatGame(mostRecent, 'past', team.abbr, team.sport, team.sportKey)}</div>`;
             }
             if (nextGame) {
                 const gameType = liveGame ? 'live' : 'upcoming';
-                html += `<div class="game ${gameType === 'live' ? 'live' : ''}">${await formatGame(nextGame, gameType, team.abbr, team.sport)}</div>`;
+                html += `<div class="game ${gameType === 'live' ? 'live' : ''}">${await formatGame(nextGame, gameType, team.abbr, team.sport, team.sportKey)}</div>`;
             }
             html += `</div>`;
             
             if (remainingUpcoming.length > 0) {
                 html += `<div class="upcoming-games" id="${sectionId}-upcoming">`;
                 for (const game of remainingUpcoming) {
-                    html += `<div class="game">${await formatGame(game, 'upcoming', team.abbr, team.sport)}</div>`;
+                    html += `<div class="game">${await formatGame(game, 'upcoming', team.abbr, team.sport, team.sportKey)}</div>`;
                 }
                 html += `</div>`;
                 const gameWord = remainingUpcoming.length === 1 ? 'game' : 'games';
@@ -782,7 +845,7 @@
             return html;
         }
         
-        async function formatGame(event, gameType, teamAbbr, sport) {
+        async function formatGame(event, gameType, teamAbbr, sport, sportKey) {
             const gameDate = new Date(event.date);
             const dateStr = gameDate.toLocaleDateString('en-US', { 
                 weekday: 'short', 
@@ -822,7 +885,7 @@
             
             let spreadText = '';
             if (gameType === 'upcoming') {
-                const probResult = await getBettingProbability(competition, teamAbbr, sport);
+                const probResult = await getBettingProbability(competition, teamAbbr, sport, sportKey);
                 if (probResult !== null) {
                     const probability = probResult.probability.toFixed(1);
                     const isFavorite = probResult.probability > 50;
@@ -903,7 +966,13 @@
             `;
         }
         
-        loadAllTeams();
+        // Initialize the page
+        async function init() {
+            oddsData = await loadOddsData();
+            await loadAllTeams();
+        }
+        
+        init();
     </script>
 </body>
 </html>

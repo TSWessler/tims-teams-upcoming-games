@@ -1,0 +1,46 @@
+name: Fetch Betting Odds
+
+on:
+  schedule:
+    # Runs at 7am, 11am, 3pm, 7pm Mountain Time
+    # MT is UTC-7 (MDT) or UTC-6 (MST), using MDT (UTC-7) for summer
+    # 7am MT = 2pm UTC (14:00)
+    # 11am MT = 6pm UTC (18:00)
+    # 3pm MT = 10pm UTC (22:00)
+    # 7pm MT = 2am UTC next day (02:00)
+    - cron: '0 14 * * *'  # 7am MT
+    - cron: '0 18 * * *'  # 11am MT
+    - cron: '0 22 * * *'  # 3pm MT
+    - cron: '0 2 * * *'   # 7pm MT
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  fetch-odds:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Fetch odds from API
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: npm run fetch-odds
+      
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/odds.json
+          git diff --staged --quiet || git commit -m "chore: Update betting odds data"
+          git push

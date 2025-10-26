@@ -1,0 +1,11 @@
+{
+  "name": "co-sports-nowish",
+  "version": "1.0.0",
+  "description": "Colorado Sports Now(-ish) - automated odds fetching",
+  "scripts": {
+    "fetch-odds": "node scripts/fetch-odds.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}
