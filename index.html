@@ -416,11 +416,54 @@
             }
         }
 
-        async function estimateSpread(competition, teamAbbr, sport) {
+        async function getBettingProbability(competition, teamAbbr, sport) {
             const homeTeam = competition.competitors.find(t => t.homeAway === 'home');
             const awayTeam = competition.competitors.find(t => t.homeAway === 'away');
             const isHome = homeTeam.team.abbreviation === teamAbbr;
             
+            // First, try to get actual betting lines from ESPN odds data
+            if (competition.odds && competition.odds.length > 0) {
+                // Look for moneyline odds
+                for (const odd of competition.odds) {
+                    // Check for moneyline in various possible formats
+                    let ourMoneyline = null;
+                    
+                    // Format 1: Check homeTeamOdds/awayTeamOdds properties
+                    if (odd.homeTeamOdds && odd.awayTeamOdds) {
+                        const homeOdds = odd.homeTeamOdds.moneyLine;
+                        const awayOdds = odd.awayTeamOdds.moneyLine;
+                        ourMoneyline = isHome ? homeOdds : awayOdds;
+                    }
+                    
+                    // Format 2: Check in competitors array
+                    if (!ourMoneyline && homeTeam.odds && awayTeam.odds) {
+                        ourMoneyline = isHome ? homeTeam.odds.moneyLine : awayTeam.odds.moneyLine;
+                    }
+                    
+                    if (ourMoneyline !== null && ourMoneyline !== undefined) {
+                        // Convert moneyline to probability
+                        // P = 100/(N+100) for "plus" odds (underdog, positive)
+                        // P = N/(N+100) for "minus" odds (favorite, negative)
+                        let probability;
+                        if (ourMoneyline > 0) {
+                            // Underdog (plus odds)
+                            probability = 100 / (ourMoneyline + 100);
+                        } else {
+                            // Favorite (minus odds)
+                            probability = Math.abs(ourMoneyline) / (Math.abs(ourMoneyline) + 100);
+                        }
+                        
+                        return { 
+                            probability: probability * 100, // Convert to percentage
+                            moneyline: ourMoneyline,
+                            isActual: true, 
+                            provider: odd.provider?.name 
+                        };
+                    }
+                }
+            }
+            
+            // Fallback: calculate estimate based on recent performance
             const ourTeamId = isHome ? homeTeam.team.id : awayTeam.team.id;
             const oppTeamId = isHome ? awayTeam.team.id : homeTeam.team.id;
             
@@ -434,9 +477,12 @@
             const homeAdvantage = isHome ? 2.5 : -2.5;
             const estimatedDiff = (ourMargin - oppMargin) + homeAdvantage;
             
-            const rounded = Math.round(estimatedDiff * 2) / 2;
+            // Convert margin difference to rough probability
+            // Using a simplified logistic approach: larger margin = higher win probability
+            const probability = 50 + (estimatedDiff * 2); // Rough estimate
+            const clampedProbability = Math.max(10, Math.min(90, probability)); // Keep between 10-90%
             
-            return rounded;
+            return { probability: clampedProbability, isActual: false };
         }
 
         async function loadAllTeams() {
@@ -776,13 +822,21 @@
             
             let spreadText = '';
             if (gameType === 'upcoming') {
-                const spread = await estimateSpread(competition, teamAbbr, sport);
-                if (spread !== null) {
-                    const sign = spread >= 0 ? '-' : '+';
-                    const absSpread = Math.abs(spread).toFixed(1);
-                    const isFavorite = spread >= 0;
+                const probResult = await getBettingProbability(competition, teamAbbr, sport);
+                if (probResult !== null) {
+                    const probability = probResult.probability.toFixed(1);
+                    const isFavorite = probResult.probability > 50;
                     const spreadClass = isFavorite ? 'favorite' : 'underdog';
-                    spreadText = `<span class="spread ${spreadClass}" title="Estimated based on recent performance">🤖 ${teamAbbr} ${sign}${absSpread}</span>`;
+                    
+                    if (probResult.isActual) {
+                        // Real betting line converted to probability
+                        const moneylineText = probResult.moneyline > 0 ? `+${probResult.moneyline}` : probResult.moneyline;
+                        const providerText = probResult.provider ? ` via ${probResult.provider}` : '';
+                        spreadText = `<span class="spread ${spreadClass}" title="Win probability from ${moneylineText} moneyline${providerText}">💰 ${probability}%</span>`;
+                    } else {
+                        // Calculated estimate
+                        spreadText = `<span class="spread ${spreadClass}" title="Estimated win probability based on recent performance">🤖 ${probability}%</span>`;
+                    }
                 }
             }
             
