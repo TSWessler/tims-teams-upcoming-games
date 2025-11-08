@@ -866,8 +866,13 @@
             
             let broadcastInfo = '';
             if (gameType !== 'past' && competition.broadcasts && competition.broadcasts.length > 0) {
-                const networks = competition.broadcasts.map(b => b.names[0]).join(', ');
-                broadcastInfo = `<div class="broadcast">📺 ${networks}</div>`;
+                const networks = competition.broadcasts
+                    .filter(b => b.names && b.names.length > 0)
+                    .map(b => b.names[0])
+                    .join(', ');
+                if (networks) {
+                    broadcastInfo = `<div class="broadcast">📺 ${networks}</div>`;
+                }
             }
             
             let opponentStandingsHtml = '';
