@@ -352,8 +352,8 @@
 
         async function loadOddsData() {
             try {
-                const response = await fetch('./data/odds.json');
-                if (!response.ok) {
+		const response = await fetch('https://raw.githubusercontent.com/TSWessler/tims-teams-upcoming-games/data/data/odds.json?t=' + Date.now());
+		if (!response.ok) {
                     console.warn('Could not load odds data, will use estimates');
                     return null;
                 }
@@ -368,8 +368,8 @@
 
         async function loadStandingsData() {
             try {
-                const response = await fetch('./data/standings.json');
-                if (!response.ok) {
+		const response = await fetch('https://raw.githubusercontent.com/TSWessler/tims-teams-upcoming-games/data/data/standings.json?t=' + Date.now());
+		if (!response.ok) {
                     console.warn('Could not load standings data, will fetch from ESPN');
                     return null;
                 }
