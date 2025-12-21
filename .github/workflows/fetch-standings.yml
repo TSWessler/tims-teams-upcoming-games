@@ -40,6 +40,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
+          ref: data
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Setup Node.js
@@ -59,4 +61,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add data/standings.json
           git diff --staged --quiet || git commit -m "chore: Update standings data"
-          git push
+          git push origin data
