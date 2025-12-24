@@ -620,8 +620,8 @@
                     
                     // First, try to get from cached standings data
                     if (standingsData && standingsData.teams) {
-                        const teamStandings = standingsData.teams.find(t => t.teamId === team.teamId);
-                        if (teamStandings) {
+                        const teamStandings = standingsData.teams.find(t => t.teamId === team.teamId && t.sport === team.sport);
+		    if (teamStandings) {
                             standings = teamStandings.standings;
                             if (teamStandings.standingSummary) {
                                 leagueRank = { text: teamStandings.standingSummary };
@@ -730,11 +730,20 @@
                 let record = '';
                 let rankingsText = '';
                 let standingsLink = '';
-                
-                if (team.sport.includes('hockey')) {
-                    standingsLink = 'https://www.espn.com/nhl/standings';
-                    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">Standings →</a></div>`;
-                } else if (team.sport.includes('basketball')) {
+
+	        if (team.sport.includes('hockey')) {            
+    		    const wins = stats.find(s => s.name === 'wins')?.value || 0;
+    		    const losses = stats.find(s => s.name === 'losses')?.value || 0;
+    		    const otLosses = stats.find(s => s.name === 'otLosses')?.value || 0;
+    		    record = `(${wins}-${losses}-${otLosses})`;
+    
+    		    if (leagueRank) {
+        	        rankingsText = ` - ${leagueRank.text}`;
+    		    }
+    
+    		    standingsLink = 'https://www.espn.com/nhl/standings';
+    		    standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
+		} else if (team.sport.includes('basketball')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
                     const winPct = stats.find(s => s.name === 'winPercent')?.value || 0;
