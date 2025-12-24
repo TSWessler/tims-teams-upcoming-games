@@ -11,7 +11,7 @@ const SPORTS = [
 ];
 
 const TEAMS = [
-  { name: 'Colorado Avalanche', sport: 'hockey/nhl', teamId: 21, abbr: 'COL' },
+  { name: 'Colorado Avalanche', sport: 'hockey/nhl', teamId: 17, abbr: 'COL' },
   { name: 'Denver Nuggets', sport: 'basketball/nba', teamId: 7, abbr: 'DEN' },
   { name: 'Denver Broncos', sport: 'football/nfl', teamId: 7, abbr: 'DEN' },
   { name: 'Colorado Buffaloes', sport: 'football/college-football', teamId: 38, abbr: 'COLO' }
