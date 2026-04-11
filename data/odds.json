@@ -1,348 +1,34 @@
 {
-  "lastUpdated": "2026-04-11T17:21:29.333Z",
-  "lastUpdatedMT": "4/11/2026, 11:21:29 AM",
+  "lastUpdated": "2026-04-11T21:22:22.744Z",
+  "lastUpdatedMT": "4/11/2026, 3:22:22 PM",
   "sports": [
     {
       "sport": "icehockey_nhl",
       "games": [
         {
-          "id": "b9f8b0e5f73a2b853613de9f9349f802",
-          "sport_key": "icehockey_nhl",
-          "sport_title": "NHL",
-          "commence_time": "2026-04-11T16:38:00Z",
-          "home_team": "Boston Bruins",
-          "away_team": "Tampa Bay Lightning",
-          "bookmakers": [
-            {
-              "key": "fanduel",
-              "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
-                  "outcomes": [
-                    {
-                      "name": "Boston Bruins",
-                      "price": -111
-                    },
-                    {
-                      "name": "Tampa Bay Lightning",
-                      "price": -115
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "draftkings",
-              "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Boston Bruins",
-                      "price": -115
-                    },
-                    {
-                      "name": "Tampa Bay Lightning",
-                      "price": -115
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "mybookieag",
-              "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
-                  "outcomes": [
-                    {
-                      "name": "Boston Bruins",
-                      "price": -111
-                    },
-                    {
-                      "name": "Tampa Bay Lightning",
-                      "price": -118
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betmgm",
-              "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Boston Bruins",
-                      "price": -110
-                    },
-                    {
-                      "name": "Tampa Bay Lightning",
-                      "price": -115
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "bovada",
-              "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
-                  "outcomes": [
-                    {
-                      "name": "Boston Bruins",
-                      "price": -110
-                    },
-                    {
-                      "name": "Tampa Bay Lightning",
-                      "price": -120
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "705a57dffd10478fbab59b211c54ee19",
-          "sport_key": "icehockey_nhl",
-          "sport_title": "NHL",
-          "commence_time": "2026-04-11T17:08:00Z",
-          "home_team": "New York Islanders",
-          "away_team": "Ottawa Senators",
-          "bookmakers": [
-            {
-              "key": "fanduel",
-              "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 110
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -140
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "draftkings",
-              "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 100
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -130
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betonlineag",
-              "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:08:17Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:08:17Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 112
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -127
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "lowvig",
-              "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:08:17Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:08:17Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 112
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -127
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betus",
-              "title": "BetUS",
-              "last_update": "2026-04-11T17:08:53Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:08:53Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 110
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -130
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "mybookieag",
-              "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 105
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -133
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betmgm",
-              "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 100
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -125
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "bovada",
-              "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
-                  "outcomes": [
-                    {
-                      "name": "New York Islanders",
-                      "price": 115
-                    },
-                    {
-                      "name": "Ottawa Senators",
-                      "price": -150
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
           "id": "6b7f5c39f42d1d9e4091b0c5f011711e",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T19:00:00Z",
+          "commence_time": "2026-04-11T19:20:00Z",
           "home_team": "Pittsburgh Penguins",
           "away_team": "Washington Capitals",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Pittsburgh Penguins",
-                      "price": 108
-                    },
-                    {
-                      "name": "Washington Capitals",
-                      "price": -132
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:23Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Pittsburgh Penguins",
-                      "price": 106
+                      "price": 420
                     },
                     {
                       "name": "Washington Capitals",
-                      "price": -128
+                      "price": -650
                     }
                   ]
                 }
@@ -351,82 +37,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Pittsburgh Penguins",
-                      "price": 110
+                      "price": 400
                     },
                     {
                       "name": "Washington Capitals",
-                      "price": -130
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betonlineag",
-              "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Pittsburgh Penguins",
-                      "price": 113
-                    },
-                    {
-                      "name": "Washington Capitals",
-                      "price": -128
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "lowvig",
-              "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Pittsburgh Penguins",
-                      "price": 113
-                    },
-                    {
-                      "name": "Washington Capitals",
-                      "price": -128
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betus",
-              "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
-                  "outcomes": [
-                    {
-                      "name": "Pittsburgh Penguins",
-                      "price": 110
-                    },
-                    {
-                      "name": "Washington Capitals",
-                      "price": -130
+                      "price": -620
                     }
                   ]
                 }
@@ -435,19 +58,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Pittsburgh Penguins",
-                      "price": 104
+                      "price": 380
                     },
                     {
                       "name": "Washington Capitals",
-                      "price": -127
+                      "price": -556
                     }
                   ]
                 }
@@ -456,19 +79,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Pittsburgh Penguins",
-                      "price": 110
+                      "price": 950
                     },
                     {
                       "name": "Washington Capitals",
-                      "price": -135
+                      "price": -2500
                     }
                   ]
                 }
@@ -477,19 +100,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Pittsburgh Penguins",
-                      "price": 105
+                      "price": 300
                     },
                     {
                       "name": "Washington Capitals",
-                      "price": -125
+                      "price": -450
                     }
                   ]
                 }
@@ -501,47 +124,26 @@
           "id": "c41c5268371cb927b4a4817e53ebe98c",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T20:00:00Z",
+          "commence_time": "2026-04-11T20:08:00Z",
           "home_team": "Los Angeles Kings",
           "away_team": "Edmonton Oilers",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Edmonton Oilers",
-                      "price": -110
-                    },
-                    {
-                      "name": "Los Angeles Kings",
-                      "price": -110
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:23Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Edmonton Oilers",
-                      "price": -102
+                      "price": 240
                     },
                     {
                       "name": "Los Angeles Kings",
-                      "price": -118
+                      "price": -330
                     }
                   ]
                 }
@@ -550,82 +152,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Edmonton Oilers",
-                      "price": 102
+                      "price": 210
                     },
                     {
                       "name": "Los Angeles Kings",
-                      "price": -122
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betonlineag",
-              "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Edmonton Oilers",
-                      "price": 105
-                    },
-                    {
-                      "name": "Los Angeles Kings",
-                      "price": -119
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "lowvig",
-              "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Edmonton Oilers",
-                      "price": 105
-                    },
-                    {
-                      "name": "Los Angeles Kings",
-                      "price": -119
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betus",
-              "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
-                  "outcomes": [
-                    {
-                      "name": "Edmonton Oilers",
-                      "price": 100
-                    },
-                    {
-                      "name": "Los Angeles Kings",
-                      "price": -120
+                      "price": -280
                     }
                   ]
                 }
@@ -634,19 +173,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Edmonton Oilers",
-                      "price": -101
+                      "price": 210
                     },
                     {
                       "name": "Los Angeles Kings",
-                      "price": -121
+                      "price": -286
                     }
                   ]
                 }
@@ -655,19 +194,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Edmonton Oilers",
-                      "price": 100
+                      "price": 210
                     },
                     {
                       "name": "Los Angeles Kings",
-                      "price": -120
+                      "price": -275
                     }
                   ]
                 }
@@ -676,19 +215,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Edmonton Oilers",
-                      "price": -103
+                      "price": 210
                     },
                     {
                       "name": "Los Angeles Kings",
-                      "price": -117
+                      "price": -285
                     }
                   ]
                 }
@@ -700,47 +239,26 @@
           "id": "7fe1fbea33dee61b8d438e780410bdb4",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T21:00:00Z",
+          "commence_time": "2026-04-11T21:08:00Z",
           "home_team": "Utah Mammoth",
           "away_team": "Carolina Hurricanes",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Carolina Hurricanes",
-                      "price": 107
-                    },
-                    {
-                      "name": "Utah Mammoth",
-                      "price": -130
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:23Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 108
+                      "price": -188
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -130
+                      "price": 146
                     }
                   ]
                 }
@@ -749,19 +267,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 110
+                      "price": -180
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -130
+                      "price": 140
                     }
                   ]
                 }
@@ -770,19 +288,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:10Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:10Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 117
+                      "price": 115
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -133
+                      "price": -130
                     }
                   ]
                 }
@@ -791,19 +309,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:09Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:09Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 117
+                      "price": 115
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -133
+                      "price": -130
                     }
                   ]
                 }
@@ -812,19 +330,19 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:07:53Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:07:53Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 115
+                      "price": 105
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -135
+                      "price": -125
                     }
                   ]
                 }
@@ -833,19 +351,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 108
+                      "price": -200
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -132
+                      "price": 155
                     }
                   ]
                 }
@@ -854,19 +372,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 117
+                      "price": -190
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -137
+                      "price": 145
                     }
                   ]
                 }
@@ -875,19 +393,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Carolina Hurricanes",
-                      "price": 110
+                      "price": -180
                     },
                     {
                       "name": "Utah Mammoth",
-                      "price": -130
+                      "price": 140
                     }
                   ]
                 }
@@ -899,47 +417,26 @@
           "id": "1202108d90d74b3dcae725f88457dd39",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T21:00:00Z",
+          "commence_time": "2026-04-11T21:08:00Z",
           "home_team": "Chicago Blackhawks",
           "away_team": "St Louis Blues",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Chicago Blackhawks",
-                      "price": 123
-                    },
-                    {
-                      "name": "St Louis Blues",
-                      "price": -150
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Chicago Blackhawks",
-                      "price": 118
+                      "price": 122
                     },
                     {
                       "name": "St Louis Blues",
-                      "price": -142
+                      "price": -156
                     }
                   ]
                 }
@@ -948,19 +445,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Chicago Blackhawks",
-                      "price": 124
+                      "price": 114
                     },
                     {
                       "name": "St Louis Blues",
-                      "price": -148
+                      "price": -145
                     }
                   ]
                 }
@@ -969,19 +466,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:54Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:54Z",
                   "outcomes": [
                     {
                       "name": "Chicago Blackhawks",
-                      "price": 125
+                      "price": 128
                     },
                     {
                       "name": "St Louis Blues",
-                      "price": -142
+                      "price": -145
                     }
                   ]
                 }
@@ -990,19 +487,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:52Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:52Z",
                   "outcomes": [
                     {
                       "name": "Chicago Blackhawks",
-                      "price": 125
+                      "price": 128
                     },
                     {
                       "name": "St Louis Blues",
-                      "price": -142
+                      "price": -145
                     }
                   ]
                 }
@@ -1011,15 +508,57 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:07:53Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:07:53Z",
                   "outcomes": [
                     {
                       "name": "Chicago Blackhawks",
-                      "price": 129
+                      "price": 125
+                    },
+                    {
+                      "name": "St Louis Blues",
+                      "price": -145
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "mybookieag",
+              "title": "MyBookie.ag",
+              "last_update": "2026-04-11T21:21:05Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:05Z",
+                  "outcomes": [
+                    {
+                      "name": "Chicago Blackhawks",
+                      "price": 120
+                    },
+                    {
+                      "name": "St Louis Blues",
+                      "price": -154
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Chicago Blackhawks",
+                      "price": 118
                     },
                     {
                       "name": "St Louis Blues",
@@ -1030,63 +569,21 @@
               ]
             },
             {
-              "key": "mybookieag",
-              "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
-                  "outcomes": [
-                    {
-                      "name": "Chicago Blackhawks",
-                      "price": 119
-                    },
-                    {
-                      "name": "St Louis Blues",
-                      "price": -145
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "key": "betmgm",
-              "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
-                  "outcomes": [
-                    {
-                      "name": "Chicago Blackhawks",
-                      "price": 118
-                    },
-                    {
-                      "name": "St Louis Blues",
-                      "price": -145
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Chicago Blackhawks",
-                      "price": 133
+                      "price": 110
                     },
                     {
                       "name": "St Louis Blues",
-                      "price": -155
+                      "price": -145
                     }
                   ]
                 }
@@ -1098,47 +595,26 @@
           "id": "5ef60096243b0d089602fdf1f288c8bb",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T21:00:00Z",
+          "commence_time": "2026-04-11T21:08:00Z",
           "home_team": "Dallas Stars",
           "away_team": "New York Rangers",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Dallas Stars",
-                      "price": -195
-                    },
-                    {
-                      "name": "New York Rangers",
-                      "price": 155
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -184
+                      "price": -170
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 155
+                      "price": 132
                     }
                   ]
                 }
@@ -1147,19 +623,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -198
+                      "price": -175
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 164
+                      "price": 135
                     }
                   ]
                 }
@@ -1168,19 +644,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:54Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:54Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -183
+                      "price": -173
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 160
+                      "price": 152
                     }
                   ]
                 }
@@ -1189,19 +665,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:09Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:09Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -183
+                      "price": -173
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 160
+                      "price": 152
                     }
                   ]
                 }
@@ -1210,19 +686,19 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:07:53Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:07:53Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -190
+                      "price": -175
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 163
+                      "price": 150
                     }
                   ]
                 }
@@ -1231,19 +707,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -202
+                      "price": -154
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 162
+                      "price": 120
                     }
                   ]
                 }
@@ -1252,19 +728,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -190
+                      "price": -170
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 154
+                      "price": 135
                     }
                   ]
                 }
@@ -1273,19 +749,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Dallas Stars",
-                      "price": -185
+                      "price": -165
                     },
                     {
                       "name": "New York Rangers",
-                      "price": 160
+                      "price": 125
                     }
                   ]
                 }
@@ -1297,43 +773,22 @@
           "id": "a3ce07b80e1bdb4c4be7fead2bc1bb34",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T21:00:00Z",
+          "commence_time": "2026-04-11T21:08:00Z",
           "home_team": "Detroit Red Wings",
           "away_team": "New Jersey Devils",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Detroit Red Wings",
-                      "price": -150
-                    },
-                    {
-                      "name": "New Jersey Devils",
-                      "price": 123
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -137
+                      "price": -146
                     },
                     {
                       "name": "New Jersey Devils",
@@ -1346,19 +801,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -135
+                      "price": -154
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 114
+                      "price": 120
                     }
                   ]
                 }
@@ -1367,19 +822,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:54Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:54Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -133
+                      "price": -132
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 117
+                      "price": 116
                     }
                   ]
                 }
@@ -1388,19 +843,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:52Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:52Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -133
+                      "price": -132
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 117
+                      "price": 116
                     }
                   ]
                 }
@@ -1409,19 +864,19 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:07:53Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:07:53Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -135
+                      "price": -130
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 115
+                      "price": 110
                     }
                   ]
                 }
@@ -1430,19 +885,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -141
+                      "price": -143
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 115
+                      "price": 110
                     }
                   ]
                 }
@@ -1451,19 +906,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
-                      "price": -137
+                      "price": -135
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 117
+                      "price": 105
                     }
                   ]
                 }
@@ -1472,11 +927,11 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Detroit Red Wings",
@@ -1484,7 +939,7 @@
                     },
                     {
                       "name": "New Jersey Devils",
-                      "price": 115
+                      "price": 105
                     }
                   ]
                 }
@@ -1496,47 +951,26 @@
           "id": "71e645a6f544e0eb4543265a1613ca61",
           "sport_key": "icehockey_nhl",
           "sport_title": "NHL",
-          "commence_time": "2026-04-11T21:00:00Z",
+          "commence_time": "2026-04-11T21:08:00Z",
           "home_team": "Nashville Predators",
           "away_team": "Minnesota Wild",
           "bookmakers": [
             {
-              "key": "betrivers",
-              "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
-                  "outcomes": [
-                    {
-                      "name": "Minnesota Wild",
-                      "price": -137
-                    },
-                    {
-                      "name": "Nashville Predators",
-                      "price": 114
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -130
+                      "price": 100
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 108
+                      "price": -128
                     }
                   ]
                 }
@@ -1545,19 +979,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -130
+                      "price": 100
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 110
+                      "price": -130
                     }
                   ]
                 }
@@ -1566,19 +1000,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:10:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:10:38Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -129
+                      "price": -109
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 114
+                      "price": -105
                     }
                   ]
                 }
@@ -1587,19 +1021,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:09:52Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:09:52Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -129
+                      "price": -109
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 114
+                      "price": -105
                     }
                   ]
                 }
@@ -1608,19 +1042,19 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:07:53Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:07:53Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -130
+                      "price": -110
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 110
+                      "price": -110
                     }
                   ]
                 }
@@ -1629,19 +1063,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -131
+                      "price": 100
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 107
+                      "price": -133
                     }
                   ]
                 }
@@ -1650,19 +1084,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -130
+                      "price": 100
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 105
+                      "price": -125
                     }
                   ]
                 }
@@ -1671,19 +1105,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Minnesota Wild",
-                      "price": -135
+                      "price": 105
                     },
                     {
                       "name": "Nashville Predators",
-                      "price": 115
+                      "price": -135
                     }
                   ]
                 }
@@ -1702,11 +1136,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1723,11 +1157,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1744,11 +1178,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1765,11 +1199,11 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1786,11 +1220,11 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:00Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:00Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1807,11 +1241,11 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1828,19 +1262,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
-                      "price": 111
+                      "price": 109
                     },
                     {
                       "name": "Seattle Kraken",
-                      "price": -136
+                      "price": -133
                     }
                   ]
                 }
@@ -1849,19 +1283,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
-                      "price": 115
+                      "price": 110
                     },
                     {
                       "name": "Seattle Kraken",
-                      "price": -135
+                      "price": -130
                     }
                   ]
                 }
@@ -1870,11 +1304,11 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
@@ -1901,11 +1335,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
@@ -1922,19 +1356,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
-                      "price": 110
+                      "price": 108
                     },
                     {
                       "name": "Montréal Canadiens",
-                      "price": -132
+                      "price": -130
                     }
                   ]
                 }
@@ -1943,19 +1377,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
-                      "price": 114
+                      "price": 110
                     },
                     {
                       "name": "Montréal Canadiens",
-                      "price": -135
+                      "price": -130
                     }
                   ]
                 }
@@ -1964,19 +1398,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
-                      "price": 108
+                      "price": 117
                     },
                     {
                       "name": "Montréal Canadiens",
-                      "price": -122
+                      "price": -133
                     }
                   ]
                 }
@@ -1985,19 +1419,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:00Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:00Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
-                      "price": 108
+                      "price": 117
                     },
                     {
                       "name": "Montréal Canadiens",
-                      "price": -122
+                      "price": -133
                     }
                   ]
                 }
@@ -2006,11 +1440,11 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
@@ -2027,15 +1461,36 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
-                      "price": 110
+                      "price": 111
+                    },
+                    {
+                      "name": "Montréal Canadiens",
+                      "price": -136
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "bovada",
+              "title": "Bovada",
+              "last_update": "2026-04-11T21:20:36Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:20:36Z",
+                  "outcomes": [
+                    {
+                      "name": "Columbus Blue Jackets",
+                      "price": 115
                     },
                     {
                       "name": "Montréal Canadiens",
@@ -2046,34 +1501,13 @@
               ]
             },
             {
-              "key": "bovada",
-              "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
-              "markets": [
-                {
-                  "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
-                  "outcomes": [
-                    {
-                      "name": "Columbus Blue Jackets",
-                      "price": 112
-                    },
-                    {
-                      "name": "Montréal Canadiens",
-                      "price": -133
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Columbus Blue Jackets",
@@ -2100,11 +1534,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
@@ -2121,11 +1555,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:23Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
@@ -2142,11 +1576,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
@@ -2163,19 +1597,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
-                      "price": 111
+                      "price": 112
                     },
                     {
                       "name": "Toronto Maple Leafs",
-                      "price": -126
+                      "price": -127
                     }
                   ]
                 }
@@ -2184,19 +1618,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:00Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:00Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
-                      "price": 111
+                      "price": 112
                     },
                     {
                       "name": "Toronto Maple Leafs",
-                      "price": -126
+                      "price": -127
                     }
                   ]
                 }
@@ -2205,11 +1639,11 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
@@ -2226,11 +1660,11 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
@@ -2247,19 +1681,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
-                      "price": 107
+                      "price": 110
                     },
                     {
                       "name": "Toronto Maple Leafs",
-                      "price": -128
+                      "price": -130
                     }
                   ]
                 }
@@ -2268,19 +1702,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Florida Panthers",
-                      "price": 105
+                      "price": 110
                     },
                     {
                       "name": "Toronto Maple Leafs",
-                      "price": -130
+                      "price": -135
                     }
                   ]
                 }
@@ -2299,19 +1733,19 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 108
+                      "price": 106
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -132
+                      "price": -127
                     }
                   ]
                 }
@@ -2320,11 +1754,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:22Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
@@ -2341,19 +1775,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 110
+                      "price": 105
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -130
+                      "price": -125
                     }
                   ]
                 }
@@ -2362,19 +1796,19 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 114
+                      "price": 109
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -129
+                      "price": -123
                     }
                   ]
                 }
@@ -2383,19 +1817,19 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:00Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:00Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 114
+                      "price": 109
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -129
+                      "price": -123
                     }
                   ]
                 }
@@ -2404,19 +1838,19 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 110
+                      "price": 105
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -130
+                      "price": -125
                     }
                   ]
                 }
@@ -2425,15 +1859,15 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 107
+                      "price": 106
                     },
                     {
                       "name": "Winnipeg Jets",
@@ -2446,19 +1880,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 110
+                      "price": 102
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -130
+                      "price": -122
                     }
                   ]
                 }
@@ -2467,19 +1901,19 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Philadelphia Flyers",
-                      "price": 110
+                      "price": 105
                     },
                     {
                       "name": "Winnipeg Jets",
-                      "price": -135
+                      "price": -130
                     }
                   ]
                 }
@@ -2498,11 +1932,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2519,11 +1953,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:23Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2540,11 +1974,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2561,11 +1995,11 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2582,11 +2016,11 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:00Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:00Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2603,11 +2037,11 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2624,11 +2058,11 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2645,19 +2079,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
-                      "price": -133
+                      "price": -130
                     },
                     {
                       "name": "Vegas Golden Knights",
-                      "price": 112
+                      "price": 110
                     }
                   ]
                 }
@@ -2666,11 +2100,11 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Colorado Avalanche",
@@ -2697,11 +2131,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
@@ -2718,11 +2152,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:23Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:23Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
@@ -2739,19 +2173,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
-                      "price": -218
+                      "price": -205
                     },
                     {
                       "name": "Vancouver Canucks",
-                      "price": 180
+                      "price": 170
                     }
                   ]
                 }
@@ -2760,11 +2194,11 @@
             {
               "key": "betonlineag",
               "title": "BetOnline.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
@@ -2781,11 +2215,11 @@
             {
               "key": "lowvig",
               "title": "LowVig.ag",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:22:00Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:22:00Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
@@ -2802,11 +2236,11 @@
             {
               "key": "betus",
               "title": "BetUS",
-              "last_update": "2026-04-11T17:20:58Z",
+              "last_update": "2026-04-11T21:22:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:58Z",
+                  "last_update": "2026-04-11T21:22:02Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
@@ -2823,19 +2257,19 @@
             {
               "key": "mybookieag",
               "title": "MyBookie.ag",
-              "last_update": "2026-04-11T17:20:21Z",
+              "last_update": "2026-04-11T21:21:05Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:21Z",
+                  "last_update": "2026-04-11T21:21:05Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
-                      "price": -220
+                      "price": -222
                     },
                     {
                       "name": "Vancouver Canucks",
-                      "price": 175
+                      "price": 177
                     }
                   ]
                 }
@@ -2844,19 +2278,19 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:15:25Z",
+              "last_update": "2026-04-11T21:20:36Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:15:25Z",
+                  "last_update": "2026-04-11T21:20:36Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
-                      "price": -205
+                      "price": -220
                     },
                     {
                       "name": "Vancouver Canucks",
-                      "price": 173
+                      "price": 180
                     }
                   ]
                 }
@@ -2865,11 +2299,11 @@
             {
               "key": "betmgm",
               "title": "BetMGM",
-              "last_update": "2026-04-11T17:20:09Z",
+              "last_update": "2026-04-11T21:22:13Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:09Z",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "San Jose Sharks",
@@ -2878,6 +2312,58 @@
                     {
                       "name": "Vancouver Canucks",
                       "price": 170
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "eb2e9eeee862cc6668c7304236c8b6a2",
+          "sport_key": "icehockey_nhl",
+          "sport_title": "NHL",
+          "commence_time": "2026-04-12T19:00:00Z",
+          "home_team": "Washington Capitals",
+          "away_team": "Pittsburgh Penguins",
+          "bookmakers": [
+            {
+              "key": "draftkings",
+              "title": "DraftKings",
+              "last_update": "2026-04-11T21:21:38Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:38Z",
+                  "outcomes": [
+                    {
+                      "name": "Pittsburgh Penguins",
+                      "price": 136
+                    },
+                    {
+                      "name": "Washington Capitals",
+                      "price": -162
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Pittsburgh Penguins",
+                      "price": 125
+                    },
+                    {
+                      "name": "Washington Capitals",
+                      "price": -150
                     }
                   ]
                 }
@@ -2896,11 +2382,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Boston Bruins",
@@ -2909,6 +2395,48 @@
                     {
                       "name": "Columbus Blue Jackets",
                       "price": -135
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Boston Bruins",
+                      "price": 118
+                    },
+                    {
+                      "name": "Columbus Blue Jackets",
+                      "price": -142
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Boston Bruins",
+                      "price": 115
+                    },
+                    {
+                      "name": "Columbus Blue Jackets",
+                      "price": -140
                     }
                   ]
                 }
@@ -2927,11 +2455,53 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
+                  "outcomes": [
+                    {
+                      "name": "Montréal Canadiens",
+                      "price": -110
+                    },
+                    {
+                      "name": "New York Islanders",
+                      "price": -110
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Montréal Canadiens",
+                      "price": -113
+                    },
+                    {
+                      "name": "New York Islanders",
+                      "price": -106
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
                   "outcomes": [
                     {
                       "name": "Montréal Canadiens",
@@ -2958,11 +2528,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "New Jersey Devils",
@@ -2971,6 +2541,48 @@
                     {
                       "name": "Ottawa Senators",
                       "price": -142
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "New Jersey Devils",
+                      "price": 115
+                    },
+                    {
+                      "name": "Ottawa Senators",
+                      "price": -138
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "New Jersey Devils",
+                      "price": 120
+                    },
+                    {
+                      "name": "Ottawa Senators",
+                      "price": -145
                     }
                   ]
                 }
@@ -2989,11 +2601,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Anaheim Ducks",
@@ -3010,11 +2622,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:12Z",
+              "last_update": "2026-04-11T21:22:01Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:12Z",
+                  "last_update": "2026-04-11T21:22:01Z",
                   "outcomes": [
                     {
                       "name": "Anaheim Ducks",
@@ -3023,6 +2635,48 @@
                     {
                       "name": "Vancouver Canucks",
                       "price": 230
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Anaheim Ducks",
+                      "price": -330
+                    },
+                    {
+                      "name": "Vancouver Canucks",
+                      "price": 260
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Anaheim Ducks",
+                      "price": -300
+                    },
+                    {
+                      "name": "Vancouver Canucks",
+                      "price": 240
                     }
                   ]
                 }
@@ -3041,15 +2695,57 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:21:09Z",
+              "last_update": "2026-04-11T21:21:38Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:09Z",
+                  "last_update": "2026-04-11T21:21:38Z",
                   "outcomes": [
                     {
                       "name": "Calgary Flames",
                       "price": 142
+                    },
+                    {
+                      "name": "Utah Mammoth",
+                      "price": -170
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Calgary Flames",
+                      "price": 134
+                    },
+                    {
+                      "name": "Utah Mammoth",
+                      "price": -162
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:22:13Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:13Z",
+                  "outcomes": [
+                    {
+                      "name": "Calgary Flames",
+                      "price": 140
                     },
                     {
                       "name": "Utah Mammoth",
@@ -3077,19 +2773,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Atlanta Hawks",
-                      "price": -240
+                      "price": -152
                     },
                     {
                       "name": "Miami Heat",
-                      "price": 198
+                      "price": 128
                     }
                   ]
                 }
@@ -3098,19 +2794,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Atlanta Hawks",
-                      "price": -250
+                      "price": -148
                     },
                     {
                       "name": "Miami Heat",
-                      "price": 205
+                      "price": 124
                     }
                   ]
                 }
@@ -3119,19 +2815,19 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Atlanta Hawks",
-                      "price": -245
+                      "price": -159
                     },
                     {
                       "name": "Miami Heat",
-                      "price": 190
+                      "price": 128
                     }
                   ]
                 }
@@ -3150,19 +2846,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Boston Celtics",
-                      "price": 142
+                      "price": 310
                     },
                     {
                       "name": "Orlando Magic",
-                      "price": -168
+                      "price": -390
                     }
                   ]
                 }
@@ -3171,19 +2867,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Boston Celtics",
-                      "price": 140
+                      "price": 320
                     },
                     {
                       "name": "Orlando Magic",
-                      "price": -166
+                      "price": -410
                     }
                   ]
                 }
@@ -3192,19 +2888,19 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Boston Celtics",
-                      "price": 133
+                      "price": 275
                     },
                     {
                       "name": "Orlando Magic",
-                      "price": -167
+                      "price": -375
                     }
                   ]
                 }
@@ -3223,19 +2919,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Brooklyn Nets",
-                      "price": 1400
+                      "price": 1600
                     },
                     {
                       "name": "Toronto Raptors",
-                      "price": -3500
+                      "price": -4500
                     }
                   ]
                 }
@@ -3244,19 +2940,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Brooklyn Nets",
-                      "price": 1300
+                      "price": 1500
                     },
                     {
                       "name": "Toronto Raptors",
-                      "price": -2800
+                      "price": -3600
                     }
                   ]
                 }
@@ -3265,11 +2961,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Brooklyn Nets",
@@ -3278,6 +2974,27 @@
                     {
                       "name": "Toronto Raptors",
                       "price": -2500
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Brooklyn Nets",
+                      "price": 1350
+                    },
+                    {
+                      "name": "Toronto Raptors",
+                      "price": -5000
                     }
                   ]
                 }
@@ -3296,19 +3013,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Charlotte Hornets",
-                      "price": -295
+                      "price": -490
                     },
                     {
                       "name": "New York Knicks",
-                      "price": 240
+                      "price": 380
                     }
                   ]
                 }
@@ -3317,19 +3034,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Charlotte Hornets",
-                      "price": -325
+                      "price": -470
                     },
                     {
                       "name": "New York Knicks",
-                      "price": 260
+                      "price": 360
                     }
                   ]
                 }
@@ -3338,19 +3055,19 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Charlotte Hornets",
-                      "price": -315
+                      "price": -530
                     },
                     {
                       "name": "New York Knicks",
-                      "price": 240
+                      "price": 370
                     }
                   ]
                 }
@@ -3369,19 +3086,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Cleveland Cavaliers",
-                      "price": -1500
+                      "price": -800
                     },
                     {
                       "name": "Washington Wizards",
-                      "price": 870
+                      "price": 560
                     }
                   ]
                 }
@@ -3390,19 +3107,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Cleveland Cavaliers",
-                      "price": -1650
+                      "price": -800
                     },
                     {
                       "name": "Washington Wizards",
-                      "price": 950
+                      "price": 550
                     }
                   ]
                 }
@@ -3411,19 +3128,19 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Cleveland Cavaliers",
-                      "price": -1667
+                      "price": -910
                     },
                     {
                       "name": "Washington Wizards",
-                      "price": 800
+                      "price": 550
                     }
                   ]
                 }
@@ -3442,19 +3159,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Detroit Pistons",
-                      "price": -700
+                      "price": -670
                     },
                     {
                       "name": "Indiana Pacers",
-                      "price": 500
+                      "price": 490
                     }
                   ]
                 }
@@ -3463,19 +3180,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Detroit Pistons",
-                      "price": -850
+                      "price": -650
                     },
                     {
                       "name": "Indiana Pacers",
-                      "price": 575
+                      "price": 470
                     }
                   ]
                 }
@@ -3484,19 +3201,40 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Detroit Pistons",
-                      "price": -770
+                      "price": -670
                     },
                     {
                       "name": "Indiana Pacers",
-                      "price": 500
+                      "price": 450
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Detroit Pistons",
+                      "price": -800
+                    },
+                    {
+                      "name": "Indiana Pacers",
+                      "price": 550
                     }
                   ]
                 }
@@ -3515,11 +3253,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Milwaukee Bucks",
@@ -3536,11 +3274,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Milwaukee Bucks",
@@ -3557,11 +3295,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Milwaukee Bucks",
@@ -3570,6 +3308,121 @@
                     {
                       "name": "Philadelphia 76ers",
                       "price": -1100
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Milwaukee Bucks",
+                      "price": 700
+                    },
+                    {
+                      "name": "Philadelphia 76ers",
+                      "price": -1100
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c8cde1aa908581185caf0bb87659055a",
+          "sport_key": "basketball_nba",
+          "sport_title": "NBA",
+          "commence_time": "2026-04-13T00:40:00Z",
+          "home_team": "Dallas Mavericks",
+          "away_team": "Chicago Bulls",
+          "bookmakers": [
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:11Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:11Z",
+                  "outcomes": [
+                    {
+                      "name": "Chicago Bulls",
+                      "price": 230
+                    },
+                    {
+                      "name": "Dallas Mavericks",
+                      "price": -280
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betrivers",
+              "title": "BetRivers",
+              "last_update": "2026-04-11T21:21:59Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:59Z",
+                  "outcomes": [
+                    {
+                      "name": "Chicago Bulls",
+                      "price": 210
+                    },
+                    {
+                      "name": "Dallas Mavericks",
+                      "price": -275
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "draftkings",
+              "title": "DraftKings",
+              "last_update": "2026-04-11T21:21:02Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:02Z",
+                  "outcomes": [
+                    {
+                      "name": "Chicago Bulls",
+                      "price": 240
+                    },
+                    {
+                      "name": "Dallas Mavericks",
+                      "price": -298
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Chicago Bulls",
+                      "price": 240
+                    },
+                    {
+                      "name": "Dallas Mavericks",
+                      "price": -300
                     }
                   ]
                 }
@@ -3588,19 +3441,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Denver Nuggets",
-                      "price": 116
+                      "price": 164
                     },
                     {
                       "name": "San Antonio Spurs",
-                      "price": -136
+                      "price": -196
                     }
                   ]
                 }
@@ -3609,19 +3462,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Denver Nuggets",
-                      "price": 114
+                      "price": 164
                     },
                     {
                       "name": "San Antonio Spurs",
-                      "price": -135
+                      "price": -198
                     }
                   ]
                 }
@@ -3630,19 +3483,19 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Denver Nuggets",
-                      "price": 106
+                      "price": 160
                     },
                     {
                       "name": "San Antonio Spurs",
-                      "price": -132
+                      "price": -200
                     }
                   ]
                 }
@@ -3661,11 +3514,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Golden State Warriors",
@@ -3682,11 +3535,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Golden State Warriors",
@@ -3703,19 +3556,113 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Golden State Warriors",
-                      "price": 270
+                      "price": 265
                     },
                     {
                       "name": "Los Angeles Clippers",
-                      "price": -360
+                      "price": -345
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Golden State Warriors",
+                      "price": 275
+                    },
+                    {
+                      "name": "Los Angeles Clippers",
+                      "price": -350
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fdd561cce076bab5eb0f0651d1d0f8e4",
+          "sport_key": "basketball_nba",
+          "sport_title": "NBA",
+          "commence_time": "2026-04-13T00:40:00Z",
+          "home_team": "Houston Rockets",
+          "away_team": "Memphis Grizzlies",
+          "bookmakers": [
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:11Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:11Z",
+                  "outcomes": [
+                    {
+                      "name": "Houston Rockets",
+                      "price": -1500
+                    },
+                    {
+                      "name": "Memphis Grizzlies",
+                      "price": 870
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "draftkings",
+              "title": "DraftKings",
+              "last_update": "2026-04-11T21:21:02Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:02Z",
+                  "outcomes": [
+                    {
+                      "name": "Houston Rockets",
+                      "price": -1350
+                    },
+                    {
+                      "name": "Memphis Grizzlies",
+                      "price": 800
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betrivers",
+              "title": "BetRivers",
+              "last_update": "2026-04-11T21:21:59Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:59Z",
+                  "outcomes": [
+                    {
+                      "name": "Houston Rockets",
+                      "price": -1430
+                    },
+                    {
+                      "name": "Memphis Grizzlies",
+                      "price": 700
                     }
                   ]
                 }
@@ -3734,11 +3681,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Los Angeles Lakers",
@@ -3747,6 +3694,163 @@
                     {
                       "name": "Utah Jazz",
                       "price": 980
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "draftkings",
+              "title": "DraftKings",
+              "last_update": "2026-04-11T21:21:02Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:02Z",
+                  "outcomes": [
+                    {
+                      "name": "Los Angeles Lakers",
+                      "price": -2100
+                    },
+                    {
+                      "name": "Utah Jazz",
+                      "price": 1100
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betrivers",
+              "title": "BetRivers",
+              "last_update": "2026-04-11T21:21:59Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:59Z",
+                  "outcomes": [
+                    {
+                      "name": "Los Angeles Lakers",
+                      "price": -1667
+                    },
+                    {
+                      "name": "Utah Jazz",
+                      "price": 850
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Los Angeles Lakers",
+                      "price": -2000
+                    },
+                    {
+                      "name": "Utah Jazz",
+                      "price": 950
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "47ede7b5685ae38218b5c2ea1ffd1699",
+          "sport_key": "basketball_nba",
+          "sport_title": "NBA",
+          "commence_time": "2026-04-13T00:40:00Z",
+          "home_team": "Minnesota Timberwolves",
+          "away_team": "New Orleans Pelicans",
+          "bookmakers": [
+            {
+              "key": "fanduel",
+              "title": "FanDuel",
+              "last_update": "2026-04-11T21:22:11Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:22:11Z",
+                  "outcomes": [
+                    {
+                      "name": "Minnesota Timberwolves",
+                      "price": -550
+                    },
+                    {
+                      "name": "New Orleans Pelicans",
+                      "price": 410
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betrivers",
+              "title": "BetRivers",
+              "last_update": "2026-04-11T21:21:59Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:59Z",
+                  "outcomes": [
+                    {
+                      "name": "Minnesota Timberwolves",
+                      "price": -590
+                    },
+                    {
+                      "name": "New Orleans Pelicans",
+                      "price": 400
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "draftkings",
+              "title": "DraftKings",
+              "last_update": "2026-04-11T21:21:02Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:02Z",
+                  "outcomes": [
+                    {
+                      "name": "Minnesota Timberwolves",
+                      "price": -550
+                    },
+                    {
+                      "name": "New Orleans Pelicans",
+                      "price": 410
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Minnesota Timberwolves",
+                      "price": -550
+                    },
+                    {
+                      "name": "New Orleans Pelicans",
+                      "price": 400
                     }
                   ]
                 }
@@ -3765,19 +3869,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Oklahoma City Thunder",
-                      "price": -240
+                      "price": -290
                     },
                     {
                       "name": "Phoenix Suns",
-                      "price": 194
+                      "price": 235
                     }
                   ]
                 }
@@ -3786,19 +3890,19 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Oklahoma City Thunder",
-                      "price": -250
+                      "price": -310
                     },
                     {
                       "name": "Phoenix Suns",
-                      "price": 205
+                      "price": 250
                     }
                   ]
                 }
@@ -3807,19 +3911,40 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Oklahoma City Thunder",
-                      "price": -245
+                      "price": -305
                     },
                     {
                       "name": "Phoenix Suns",
-                      "price": 188
+                      "price": 235
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Oklahoma City Thunder",
+                      "price": -300
+                    },
+                    {
+                      "name": "Phoenix Suns",
+                      "price": 240
                     }
                   ]
                 }
@@ -3838,19 +3963,19 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:07Z",
+              "last_update": "2026-04-11T21:22:11Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:07Z",
+                  "last_update": "2026-04-11T21:22:11Z",
                   "outcomes": [
                     {
                       "name": "Portland Trail Blazers",
-                      "price": -1350
+                      "price": -1600
                     },
                     {
                       "name": "Sacramento Kings",
-                      "price": 810
+                      "price": 900
                     }
                   ]
                 }
@@ -3859,11 +3984,11 @@
             {
               "key": "draftkings",
               "title": "DraftKings",
-              "last_update": "2026-04-11T17:20:30Z",
+              "last_update": "2026-04-11T21:21:02Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:20:30Z",
+                  "last_update": "2026-04-11T21:21:02Z",
                   "outcomes": [
                     {
                       "name": "Portland Trail Blazers",
@@ -3880,11 +4005,11 @@
             {
               "key": "betrivers",
               "title": "BetRivers",
-              "last_update": "2026-04-11T17:21:08Z",
+              "last_update": "2026-04-11T21:21:59Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:08Z",
+                  "last_update": "2026-04-11T21:21:59Z",
                   "outcomes": [
                     {
                       "name": "Portland Trail Blazers",
@@ -3893,6 +4018,27 @@
                     {
                       "name": "Sacramento Kings",
                       "price": 750
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "betmgm",
+              "title": "BetMGM",
+              "last_update": "2026-04-11T21:21:25Z",
+              "markets": [
+                {
+                  "key": "h2h",
+                  "last_update": "2026-04-11T21:21:25Z",
+                  "outcomes": [
+                    {
+                      "name": "Portland Trail Blazers",
+                      "price": -1400
+                    },
+                    {
+                      "name": "Sacramento Kings",
+                      "price": 825
                     }
                   ]
                 }
@@ -3920,11 +4066,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "NC State Wolfpack",
@@ -3941,11 +4087,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "NC State Wolfpack",
@@ -3972,11 +4118,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "North Carolina Tar Heels",
@@ -3993,11 +4139,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "North Carolina Tar Heels",
@@ -4024,11 +4170,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "Auburn Tigers",
@@ -4045,11 +4191,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "Auburn Tigers",
@@ -4076,11 +4222,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "California Golden Bears",
@@ -4097,11 +4243,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "California Golden Bears",
@@ -4128,11 +4274,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "Clemson Tigers",
@@ -4149,11 +4295,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "Clemson Tigers",
@@ -4180,11 +4326,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "Louisville Cardinals",
@@ -4201,11 +4347,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "Louisville Cardinals",
@@ -4232,11 +4378,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "Notre Dame Fighting Irish",
@@ -4253,11 +4399,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "Notre Dame Fighting Irish",
@@ -4284,11 +4430,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "Michigan Wolverines",
@@ -4305,11 +4451,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "Michigan Wolverines",
@@ -4336,11 +4482,11 @@
             {
               "key": "fanduel",
               "title": "FanDuel",
-              "last_update": "2026-04-11T17:21:25Z",
+              "last_update": "2026-04-11T21:22:03Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:21:25Z",
+                  "last_update": "2026-04-11T21:22:03Z",
                   "outcomes": [
                     {
                       "name": "Ohio State Buckeyes",
@@ -4357,11 +4503,11 @@
             {
               "key": "bovada",
               "title": "Bovada",
-              "last_update": "2026-04-11T17:19:38Z",
+              "last_update": "2026-04-11T21:21:22Z",
               "markets": [
                 {
                   "key": "h2h",
-                  "last_update": "2026-04-11T17:19:38Z",
+                  "last_update": "2026-04-11T21:21:22Z",
                   "outcomes": [
                     {
                       "name": "Ohio State Buckeyes",
