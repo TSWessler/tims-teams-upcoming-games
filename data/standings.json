@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-20T12:16:44.868Z",
-  "lastUpdatedMT": "7/20/2026, 6:16:44 AM",
+  "lastUpdated": "2026-07-20T20:58:56.992Z",
+  "lastUpdatedMT": "7/20/2026, 2:58:56 PM",
   "teams": [
     {
       "teamId": 21,
@@ -15,10 +15,17 @@
       "name": "Denver Nuggets",
       "abbr": "DEN",
       "sport": "basketball/nba",
+      "standings": null,
+      "standingSummary": "2nd in Northwest Division"
+    },
+    {
+      "teamId": 7,
+      "name": "Denver Broncos",
+      "abbr": "DEN",
+      "sport": "football/nfl",
       "standings": {
-        "description": "Overall Record",
         "type": "total",
-        "summary": "54-28",
+        "summary": "0-0",
         "stats": [
           {
             "name": "OTLosses",
@@ -30,63 +37,59 @@
           },
           {
             "name": "avgPointsAgainst",
-            "value": 116.914635
+            "value": 0
           },
           {
             "name": "avgPointsFor",
-            "value": 122.07317
-          },
-          {
-            "name": "clincher",
-            "value": 1
+            "value": 0
           },
           {
             "name": "differential",
-            "value": 5.199999999999989
+            "value": 0
           },
           {
             "name": "divisionWinPercent",
-            "value": 0.6875
+            "value": 0
           },
           {
             "name": "gamesBehind",
-            "value": 10
+            "value": 0
           },
           {
             "name": "gamesPlayed",
-            "value": 82
+            "value": 0
           },
           {
             "name": "leagueWinPercent",
-            "value": 0.6923077
+            "value": 0
           },
           {
             "name": "losses",
-            "value": 28
+            "value": 0
           },
           {
             "name": "playoffSeed",
-            "value": 3
+            "value": 0
           },
           {
             "name": "pointDifferential",
-            "value": 423
+            "value": 0
           },
           {
             "name": "points",
-            "value": 13
+            "value": 0
           },
           {
             "name": "pointsAgainst",
-            "value": 9587
+            "value": 0
           },
           {
             "name": "pointsFor",
-            "value": 10010
+            "value": 0
           },
           {
             "name": "streak",
-            "value": 12
+            "value": 0
           },
           {
             "name": "ties",
@@ -94,26 +97,30 @@
           },
           {
             "name": "winPercent",
-            "value": 0.6585366
+            "value": 0
           },
           {
             "name": "wins",
-            "value": 54
+            "value": 0
           },
           {
-            "name": "gamesAhead",
-            "value": 32
+            "name": "divisionLosses",
+            "value": 0
+          },
+          {
+            "name": "divisionRecord",
+            "value": 0
+          },
+          {
+            "name": "divisionTies",
+            "value": 0
+          },
+          {
+            "name": "divisionWins",
+            "value": 0
           }
         ]
       },
-      "standingSummary": "2nd in Northwest Division"
-    },
-    {
-      "teamId": 7,
-      "name": "Denver Broncos",
-      "abbr": "DEN",
-      "sport": "football/nfl",
-      "standings": null,
       "standingSummary": "1st in AFC West"
     },
     {
@@ -125,5 +132,21 @@
       "standingSummary": "1st in Big 12"
     }
   ],
-  "opponents": []
+  "opponents": [
+    {
+      "sport": "football/nfl",
+      "teamId": "12",
+      "record": "(0-0-0) - 1st in AFC West"
+    },
+    {
+      "sport": "football/nfl",
+      "teamId": "30",
+      "record": "(0-0-0) - 1st in AFC South"
+    },
+    {
+      "sport": "football/nfl",
+      "teamId": "14",
+      "record": "(0-0-0) - 1st in NFC West"
+    }
+  ]
 }
