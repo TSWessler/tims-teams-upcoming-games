@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-08-22T06:47:57.719Z",
-  "lastUpdatedMT": "8/22/2026, 12:47:57 AM",
+  "lastUpdated": "2026-08-22T07:32:38.609Z",
+  "lastUpdatedMT": "8/22/2026, 1:32:38 AM",
   "teams": [
     {
       "teamId": 21,
@@ -128,7 +128,105 @@
       "name": "Colorado Buffaloes",
       "abbr": "COLO",
       "sport": "football/college-football",
-      "standings": null,
+      "standings": {
+        "description": "Overall Record",
+        "type": "total",
+        "summary": "0-0",
+        "stats": [
+          {
+            "name": "OTLosses",
+            "value": 0
+          },
+          {
+            "name": "OTWins",
+            "value": 0
+          },
+          {
+            "name": "avgPointsAgainst",
+            "value": 0
+          },
+          {
+            "name": "avgPointsFor",
+            "value": 0
+          },
+          {
+            "name": "differential",
+            "value": 0
+          },
+          {
+            "name": "divisionWinPercent",
+            "value": 0
+          },
+          {
+            "name": "gamesBehind",
+            "value": 0
+          },
+          {
+            "name": "gamesPlayed",
+            "value": 0
+          },
+          {
+            "name": "leagueWinPercent",
+            "value": 0
+          },
+          {
+            "name": "losses",
+            "value": 0
+          },
+          {
+            "name": "playoffSeed",
+            "value": 0
+          },
+          {
+            "name": "pointDifferential",
+            "value": 0
+          },
+          {
+            "name": "points",
+            "value": 0
+          },
+          {
+            "name": "pointsAgainst",
+            "value": 0
+          },
+          {
+            "name": "pointsFor",
+            "value": 0
+          },
+          {
+            "name": "streak",
+            "value": 0
+          },
+          {
+            "name": "ties",
+            "value": 0
+          },
+          {
+            "name": "winPercent",
+            "value": 0
+          },
+          {
+            "name": "wins",
+            "value": 0
+          },
+          {
+            "name": "divisionLosses",
+            "value": 0
+          },
+          {
+            "name": "divisionRecord",
+            "value": 0
+          },
+          {
+            "name": "divisionTies",
+            "value": 0
+          },
+          {
+            "name": "divisionWins",
+            "value": 0
+          }
+        ]
+      },
       "standingSummary": "1st in Big 12"
     }
   ],
@@ -137,6 +235,21 @@
       "sport": "football/nfl",
       "teamId": "16",
       "record": "(1-0-0)"
+    },
+    {
+      "sport": "football/college-football",
+      "teamId": "59",
+      "record": "(0-0) - 1st in ACC"
+    },
+    {
+      "sport": "football/college-football",
+      "teamId": "2692",
+      "record": "(0-0) - 1st in Big Sky"
+    },
+    {
+      "sport": "football/college-football",
+      "teamId": "77",
+      "record": "(0-0) - 1st in Big Ten"
     }
   ]
 }
