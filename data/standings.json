@@ -1,14 +1,140 @@
 {
-  "lastUpdated": "2026-09-09T14:12:30.710Z",
-  "lastUpdatedMT": "9/9/2026, 8:12:30 AM",
+  "lastUpdated": "2026-09-09T22:04:37.824Z",
+  "lastUpdatedMT": "9/9/2026, 4:04:37 PM",
   "teams": [
     {
       "teamId": 21,
       "name": "Colorado Avalanche",
       "abbr": "COL",
       "sport": "hockey/nhl",
-      "standings": null,
-      "standingSummary": "8th in Atlantic Division"
+      "standings": {
+        "description": "Overall Record",
+        "type": "total",
+        "summary": "0-0-0",
+        "stats": [
+          {
+            "name": "otLosses",
+            "value": 0
+          },
+          {
+            "name": "otWins",
+            "value": 0
+          },
+          {
+            "name": "avgPointsAgainst",
+            "value": 0
+          },
+          {
+            "name": "avgPointsFor",
+            "value": 0
+          },
+          {
+            "name": "differential",
+            "value": 0
+          },
+          {
+            "name": "gamesBehind",
+            "value": 0
+          },
+          {
+            "name": "gamesPlayed",
+            "value": 0
+          },
+          {
+            "name": "losses",
+            "value": 0
+          },
+          {
+            "name": "playoffSeed",
+            "value": 0
+          },
+          {
+            "name": "pointDifferential",
+            "value": 0
+          },
+          {
+            "name": "points",
+            "value": 0
+          },
+          {
+            "name": "pointsAgainst",
+            "value": 0
+          },
+          {
+            "name": "pointsFor",
+            "value": 0
+          },
+          {
+            "name": "streak",
+            "value": 0
+          },
+          {
+            "name": "ties",
+            "value": 0
+          },
+          {
+            "name": "winPercent",
+            "value": 0
+          },
+          {
+            "name": "wins",
+            "value": 0
+          },
+          {
+            "name": "overtimeLosses",
+            "value": 0
+          },
+          {
+            "name": "overtimeWins",
+            "value": 0
+          },
+          {
+            "name": "pointsDiff",
+            "value": 0
+          },
+          {
+            "name": "powerPlayGoals",
+            "value": 0
+          },
+          {
+            "name": "powerPlayGoalsAgainst",
+            "value": 0
+          },
+          {
+            "name": "powerPlayOpportunities",
+            "value": 0
+          },
+          {
+            "name": "regLosses",
+            "value": 0
+          },
+          {
+            "name": "regWins",
+            "value": 0
+          },
+          {
+            "name": "rotLosses",
+            "value": 0
+          },
+          {
+            "name": "rotWins",
+            "value": 0
+          },
+          {
+            "name": "shootoutLosses",
+            "value": 0
+          },
+          {
+            "name": "shootoutWins",
+            "value": 0
+          },
+          {
+            "name": "timesShortHanded",
+            "value": 0
+          }
+        ]
+      },
+      "standingSummary": "1st in Atlantic Division"
     },
     {
       "teamId": 7,
@@ -239,6 +365,21 @@
     }
   ],
   "opponents": [
+    {
+      "sport": "hockey/nhl",
+      "teamId": "10",
+      "record": "(0-0) - 1st in Atlantic Division"
+    },
+    {
+      "sport": "hockey/nhl",
+      "teamId": "12",
+      "record": "(0-0) - 1st in Metropolitan Division"
+    },
+    {
+      "sport": "hockey/nhl",
+      "teamId": "14",
+      "record": "(0-0) - 1st in Atlantic Division"
+    },
     {
       "sport": "football/nfl",
       "teamId": "12",
