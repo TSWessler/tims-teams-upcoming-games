@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 
-const API_KEY = process.env.ODDS_API_KEY || '02a567c1ba7a8bee2b64a26ec76897dc';
+const API_KEY = process.env.ODDS_API_KEY;
 const SPORTS = [
   'icehockey_nhl',      // NHL
   'basketball_nba',     // NBA
@@ -195,6 +195,10 @@ async function fetchAllStandings() {
 }
 
 async function fetchAllOdds() {
+  if (!API_KEY) {
+    throw new Error('ODDS_API_KEY environment variable is not set');
+  }
+
   console.log('Fetching odds from The Odds API...');
   console.log(`Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Denver' })} MT`);
   
