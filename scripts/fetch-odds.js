@@ -11,11 +11,21 @@ const SPORTS = [
 ];
 
 const TEAMS = [
-  { name: 'Colorado Avalanche', sport: 'hockey/nhl', teamId: 17, abbr: 'COL' },
-  { name: 'Denver Nuggets', sport: 'basketball/nba', teamId: 7, abbr: 'DEN' },
-  { name: 'Denver Broncos', sport: 'football/nfl', teamId: 7, abbr: 'DEN' },
-  { name: 'Colorado Buffaloes', sport: 'football/college-football', teamId: 38, abbr: 'COLO' }
+  { name: 'Colorado Avalanche', sport: 'hockey/nhl', sportKey: 'icehockey_nhl', teamId: 17, abbr: 'COL' },
+  { name: 'Denver Nuggets', sport: 'basketball/nba', sportKey: 'basketball_nba', teamId: 7, abbr: 'DEN' },
+  { name: 'Denver Broncos', sport: 'football/nfl', sportKey: 'americanfootball_nfl', teamId: 7, abbr: 'DEN' },
+  { name: 'Colorado Buffaloes', sport: 'football/college-football', sportKey: 'americanfootball_ncaaf', teamId: 38, abbr: 'COLO' }
 ];
+
+// Where odds.json and standings.json are read and written. The workflows point
+// this at their checkout of the data branch.
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
+
+// Odds schedule (see planOddsFetches). Each fetch of one league costs 1 credit.
+const PRE_GAME_WINDOW_MIN = 100; // fetch a league when its game starts within this many minutes
+const MORNING_HOUR_MT = 8;       // daily refresh of leagues with a game in the next week
+const LOOKAHEAD_DAYS = 7;
+const MORNING_RESERVE = 25;      // below this many credits, skip morning refreshes and keep the rest for pre-game
 
 async function fetchOddsForSport(sport) {
   const url = `https://api.the-odds-api.com/v4/sports/${sport}/odds/?apiKey=${API_KEY}&regions=us&markets=h2h&oddsFormat=american`;
@@ -27,8 +37,9 @@ async function fetchOddsForSport(sport) {
       return null;
     }
     const data = await response.json();
-    console.log(`✓ Fetched ${data.length} games for ${sport}`);
-    return { sport, games: data };
+    const remaining = Number(response.headers.get('x-requests-remaining'));
+    console.log(`✓ Fetched ${data.length} games for ${sport} (${remaining} credits left)`);
+    return { sport, games: data, remaining: Number.isFinite(remaining) ? remaining : null };
   } catch (error) {
     console.error(`Error fetching ${sport}:`, error.message);
     return null;
@@ -179,14 +190,8 @@ async function fetchAllStandings() {
     opponents: opponents
   };
   
-  // Ensure data directory exists
-  const dataDir = path.join(__dirname, '..', 'data');
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-  
-  // Write to file
-  const outputPath = path.join(dataDir, 'standings.json');
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  const outputPath = path.join(DATA_DIR, 'standings.json');
   fs.writeFileSync(outputPath, JSON.stringify(standingsData, null, 2));
   
   console.log(`✓ Saved standings to ${outputPath}`);
@@ -194,54 +199,164 @@ async function fetchAllStandings() {
   return standingsData;
 }
 
-async function fetchAllOdds() {
+// ---------------------------------------------------------------------------
+// Odds
+// ---------------------------------------------------------------------------
+
+// Date and hour in Mountain Time, e.g. { date: '2026-11-26', hour: 8 }
+function mountainTime(date) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Denver', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: 'numeric', hourCycle: 'h23'
+    }).formatToParts(date).map(p => [p.type, p.value])
+  );
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, hour: Number(parts.hour) };
+}
+
+function readOddsData() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'odds.json'), 'utf8'));
+  } catch {
+    return { sports: [] };
+  }
+}
+
+// Credits left, as of the last fetch. The Odds API resets on the 1st at 00:00 UTC,
+// so a value saved in an earlier month no longer applies.
+function creditsRemaining(oddsData, now) {
+  const quota = oddsData.quota;
+  if (!quota || quota.remaining == null) return Infinity;
+  const at = new Date(quota.at);
+  const sameMonth = at.getUTCFullYear() === now.getUTCFullYear() && at.getUTCMonth() === now.getUTCMonth();
+  return sameMonth ? quota.remaining : Infinity;
+}
+
+// Decide which leagues to fetch now. Pure function, so it can be tested.
+//   games: [{ sportKey, name, start: Date }] upcoming games for our teams
+// Returns a Map of sportKey -> reason.
+function planOddsFetches(now, oddsData, games, credits) {
+  const plan = new Map();
+  const fetchedAt = sport => {
+    const s = (oddsData.sports || []).find(x => x.sport === sport);
+    return s && s.fetchedAt ? new Date(s.fetchedAt) : null;
+  };
+
+  // 1. About an hour before each game: once per game, once its start is within the window.
+  for (const g of games) {
+    const minutesAway = (g.start - now) / 60000;
+    if (minutesAway <= 0 || minutesAway > PRE_GAME_WINDOW_MIN) continue;
+    const last = fetchedAt(g.sportKey);
+    const windowOpened = new Date(g.start.getTime() - PRE_GAME_WINDOW_MIN * 60000);
+    if (!last || last < windowOpened) {
+      plan.set(g.sportKey, `pre-game: ${g.name} starts in ${Math.round(minutesAway)} min`);
+    }
+  }
+
+  // 2. Morning refresh: once a day after 8am MT, for leagues with a game in the next week.
+  //    Skipped when credits are low so the pre-game fetches still have enough.
+  const nowMT = mountainTime(now);
+  if (nowMT.hour >= MORNING_HOUR_MT && credits - plan.size > MORNING_RESERVE) {
+    const horizon = new Date(now.getTime() + LOOKAHEAD_DAYS * 24 * 3600 * 1000);
+    for (const g of games) {
+      if (plan.has(g.sportKey) || g.start <= now || g.start > horizon) continue;
+      const last = fetchedAt(g.sportKey);
+      const lastMT = last && mountainTime(last);
+      const doneToday = lastMT && lastMT.date === nowMT.date && lastMT.hour >= MORNING_HOUR_MT;
+      if (!doneToday) plan.set(g.sportKey, `morning refresh: next is ${g.name} on ${g.start.toISOString()}`);
+    }
+  }
+
+  // Never plan more fetches than there are credits for
+  return new Map([...plan].slice(0, Math.max(0, Math.min(plan.size, credits))));
+}
+
+// Upcoming games for our teams, from ESPN (free)
+async function fetchUpcomingGames() {
+  const games = [];
+  for (const team of TEAMS) {
+    try {
+      const url = `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      for (const e of data.events || []) {
+        if (e.competitions[0].status.type.state === 'pre') {
+          games.push({ sportKey: team.sportKey, name: e.shortName || e.name, start: new Date(e.date) });
+        }
+      }
+    } catch (error) {
+      console.error(`Could not load schedule for ${team.name}:`, error.message);
+    }
+  }
+  return games.sort((a, b) => a.start - b.start);
+}
+
+// Fetch the given leagues and merge them into odds.json, keeping other leagues as they were
+async function fetchOdds(sports, oddsData) {
   if (!API_KEY) {
     throw new Error('ODDS_API_KEY environment variable is not set');
   }
+  const now = new Date();
+  const results = await Promise.all(sports.map(sport => fetchOddsForSport(sport)));
 
-  console.log('Fetching odds from The Odds API...');
-  console.log(`Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Denver' })} MT`);
-  
-  const results = await Promise.all(
-    SPORTS.map(sport => fetchOddsForSport(sport))
-  );
-  
-  const oddsData = {
-    lastUpdated: new Date().toISOString(),
-    lastUpdatedMT: new Date().toLocaleString('en-US', { timeZone: 'America/Denver' }),
-    sports: results.filter(r => r !== null)
-  };
-  
-  // Ensure data directory exists
-  const dataDir = path.join(__dirname, '..', 'data');
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
+  oddsData.sports = oddsData.sports || [];
+  let remaining = null;
+  for (const r of results.filter(Boolean)) {
+    const entry = { sport: r.sport, fetchedAt: now.toISOString(), games: r.games };
+    const i = oddsData.sports.findIndex(s => s.sport === r.sport);
+    if (i >= 0) oddsData.sports[i] = entry; else oddsData.sports.push(entry);
+    if (r.remaining != null) remaining = remaining == null ? r.remaining : Math.min(remaining, r.remaining);
   }
-  
-  // Write to file
-  const outputPath = path.join(dataDir, 'odds.json');
+  if (remaining != null) oddsData.quota = { remaining, at: now.toISOString() };
+  oddsData.lastUpdated = now.toISOString();
+  oddsData.lastUpdatedMT = now.toLocaleString('en-US', { timeZone: 'America/Denver' });
+
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  const outputPath = path.join(DATA_DIR, 'odds.json');
   fs.writeFileSync(outputPath, JSON.stringify(oddsData, null, 2));
-  
   console.log(`\n✓ Saved odds to ${outputPath}`);
-  console.log(`Total API calls used: ${SPORTS.length}`);
-  
   return oddsData;
+}
+
+// Manual: fetch every league now (4 credits)
+async function fetchAllOdds() {
+  console.log(`Fetching all leagues. Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Denver' })} MT`);
+  return fetchOdds(SPORTS, readOddsData());
+}
+
+// Scheduled (runs hourly): fetch only what's due
+async function fetchDueOdds() {
+  const now = new Date();
+  console.log(`Time: ${now.toLocaleString('en-US', { timeZone: 'America/Denver' })} MT`);
+  const oddsData = readOddsData();
+  const credits = creditsRemaining(oddsData, now);
+  const games = await fetchUpcomingGames();
+  const plan = planOddsFetches(now, oddsData, games, credits);
+
+  console.log(`Credits left (as of last fetch): ${credits === Infinity ? 'unknown' : credits}`);
+  if (plan.size === 0) {
+    console.log('Nothing due. No credits used.');
+    return null;
+  }
+  for (const [sport, reason] of plan) console.log(`→ ${sport}: ${reason}`);
+  return fetchOdds([...plan.keys()], oddsData);
 }
 
 // Run if called directly
 if (require.main === module) {
-  const args = process.argv.slice(2);
-  const mode = args[0] || 'both'; // 'odds', 'standings', or 'both'
-  
+  const mode = process.argv[2] || 'odds-due'; // 'odds-due', 'odds', or 'standings'
+
   (async () => {
     try {
-      if (mode === 'odds') {
+      if (mode === 'odds-due') {
+        await fetchDueOdds();
+      } else if (mode === 'odds') {
         await fetchAllOdds();
       } else if (mode === 'standings') {
         await fetchAllStandings();
       } else {
-        await fetchAllOdds();
-        await fetchAllStandings();
+        throw new Error(`Unknown mode: ${mode}`);
       }
       console.log('\n✓ Complete!');
       process.exit(0);
@@ -252,4 +367,4 @@ if (require.main === module) {
   })();
 }
 
-module.exports = { fetchAllOdds, fetchAllStandings };
+module.exports = { fetchAllOdds, fetchDueOdds, fetchAllStandings, planOddsFetches, mountainTime, creditsRemaining };
