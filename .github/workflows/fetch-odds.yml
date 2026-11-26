@@ -16,33 +16,47 @@ on:
 jobs:
   fetch-odds:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Scripts come from main so fixes there take effect immediately
+      - name: Checkout code (main)
+        uses: actions/checkout@v5
+
+      # Generated data lives on the data branch to avoid triggering site deploys
+      - name: Checkout data branch
+        uses: actions/checkout@v5
         with:
           ref: data
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
+          path: data-branch
+
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
-      
+          node-version: '24'
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Fetch odds from API
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: npm run fetch-odds
-      
+
       - name: Commit and push if changes
+        working-directory: data-branch
         run: |
+          cp ../data/odds.json data/odds.json
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add data/odds.json
-          git diff --staged --quiet || git commit -m "chore: Update betting odds data"
-          git push origin data
-
+          if git diff --staged --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "chore: Update betting odds data"
+          # The odds and standings jobs can run at the same time; rebase if the other pushed first
+          for i in 1 2 3; do
+            git push origin HEAD:data && exit 0
+            git pull --rebase origin data
+          done
+          exit 1
