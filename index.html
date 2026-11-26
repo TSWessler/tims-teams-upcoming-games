@@ -270,6 +270,14 @@
             font-weight: 500;
         }
         
+        .standings-lines a {
+            display: block;
+        }
+        
+        .standings-lines a + a {
+            margin-top: 4px;
+        }
+        
         .odds-note {
             color: #888;
             font-size: 12px;
@@ -617,6 +625,9 @@
                             if (teamStandings.standingSummary) {
                                 leagueRank = { text: teamStandings.standingSummary };
                             }
+                            if (teamStandings.breakdown?.length) {
+                                leagueRank = { ...leagueRank, breakdown: teamStandings.breakdown };
+                            }
                         }
                     }
                     
@@ -751,6 +762,14 @@
                     
                     standingsLink = 'https://www.espn.com/nba/standings';
                     standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
+                    
+                    // League / conference / division, one linked line each
+                    if (leagueRank?.breakdown) {
+                        const lines = leagueRank.breakdown.map(b =>
+                            `<a href="${b.link}" target="_blank">(${b.record}, ${b.pct.toFixed(3)}) - ${b.rank} in ${b.name}</a>`
+                        ).join('');
+                        standingsHtml = `<div class="standings standings-lines">${lines}</div>`;
+                    }
                 } else if (team.sport.includes('football/nfl')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
