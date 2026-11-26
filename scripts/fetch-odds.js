@@ -200,7 +200,7 @@ const BREAKDOWN = {
     sortKey: e => [-num(e, 'points'), -(num(e, 'points') / Math.max(1, num(e, 'gamesPlayed'))), -num(e, 'regWins')],
     leagueTiesBy: null,
     conferenceRank: null,
-    // ESPN gives no conference record for the NHL, so that line shows the rank only
+    // ESPN gives no conference record for the NHL; fetchNhlConferenceRecord counts it for our team
     record: {
       league: e => `(${num(e, 'wins')}-${num(e, 'losses')}-${num(e, 'otLosses')}, ${num(e, 'points')} pts)`,
       conference: () => '',
@@ -279,6 +279,28 @@ async function fetchBreakdown(sport) {
   return result;
 }
 
+// ESPN's NHL standings have no conference record, so count it from the team's
+// completed games against teams in the same conference: W-L-OTL.
+async function fetchNhlConferenceRecord(team, breakdown) {
+  const ourConference = breakdown[String(team.teamId)]?.conference?.name;
+  if (!ourConference) return null;
+  const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`);
+  if (!r.ok) throw new Error(`schedule HTTP ${r.status}`);
+  const data = await r.json();
+  let w = 0, l = 0, otl = 0;
+  for (const e of data.events || []) {
+    const c = e.competitions[0];
+    if (c.status.type.state !== 'post') continue;
+    const us = c.competitors.find(t => String(t.team.id) === String(team.teamId));
+    const them = c.competitors.find(t => String(t.team.id) !== String(team.teamId));
+    if (!us || !them || breakdown[String(them.team.id)]?.conference?.name !== ourConference) continue;
+    if (us.winner) w++;
+    else if (/OT|SO/.test(c.status.type.detail || '')) otl++;
+    else l++;
+  }
+  return `(${w}-${l}-${otl})`;
+}
+
 async function fetchAllStandings() {
   console.log('\nFetching team standings from ESPN...');
   
@@ -295,6 +317,14 @@ async function fetchAllStandings() {
       for (const r of results) {
         const b = r && r.sport === sport && breakdown[String(r.teamId)];
         if (b) r.breakdown = [b.league, b.conference, b.division].filter(Boolean);
+        if (b && b.conference && sport === 'hockey/nhl') {
+          try {
+            const confRecord = await fetchNhlConferenceRecord(TEAMS.find(t => t.sport === sport), breakdown);
+            if (confRecord) b.conference.text = `${confRecord} - ${b.conference.rank} in ${b.conference.name}`;
+          } catch (error) {
+            console.error('Could not count NHL conference record:', error.message);
+          }
+        }
       }
       // NBA: ESPN's summary text is wrong for every team, so save a corrected
       // conference line for all 30 (past and upcoming opponents)
