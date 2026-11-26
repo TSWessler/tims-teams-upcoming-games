@@ -1,54 +1,26 @@
 name: Fetch Betting Odds
 
-# Mountain Time: 8am (morning check, before 10-11am weekend kickoffs),
-# 12pm (lunch, before 1:30-2:30pm kickoffs), 5pm (closing lines for 7pm games).
-# 3 runs x 4 leagues = 12 Odds API credits/day (~372/month of the 500 free).
+# Runs hourly, but only spends Odds API credits when something is due
+# (see planOddsFetches in scripts/fetch-odds.js):
+#   - About an hour before each of our teams' games: that league only (1 credit)
+#   - Once a day after 8am MT: leagues with a game in the next week (1 credit each),
+#     skipped when credits run low so pre-game fetches still have enough
+# Most hourly runs find nothing due and use no credits.
 # Off the top of the hour, where GitHub's scheduled runs are most often delayed.
 
 on:
   schedule:
-    - cron: '5 0 * * *'
-    - cron: '5 14 * * *'
-    - cron: '5 15 * * *'
-    - cron: '5 18 * * *'
-    - cron: '5 19 * * *'
-    - cron: '5 23 * * *'
+    - cron: '5 * * * *'
   workflow_dispatch:  # Allows manual trigger from GitHub UI
+    inputs:
+      mode:
+        description: 'due = only what the schedule calls for; all = every league now (4 credits)'
+        type: choice
+        options: [due, all]
+        default: due
 
 jobs:
-  # GitHub cron only runs in UTC, so each Mountain Time slot is scheduled at both
-  # its MST (UTC-7) and MDT (UTC-6) times. This job lets through only the one that
-  # matches today's Mountain Time, so daylight saving is handled automatically.
-  # Manual runs (workflow_dispatch) always go through.
-  check-time:
-    runs-on: ubuntu-latest
-    outputs:
-      run: ${{ steps.check.outputs.run }}
-    steps:
-      - name: Check Mountain Time schedule
-        id: check
-        env:
-          SCHEDULE: ${{ github.event.schedule }}
-          MT_HOURS: '8,12,17'
-        run: |
-          node -e '
-            const schedule = process.env.SCHEDULE;
-            let run = true;
-            if (schedule) {
-              const scheduled = new Date();
-              scheduled.setUTCHours(Number(schedule.split(" ")[1]), 0, 0, 0);
-              const mtHour = Number(new Intl.DateTimeFormat("en-US", {
-                timeZone: "America/Denver", hour: "numeric", hourCycle: "h23"
-              }).format(scheduled));
-              run = process.env.MT_HOURS.split(",").map(Number).includes(mtHour);
-              console.log(`Scheduled for ${mtHour}:00 MT -> ${run ? "running" : "skipping"}`);
-            }
-            require("fs").appendFileSync(process.env.GITHUB_OUTPUT, `run=${run}\n`);
-          '
-
   fetch-odds:
-    needs: check-time
-    if: needs.check-time.outputs.run == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -71,15 +43,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Fetch odds from API
+      - name: Fetch odds
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: npm run fetch-odds
+          DATA_DIR: ${{ github.workspace }}/data-branch/data
+        run: |
+          if [ "${{ inputs.mode }}" = "all" ]; then
+            npm run fetch-odds
+          else
+            npm run fetch-odds-due
+          fi
 
       - name: Commit and push if changes
         working-directory: data-branch
         run: |
-          cp ../data/odds.json data/odds.json
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add data/odds.json

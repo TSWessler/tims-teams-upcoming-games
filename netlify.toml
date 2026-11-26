@@ -1,0 +1,5 @@
+# Only build and deploy when the site itself changes. Commits that only touch
+# workflows, scripts or docs are skipped, so they don't use Netlify credits.
+# (Netlify skips the build when this command exits 0, i.e. no diff.)
+[build]
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- index.html"
