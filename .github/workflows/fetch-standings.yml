@@ -1,6 +1,6 @@
 name: Fetch Standings
 
-# Mountain Time: hourly 12pm-1am (as games finish), plus 6am (late finals).
+# Mountain Time: hourly 8am-2am, covering 10-11am kickoffs through late West Coast finals.
 # ESPN is free, so these runs cost no credits.
 # Off the top of the hour, where GitHub's scheduled runs are most often delayed.
 
@@ -15,8 +15,11 @@ on:
     - cron: '15 6 * * *'
     - cron: '15 7 * * *'
     - cron: '15 8 * * *'
-    - cron: '15 12 * * *'
-    - cron: '15 13 * * *'
+    - cron: '15 9 * * *'
+    - cron: '15 14 * * *'
+    - cron: '15 15 * * *'
+    - cron: '15 16 * * *'
+    - cron: '15 17 * * *'
     - cron: '15 18 * * *'
     - cron: '15 19 * * *'
     - cron: '15 20 * * *'
@@ -39,7 +42,7 @@ jobs:
         id: check
         env:
           SCHEDULE: ${{ github.event.schedule }}
-          MT_HOURS: '6,12,13,14,15,16,17,18,19,20,21,22,23,0,1'
+          MT_HOURS: '8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2'
         run: |
           node -e '
             const schedule = process.env.SCHEDULE;
