@@ -545,75 +545,52 @@
                 
                 // Load all teams in parallel and render in order
                 const teamPromises = TEAMS.map(async (team, index) => {
-                    const startDate = formatDate(lastWeek);
-                    const endDate = formatDate(nextWeek);
-                    
+                  try {
+                    // ESPN's scoreboard endpoint no longer accepts date ranges, so load the
+                    // team's season schedule and keep the games from last week through next week.
                     const response = await fetch(
-                        `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/scoreboard?dates=${startDate}-${endDate}`
+                        `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`
                     );
                     const data = await response.json();
+                    const events = data.events || [];
                     
                     const previousGames = [];
                     let liveGame = null;
                     const upcomingGames = [];
+                    const allPreviousGames = [];
+                    const allUpcomingGames = [];
                     
-                    data.events.forEach(event => {
-                        const hasTeam = event.competitions[0].competitors.some(
-                            t => t.team.abbreviation === team.abbr
-                        );
-                        
-                        if (!hasTeam) return;
-                        
+                    events.forEach(event => {
                         const status = event.competitions[0].status.type.state;
+                        const gameDate = new Date(event.date);
+                        const inWindow = gameDate >= lastWeek && gameDate <= nextWeek;
                         
                         if (status === 'post') {
-                            previousGames.push(event);
+                            allPreviousGames.push(event);
+                            if (inWindow) previousGames.push(event);
                         } else if (status === 'in') {
                             liveGame = event;
                         } else if (status === 'pre') {
-                            upcomingGames.push(event);
+                            allUpcomingGames.push(event);
+                            if (inWindow) upcomingGames.push(event);
                         }
                     });
                     
                     previousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
                     upcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    allPreviousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    allUpcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
                     
-                    if (previousGames.length === 0 || upcomingGames.length === 0) {
-                        const fullSeasonResponse = await fetch(
-                            `https://site.api.espn.com/apis/site/v2/sports/${team.sport}/teams/${team.teamId}/schedule`
-                        );
-                        const fullData = await fullSeasonResponse.json();
-                        
-                        if (fullData.events) {
-                            const allPreviousGames = [];
-                            const allUpcomingGames = [];
-                            
-                            fullData.events.forEach(event => {
-                                const status = event.competitions[0].status.type.state;
-                                
-                                if (status === 'post') {
-                                    allPreviousGames.push(event);
-                                } else if (status === 'pre') {
-                                    allUpcomingGames.push(event);
-                                }
-                            });
-                            
-                            allPreviousGames.sort((a, b) => new Date(b.date) - new Date(a.date));
-                            allUpcomingGames.sort((a, b) => new Date(a.date) - new Date(b.date));
-                            
-                            if (previousGames.length === 0 && allPreviousGames.length > 0) {
-                                previousGames.push(allPreviousGames[0]);
-                            }
-                            
-                            if (upcomingGames.length === 0 && allUpcomingGames.length > 0) {
-                                upcomingGames.push(allUpcomingGames[0]);
-                            }
-                        }
+                    // Nothing in the window (e.g. off week): show the nearest game either way
+                    if (previousGames.length === 0 && allPreviousGames.length > 0) {
+                        previousGames.push(allPreviousGames[0]);
+                    }
+                    if (upcomingGames.length === 0 && allUpcomingGames.length > 0) {
+                        upcomingGames.push(allUpcomingGames[0]);
                     }
                     
-                    const logoUrl = data.events.find(e => 
-                        e.competitions[0].competitors.some(t => t.team.abbreviation === team.abbr)
-                    )?.competitions[0].competitors.find(t => t.team.abbreviation === team.abbr)?.team.logo;
+                    const ourTeam = events[0]?.competitions[0].competitors.find(t => t.team.abbreviation === team.abbr)?.team;
+                    const logoUrl = ourTeam?.logo || ourTeam?.logos?.[0]?.href;
                     
                     let standings = null;
                     let leagueRank = null;
@@ -656,6 +633,10 @@
                     const teamHtml = await createTeamSection(team, previousGames, liveGame, upcomingGames, logoUrl, standings, leagueRank);
                     
                     return { html: teamHtml, index };
+                  } catch (error) {
+                    console.error('Error loading', team.name, error);
+                    return { html: `<div class="error">Couldn't load ${team.name}. Please refresh.</div>`, index };
+                  }
                 });
                 
                 // Wait for all to finish, then render in order
