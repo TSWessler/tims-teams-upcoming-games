@@ -1,20 +1,54 @@
 name: Fetch Betting Odds
 
+# Mountain Time: 8am (morning check, before 10-11am weekend kickoffs),
+# 12pm (lunch, before 1:30-2:30pm kickoffs), 5pm (closing lines for 7pm games).
+# 3 runs x 4 leagues = 12 Odds API credits/day (~372/month of the 500 free).
+# Off the top of the hour, where GitHub's scheduled runs are most often delayed.
+
 on:
   schedule:
-    # Runs at 7am, 11am, 3pm, 7pm Mountain Time (MDT = UTC-6)
-    # 7am MT = 1pm UTC (13:00)
-    # 11am MT = 5pm UTC (17:00)
-    # 3pm MT = 9pm UTC (21:00)
-    # 7pm MT = 1am UTC next day (01:00)
-    - cron: '0 13 * * *'  # 7am MT
-    - cron: '0 17 * * *'  # 11am MT
-    - cron: '0 21 * * *'  # 3pm MT
-    - cron: '0 1 * * *'   # 7pm MT
+    - cron: '5 0 * * *'
+    - cron: '5 14 * * *'
+    - cron: '5 15 * * *'
+    - cron: '5 18 * * *'
+    - cron: '5 19 * * *'
+    - cron: '5 23 * * *'
   workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
+  # GitHub cron only runs in UTC, so each Mountain Time slot is scheduled at both
+  # its MST (UTC-7) and MDT (UTC-6) times. This job lets through only the one that
+  # matches today's Mountain Time, so daylight saving is handled automatically.
+  # Manual runs (workflow_dispatch) always go through.
+  check-time:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - name: Check Mountain Time schedule
+        id: check
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          MT_HOURS: '8,12,17'
+        run: |
+          node -e '
+            const schedule = process.env.SCHEDULE;
+            let run = true;
+            if (schedule) {
+              const scheduled = new Date();
+              scheduled.setUTCHours(Number(schedule.split(" ")[1]), 0, 0, 0);
+              const mtHour = Number(new Intl.DateTimeFormat("en-US", {
+                timeZone: "America/Denver", hour: "numeric", hourCycle: "h23"
+              }).format(scheduled));
+              run = process.env.MT_HOURS.split(",").map(Number).includes(mtHour);
+              console.log(`Scheduled for ${mtHour}:00 MT -> ${run ? "running" : "skipping"}`);
+            }
+            require("fs").appendFileSync(process.env.GITHUB_OUTPUT, `run=${run}\n`);
+          '
+
   fetch-odds:
+    needs: check-time
+    if: needs.check-time.outputs.run == 'true'
     runs-on: ubuntu-latest
 
     steps:
