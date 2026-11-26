@@ -262,6 +262,12 @@
             font-weight: 500;
         }
         
+        .odds-note {
+            color: #888;
+            font-size: 12px;
+            padding: 8px 16px 10px;
+        }
+        
         .standings {
             padding: 12px 16px;
             background: #f9f9f9;
@@ -824,8 +830,20 @@
                 html += `<button class="expand-button down" data-target="${sectionId}-upcoming" data-count="${remainingUpcoming.length}">▼ Show ${remainingUpcoming.length} upcoming ${gameWord}</button>`;
             }
             
+            html += oddsNoteHtml(team.sportKey);
             html += `</div></div>`;
             return html;
+        }
+        
+        // "Odds updated around 8am MT and about an hour before each game · last update: Thu 12:32 PM MT"
+        function oddsNoteHtml(sportKey) {
+            const sportOdds = oddsData?.sports?.find(s => s.sport === sportKey);
+            const updated = sportOdds?.fetchedAt || oddsData?.lastUpdated;
+            if (!sportOdds || !updated) return '';
+            const when = new Date(updated).toLocaleString('en-US', {
+                timeZone: 'America/Denver', weekday: 'short', hour: 'numeric', minute: '2-digit'
+            });
+            return `<div class="odds-note">Note: odds updated around 8am MT and about an hour before each game · <span style="white-space: nowrap">last update: ${when} MT</span></div>`;
         }
         
         async function formatGame(event, gameType, teamAbbr, sport, sportKey) {
