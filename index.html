@@ -763,13 +763,7 @@
                     standingsLink = 'https://www.espn.com/nba/standings';
                     standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
                     
-                    // League / conference / division, one linked line each
-                    if (leagueRank?.breakdown) {
-                        const lines = leagueRank.breakdown.map(b =>
-                            `<a href="${b.link}" target="_blank">(${b.record}, ${b.pct.toFixed(3)}) - ${b.rank} in ${b.name}</a>`
-                        ).join('');
-                        standingsHtml = `<div class="standings standings-lines">${lines}</div>`;
-                    }
+
                 } else if (team.sport.includes('football/nfl')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
@@ -794,6 +788,14 @@
                     standingsLink = 'https://www.espn.com/college-football/standings';
                     standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
                 }
+            }
+            
+            // League / conference / division, one linked line each (NBA, NHL, NFL)
+            if (leagueRank?.breakdown?.length) {
+                const lines = leagueRank.breakdown.map(b =>
+                    `<a href="${b.link}" target="_blank">${b.text}</a>`
+                ).join('');
+                standingsHtml = `<div class="standings standings-lines">${lines}</div>`;
             }
             
             if (!mostRecent && !nextGame) {
