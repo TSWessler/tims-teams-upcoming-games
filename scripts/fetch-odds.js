@@ -174,6 +174,59 @@ async function fetchUpcomingOpponents() {
   return opponentsList;
 }
 
+function ordinal(n) {
+  const v = n % 100;
+  const suffix = (v >= 11 && v <= 13) ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th');
+  return `${n}${suffix}`;
+}
+
+// "6-6" -> { record: '6-6', pct: 0.5 }
+function parseRecord(text) {
+  const [w, l] = (text || '0-0').split('-').map(Number);
+  return { record: `${w}-${l}`, pct: w + l > 0 ? w / (w + l) : 0 };
+}
+
+// NBA standings broken down by league, conference and division, keyed by ESPN team id.
+// ESPN's own standingSummary for NBA teams reads e.g. "7th in Western Conference Division",
+// which mixes conference rank with division, so we build these lines ourselves.
+async function fetchNbaBreakdown() {
+  const get = async level => {
+    const r = await fetch(`https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?level=${level}`);
+    if (!r.ok) throw new Error(`NBA standings level ${level}: HTTP ${r.status}`);
+    return r.json();
+  };
+  const groups = node => node.standings ? [node] : (node.children || []).flatMap(groups);
+  const stat = (e, name) => e.stats.find(s => s.name === name);
+  const winPct = e => stat(e, 'winPercent')?.value ?? 0;
+  const seed = e => stat(e, 'playoffSeed')?.value ?? 99;
+
+  const [league, conferences, divisions] = await Promise.all([get(1), get(2), get(3)]);
+  const result = {};
+  const entry = id => (result[id] = result[id] || {});
+
+  for (const g of groups(league)) {
+    const es = g.standings.entries;
+    for (const e of es) {
+      const better = es.filter(x => winPct(x) > winPct(e)).length;
+      const tied = es.filter(x => winPct(x) === winPct(e)).length > 1;
+      const overall = parseRecord(stat(e, 'overall')?.displayValue || `${stat(e, 'wins')?.value}-${stat(e, 'losses')?.value}`);
+      entry(e.team.id).league = { ...overall, rank: `${tied ? 'T-' : ''}${ordinal(better + 1)}`, name: 'NBA', link: 'https://www.espn.com/nba/standings/_/group/league' };
+    }
+  }
+  for (const g of groups(conferences)) {
+    for (const e of g.standings.entries) {
+      entry(e.team.id).conference = { ...parseRecord(stat(e, 'vs. Conf.')?.displayValue), rank: ordinal(seed(e)), name: g.name, link: 'https://www.espn.com/nba/standings/_/group/conference' };
+    }
+  }
+  for (const g of groups(divisions)) {
+    const ranked = [...g.standings.entries].sort((a, b) => winPct(b) - winPct(a) || seed(a) - seed(b));
+    ranked.forEach((e, i) => {
+      entry(e.team.id).division = { ...parseRecord(stat(e, 'vs. Div.')?.displayValue), rank: ordinal(i + 1), name: `${g.name} Division`, link: 'https://www.espn.com/nba/standings/_/group/division' };
+    });
+  }
+  return result;
+}
+
 async function fetchAllStandings() {
   console.log('\nFetching team standings from ESPN...');
   
@@ -182,6 +235,27 @@ async function fetchAllStandings() {
   );
   
   const opponents = await fetchUpcomingOpponents();
+
+  // NBA: league / conference / division lines for our team, and a correct
+  // conference rank for opponents
+  try {
+    const nba = await fetchNbaBreakdown();
+    for (const r of results) {
+      const b = r && r.sport === 'basketball/nba' && nba[String(r.teamId)];
+      if (b) r.breakdown = [b.league, b.conference, b.division].filter(Boolean);
+    }
+    // Every NBA team, so past opponents get the corrected text too
+    for (const [teamId, b] of Object.entries(nba)) {
+      if (!b.league || !b.conference) continue;
+      const record = `(${b.league.record}, ${b.league.pct.toFixed(3)}) - ${b.conference.rank} in ${b.conference.name}`;
+      const existing = opponents.find(o => o.sport === 'basketball/nba' && String(o.teamId) === teamId);
+      if (existing) existing.record = record;
+      else opponents.push({ sport: 'basketball/nba', teamId, record });
+    }
+    console.log('✓ Built NBA league/conference/division standings');
+  } catch (error) {
+    console.error('Could not build NBA standings breakdown:', error.message);
+  }
   
   const standingsData = {
     lastUpdated: new Date().toISOString(),

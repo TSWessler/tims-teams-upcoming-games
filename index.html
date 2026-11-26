@@ -38,29 +38,37 @@
         .team-section {
             background: white;
             border-radius: 12px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 1px solid #d0d0d0;
+            border-left-width: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             overflow: hidden;
         }
-        
+
+        /* Team color: stripe down the whole card, faint tint on the header */
+        .team-section.avs { border-left-color: #236192; }
+        .team-section.nuggets { border-left-color: #0E2240; }
+        .team-section.broncos { border-left-color: #FB4F14; }
+        .team-section.buffs { border-left-color: #CFB87C; }
+
         .team-header {
             padding: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: white;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #ddd;
             cursor: pointer;
         }
-        
+
+        .team-header.avs { background: rgba(35, 97, 146, 0.08); }
+        .team-header.nuggets { background: rgba(14, 34, 64, 0.07); }
+        .team-header.broncos { background: rgba(251, 79, 20, 0.08); }
+        .team-header.buffs { background: rgba(207, 184, 124, 0.16); }
+
         .team-header:hover {
-            background: #f9f9f9;
+            filter: brightness(0.96);
         }
-        
-        .team-header.avs { border-left: 4px solid #236192; }
-        .team-header.nuggets { border-left: 4px solid #0E2240; }
-        .team-header.broncos { border-left: 4px solid #FB4F14; }
-        .team-header.buffs { border-left: 4px solid #CFB87C; }
         
         .team-info {
             display: flex;
@@ -260,6 +268,14 @@
             font-size: 13px;
             margin-top: 4px;
             font-weight: 500;
+        }
+        
+        .standings-lines a {
+            display: block;
+        }
+        
+        .standings-lines a + a {
+            margin-top: 4px;
         }
         
         .odds-note {
@@ -609,6 +625,9 @@
                             if (teamStandings.standingSummary) {
                                 leagueRank = { text: teamStandings.standingSummary };
                             }
+                            if (teamStandings.breakdown?.length) {
+                                leagueRank = { ...leagueRank, breakdown: teamStandings.breakdown };
+                            }
                         }
                     }
                     
@@ -743,6 +762,14 @@
                     
                     standingsLink = 'https://www.espn.com/nba/standings';
                     standingsHtml = `<div class="standings"><a href="${standingsLink}" target="_blank">${record}${rankingsText}</a></div>`;
+                    
+                    // League / conference / division, one linked line each
+                    if (leagueRank?.breakdown) {
+                        const lines = leagueRank.breakdown.map(b =>
+                            `<a href="${b.link}" target="_blank">(${b.record}, ${b.pct.toFixed(3)}) - ${b.rank} in ${b.name}</a>`
+                        ).join('');
+                        standingsHtml = `<div class="standings standings-lines">${lines}</div>`;
+                    }
                 } else if (team.sport.includes('football/nfl')) {
                     const wins = stats.find(s => s.name === 'wins')?.value || 0;
                     const losses = stats.find(s => s.name === 'losses')?.value || 0;
@@ -771,15 +798,15 @@
             
             if (!mostRecent && !nextGame) {
                 return `
-                    <div class="team-section">
+                    <div class="team-section ${team.className}">
                         <div class="team-header ${team.className}">
                             <div class="team-info">
                                 ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
                                 <div class="team-name">${team.name}</div>
                             </div>
-                            <div class="collapse-icon">▲</div>
+                            <div class="collapse-icon collapsed">▲</div>
                         </div>
-                        <div class="team-content">
+                        <div class="team-content collapsed">
                             ${standingsHtml}
                             <div class="no-games">No games scheduled</div>
                         </div>
@@ -788,15 +815,15 @@
             }
             
             let html = `
-                <div class="team-section">
+                <div class="team-section ${team.className}">
                     <div class="team-header ${team.className}">
                         <div class="team-info">
                             ${logoUrl ? `<img src="${logoUrl}" class="team-logo" alt="${team.name}">` : ''}
                             <div class="team-name">${team.name}</div>
                         </div>
-                        <div class="collapse-icon">▲</div>
+                        <div class="collapse-icon collapsed">▲</div>
                     </div>
-                    <div class="team-content">
+                    <div class="team-content collapsed">
                         ${standingsHtml}
             `;
             
